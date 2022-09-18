@@ -1,0 +1,418 @@
+/* import css layout  */
+
+@import url(../css/layout/header.css);
+@import url(../css/layout/sidebar.css);
+@import url(../css/layout/paging.css);
+/* end import css layout */
+/* import css base  */
+@import url(../css/base/icon.css);
+@import url(../css/base/button.css);
+@import url(../css/base/input.css);
+@import url(../css/base/table.css);
+@import url(../css/base/tooltip.css);
+/* @import url(../css/base/combobox.css); */
+/* end import css base  */
+
+/* import libary */
+@import url(../lib/combobox/css/combobox.css);
+:root{
+    --color--red:#ff0000;
+    --color--white:#ffffff;
+    --color--black:#111111;
+    --color--btn--primary:#50B83C;
+   
+    --color--head:#B9E2B1;
+    --color--checkbox:#089740;
+    --color--background:#f1f1f1;
+    --color--hover:#eceef1;
+    --color--hover--table:#DCF1D8;
+    --color--dialog--wrap: rgba(0,0,0,0.59);    
+    --height--input:32px;
+    --padding--input--left:16px;
+    --border--radius--input:4px;
+    --boder--solid--input:1px solid #babec5;
+    --border--dotted:1px dotted #babec5;
+   
+    
+}
+body{
+    margin:0;
+    padding: 0;
+    font-size: 14px;
+    font-family: Misa fonts;
+    box-sizing: border-box;
+}
+@font-face {
+    font-family: Misa fonts;
+    src: url(../assets/fonts/notosans-regular.2cb88a13.woff2);
+}
+@font-face {
+    font-family: Misa fonts italic;
+    src: url(../assets/fonts/notosans-italic.1c1aaac9.woff2);
+}
+@font-face {
+    font-family: Misa fonts bold;
+    src: url(../assets/fonts/notosans-bold.3ede5aff.woff2);
+}
+@font-face {
+    font-family: Misa font semibold;
+    src: url(../assets/fonts/notosans-semibold.df3e6dc4.woff2);
+}
+/* định dạng fontsize  */
+.fontsize__tile{
+    font-size: 24px;
+    font-weight: 700px;
+    color: var(--color--black);
+}
+.fontsize__input::placeholder{
+    font-size: 12px;
+}
+
+.color-red{
+    color: var(--color--red);
+}
+
+.container{
+    display: grid;
+    width: 100%;
+    height: 100vh;
+    grid-template-columns: 200px auto;
+    grid-template-rows: 56px auto;
+
+}
+.header{
+    height: 56px;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    display: flex;
+    justify-content: space-between;
+   
+}
+.sidebar{
+    width: 200px;
+    grid-column: 1/2;
+    grid-row: 2/3;
+    height: calc(100vh - 56px - 20px);
+    background-color: #3c3e3d;
+    overflow-y: auto;
+}
+.content{
+    grid-column: 2/3;
+    grid-row: 2/3;
+    background-color: var(--color--background);   
+    padding-left: 24px;
+    padding-right: 24px;
+    height: calc(100vh - 57px);
+}
+
+.top__content{
+    display: flex;
+    justify-content: space-between;
+    font-family: Misa fonts bold;
+    align-items: center;
+    height: 56px;
+}
+.inner__content{
+    background-color: var(--color--white);
+    height:calc(100% - 56px)
+    
+}
+.inner__top{
+    display: flex;
+    justify-content: end;
+    padding-top: 8px;
+    height: 48px;
+}
+.content__data{
+    margin-top: 8px;
+    padding: 0 0 8px 8px;
+    overflow-y: auto;
+    height: calc(100% - 128px);
+    width: 1270px;
+    overflow-x: auto;
+}
+.combobox__button{
+    height: 32px !important;
+}
+.combobox__input{
+    height: 32px !important;
+}
+.combobox__data{
+    overflow-y: 500px !important;
+}
+
+/* Căn chỉnh text */
+
+.text-align--left {
+    text-align: left;
+}
+
+.text-align--center {
+    text-align: center;
+}
+
+.text-align--right {
+    text-align: right;
+}
+
+/* Detail employee */
+.dialog__wrap{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: var(--color--dialog--wrap);
+    z-index: 99;
+}
+.dialog__infoEmp{
+    
+    margin: auto;
+    margin-top: 100px;
+    width: 832px;
+  
+    background-color: var(--color--white);  
+    border:var(--boder--solid--input);
+   border-radius:var(--border--radius--input)
+ }
+ .dialog__infoEmp--top{
+    display: flex;
+    justify-content: space-between;
+     padding:16px;
+ }
+ .dialog__info{
+     display: flex;
+     justify-content: start;
+ }
+ .dialog__info--checkbox{
+     display: flex;
+     justify-content: start;
+ }
+ .dialog__info--name{
+     font-size:24px;
+    font-weight: 700px;
+ }
+ .checkbox__item{
+     display: flex;
+     justify-content: start;
+     align-items: center;
+ }
+ .dialog__top--right{
+    display: flex;
+    justify-content: end;
+ }
+ 
+ .dialog__infoEmp--content{
+     padding: 0 16px 6px 16px;
+ }
+ .content__info{
+     display: flex;
+ }
+ .content__info--left{
+     width: 50%;
+     float: left;
+     margin-right: 32px;
+ }
+ 
+ .info__left--first{
+     width: 100%;
+     display: grid;
+     grid-template-columns: 40%  60%;
+     grid-template-rows: 100%;
+ }
+ .info__code {
+     margin-right: 8px;
+    grid-column: 1/2;
+    grid-row: 1/2;
+    width: 100%;
+ }
+ .info__code input{
+     width: 80%;
+ }
+ .info__name {
+    grid-column: 2/3;
+    grid-row: 1/2;   
+ }
+ .info__name input{
+    width: calc(100% - 16px);
+ }
+ .info__item{
+     margin-bottom: 16px;
+ }
+ .info__item--max input{
+    width: calc(100% - 16px);
+ }
+ 
+ 
+ .content__info--right{
+     width: 50%;
+     float: right;
+ }
+ .info__right--CMND{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 60%  40%;
+    grid-template-rows: 100%;
+ }
+ .item__CMND input{
+    margin-right: 16px;
+    width: calc(100% - 32px);
+ }
+ .content__radio{
+    display: flex;
+    justify-content:start;
+ }
+ .radio__item{
+    display: flex;
+    align-items: center;
+ }
+ .info__right--first{
+     width: 100%;
+     display: grid;
+     grid-template-columns: 40%  60%;
+     grid-template-rows: 100%;
+     
+ }
+ .content__address{
+    width: 100%;
+    margin-top: 16px;
+ }
+ .address__item--max input{
+    width: calc(100% - 16px);
+ }
+ .info__other{
+    display: flex;
+    justify-content: start;
+ }
+ .item__other input{
+    margin-right: 16px;
+    width: 200px;
+ }
+ .dialog__infoEmp--bottom{
+     height: 60px;
+     margin: 10px 24px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     border-top: var(--boder--solid--input);
+ }
+ .dialog__right{
+     display: flex;
+     justify-content: end;
+ }
+
+    /* custom combobox indialog*/
+.content__input .combobox{
+    width: 100% ;
+}
+/* end dialog detail employee */
+
+.content__bottom{
+    padding: 0 16px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 32px;
+    height: 56px;
+    border-top: var(--boder--solid--input);
+}
+/* popup waring  */
+.wrap__waring{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+    background-color: var(--color--dialog--wrap);
+}
+.dialog__waring{
+    margin: auto;
+    margin-top: 300px;
+    width: 400px;
+    z-index: 200;
+    background-color: var(--color--white);  
+    border: var(--boder--solid--input);
+    border-radius: var(--border--radius--input);
+   
+}
+.dialog__waring--content{
+    display: flex;
+    justify-content: start;
+   padding-bottom: 23px;
+   border-bottom:  var(--boder--solid--input);
+}
+.waring__icon{
+    margin-right: 16px;
+}
+.dialog__waring, .dialog__error, .dialog__ask{
+    padding: 24px;
+}
+
+.dialog__waring--bottom{
+    display: flex;
+    justify-content: end;
+    padding-top: 16px;
+}
+
+/* popup error  */
+.wrap__error{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+    background-color:var(--color--dialog--wrap)
+}
+
+.dialog__error{
+    margin: auto;
+    margin-top: 300px;
+    width: 400px;
+    z-index: 200;
+    background-color: var(--color--white);  
+    border:var(--color--white);
+    border-radius:var(--border--radius--input)
+   
+}
+.wrap__ask{
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+    background-color:var(--color--dialog--wrap)
+}
+.dialog__ask{
+    margin: auto;
+    margin-top: 300px;
+    width: 400px;
+    z-index: 99;
+    background-color: var(--color--white);  
+    border:var(--color--white);
+    border-radius:var(--border--radius--input)
+}
+
+
+
+::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #bbb;    
+    cursor: pointer;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }

@@ -1,0 +1,68 @@
+.combobox-container{
+    width: 204px;
+    position: relative;
+}
+
+.input-container{ 
+    display: flex;
+    cursor: pointer;
+    position: relative;
+}
+
+.icon-combobox{
+    position: absolute;
+    height: 36px;
+    width: 40px;
+    border-left: 1px solid #eed9d9;
+    padding: 8px 12px;
+    right: 0;
+    top: 0;
+}
+
+.combobox-value{
+    width: 100%;
+    padding: 8px;
+    background-color: var(--white);
+    border-radius: 4px;
+    position: absolute;
+    z-index: 100;
+    border-top: none;
+    box-shadow: 1px 0px 4px rgba(23,27,42,0.24);
+
+}
+.icon-drop-combobox{
+    background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -464px -406px; 
+    height: 16px;
+    width: 16px;
+
+}
+.combobox-item{
+    background-color: var(--white);
+    width: 100%;
+    height: 36px;
+    border-radius: 4px;
+    padding-top: 8px;
+    color: var(--black);
+    padding-left: 8px;
+    position: relative;
+}
+
+.combobox-item-active{
+    color: var(--light--green--400);
+}
+
+.combobox-item .icon-tick{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    width: 16px;
+    height: 16px;
+    background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -1224px -360px; 
+}
+.combobox__item--selected{
+    background-color: #409330 !important;
+}
+
+.combobox-item-hidden{
+    display: none;
+}

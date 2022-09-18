@@ -1,0 +1,31 @@
+.btn{
+    height: 32px;
+    padding: 0 16px;
+    border-radius: 4px;
+    color: var(--color--white);
+    text-align: center;
+    background-color: var(--color--btn--primary);
+    outline: none;
+    border: none;
+    line-height: 32px;
+}
+.btn:hover{
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 0 #babec5;
+}
+.btn__save{
+    background-color: var(--color--white);
+    border: var(--boder--solid--input);
+    color: var(--color--black);
+    margin-right: 16px;
+}
+.btn__cancel{
+    background-color: var(--color--white);
+    color:var(--color--black);
+    border: var(--boder--solid--input);
+  
+}
+.btn__aprove{
+    background-color:var(--color--btn--primary); 
+    color:var(--color--white);
+}
