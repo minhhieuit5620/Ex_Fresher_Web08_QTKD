@@ -237,27 +237,38 @@ export default {
     },
     mounted(){
         this.$refs['employeeCode'].focus();//focus vào item đầu tiên
-        this.formatDate();
+        this.formatDate();//thay đổi dữ liệu ngày tháng theo format trước khi hiển thị 
     },
     data() {
         return{
             showForm:true,     
             emp:{},
-            maxDate:common.maxDate(),
-               
+            maxDate:common.maxDate(),               
         }
     },
     
     methods:{
+          /**
+         * Đóng form dialog 
+         * Author: HMH(16/09/22)
+        */
         closeEmpDetail(){
             this.closeDialog();
         },
+        /**
+         * format ngày tháng theo định dạng mong muốn
+         * Author: HMH(19/09/22)
+         */
         formatDate(){
             if(this.formMode==eNum.formMode.Edit){
                 this.emp.dateOfBirth=common.formatDate(this.emp.dateOfBirth);
                 this.emp.identityIssuedDate=common.formatDate(this.emp.identityIssuedDate);
             }
         },
+         /**
+         * Thêm mới hoặc sửa dữ liệu theo formMode
+         * Author: HMH(19/09/22)
+         */
         btnSaveOnClick() {
         var me = this;
         var method = "POST";
@@ -269,8 +280,7 @@ export default {
         if (me.formMode == 2) {
             method = "PUT";
             url = url + `/${me.emp.id}`;
-        }
-        console.log(url)
+        }       
         fetch(url, {
             
             method: method,
@@ -282,16 +292,12 @@ export default {
             .then((res) => res.json())
             .then((res) => {
             var status = res.status;
-            if (status == 400) alert("Dữ liệu đầu vào không hợp lệ");
-            else if (status == 500) alert("Lỗi phía server!");
-            else {
-                alert("Thành công!");
-                me.$emit("closeDialog");
-            }
+                 me.$emit("closeDialog");    
+                 console.log(status);
             })
             .catch((res) => {
             console.log(res);
-            alert("Lỗi");
+            
             });
         },
     },

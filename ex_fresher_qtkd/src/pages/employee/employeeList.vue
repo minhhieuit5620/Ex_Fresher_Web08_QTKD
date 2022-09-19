@@ -42,7 +42,7 @@
                             <td style="width: 100px">{{item.employeeCode}}</td>
                             <td style="width: 150px">{{item.employeeName}}</td>
                             <td style="width: 60px">{{item.gender}}</td>
-                            <td style="width: 100px">{{item.dateOfBirth}}</td>
+                            <td style="width: 100px">{{formatDateTable(item.dateOfBirth)}}</td>
                             <td style="width: 100px">{{item.phoneNumbermobile}}</td>
                             <td style="width: 100px">{{item.departmentName}}</td>
                             <td style="width: 100px">{{item.positionName}}</td>
@@ -52,12 +52,12 @@
                             
                             <div class="value__edit"  v-show="isShowDropList[index]" :style="{'top': `${topDropList}px`}" >
                                     <div class="edit__item">Nhân bản</div>
-                                    <div class="edit__item">Xóa</div>
+                                    <div class="edit__item" @click="btnDelete(item,index)">Xóa</div>
                                     <div class="edit__item">Ngừng sử dụng</div>
                             </div>    
                             <td class="edit__td column__sticky column__edit" style="width: 100px" :ref="'row_'+index" @dblclick.stop> 
                                     Sửa
-                                    <div class="icon__drop icon icon__edit--drop"  @click="btnEdit(index)"></div>                                    
+                                    <div class="icon__drop icon icon__edit--drop"  @click="btnShowEdit(index)"></div>                                    
                             </td>
                                                   
                         </tr>
@@ -111,15 +111,14 @@
 
 import empDetail from './employeeDetail.vue'
 import eNum from '../../js/common/eNum'
+import common from '@/js/common/common'
 export default {
 
     name: "employeeList",
     components: { empDetail },
     created() {
-        this.loadData();
-       
-    },
-   
+        this.loadData();   
+    },  
     props:{        
     },
     data() {
@@ -158,7 +157,7 @@ export default {
          * Author: HMH(15/09/22)
          * @param {*} index vị trí element được chọn
          */             
-        btnEdit(index) {                  
+        btnShowEdit(index) {                  
             this.isShowDropList[index] = !this.isShowDropList[index];//ẩn hiện dropList
             let [row] = this.$refs['row_'+index];//get element được chọn
             this.topDropList = row.getBoundingClientRect().top + 35; //getBoundingClientRect dùng để lấy vị trí của element             
@@ -170,9 +169,17 @@ export default {
         showEditForm(data){           
             this.isShow = true;      
             this.formMode=eNum.formMode.Edit;     
-            this.empSelected=data;
-            
-        },
+            this.empSelected=data;            
+        }, 
+        formatDateTable(date){
+           
+            try {
+            let dateFormat = common.formatDateTable(date);
+            return dateFormat;
+            } catch (error) {
+                console.log(error);
+            }
+        },     
         /**
          * Lấy toàn bộ nhân viên và tổng số bản ghi hiện có
          * Author: HMHieu(18/09/22)
@@ -188,11 +195,39 @@ export default {
                     console.log(res);            
                 });
         },
-       
+         /**
+         * Xóa nhân viên theo ID
+         * Author: HMHieu(19/09/22)
+         */
+        btnDelete(employee,index){
+            var me = this;
+            var method = "Delete";
+            var url = "http://localhost:3000/employee/"+`${employee.id}`;
+            // validate dữ liệu:
 
+            // Xóa dữ liệu:            
+            fetch(url, {
+                
+                method: method,
+                headers: {
+                "Content-Type": "application/json",
+                },
+                
+            })
+                .then((res) => res.json())
+                .then((res) => {
+                var status = res.status;
+                    me.$emit("closeDialog");   
+                    this.isShowDropList[index] = !this.isShowDropList[index]; 
+                    this.loadData();
+                    console.log(status);
+                })
+                .catch((res) => {
+                console.log(res);
+                
+                });
+        },            
     }
-
-
 }
 </script>
 <style>
