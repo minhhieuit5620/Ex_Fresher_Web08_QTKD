@@ -35,13 +35,18 @@
     line-height: 48px;
     position: relative;
 }
-.column__edit{
-    
+.column__sticky{
     position: sticky;
-    right: 0px;
+   
     background-color: var(--color--white);
     z-index: 1;
     border-left: var(--border--dotted);
+}
+.column__checkbox{
+left: 0px;
+}
+.column__edit{
+    right: 0px;
 }
 
 .column__edit--th{
@@ -64,5 +69,9 @@
     background-color: var(--color--hover);
    cursor: pointer;
     color: var(--color--btn--primary);
+}
+table tr:hover td:first-child,
+table tr:hover td:last-child {
+    background-color: var(--color--hover--table);
 }
 

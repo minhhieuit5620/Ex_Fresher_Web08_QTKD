@@ -9,7 +9,9 @@
                     </div>
                     <div class="dialog__info--checkbox">
                         <div class="checkbox__item">
-                            <input type="checkbox" id="customer" class="checkbox__detail input__checkbox customer "  >
+                            <input type="checkbox" id="customer" class="checkbox__detail input__checkbox customer " 
+                           
+                            >
                             <label for="customer">Là khách hàng</label>
                         </div>
                         <div class="checkbox__item">
@@ -33,7 +35,9 @@
                                     <span class="color-red">*</span>
                                 </div>
                                 <div class="content__input">
-                                    <input type="text" class="input" >
+                                    <input type="text" class="input" 
+                                    v-model="emp.employeeCode"
+                                    :ref="'employeeCode'" >
                                 </div>
                                
                             </div>
@@ -43,7 +47,7 @@
                                     <span class="color-red">*</span>
                                 </div>
                                 <div class="content__input">
-                                    <input type="text" class="input">
+                                    <input type="text" class="input" v-model="emp.employeeName">
                                 </div>
                                
                             </div>
@@ -55,7 +59,7 @@
                                 <span class="color-red">*</span>
                             </div>
                             <div class="content__input">
-                                <hCombobox  :url="'https://cukcuk.manhnv.net/api/v1/CustomerGroups'" propValue="CustomerGroupId" propText="CustomerGroupName" >
+                                <hCombobox  :url="'http://localhost:3000/department'" propValue="departmentID" propText="departmentName" v-model="emp.departmentID" >
                                 </hCombobox>
                             </div>
                            
@@ -66,7 +70,7 @@
                                 
                             </div>
                             <div class="content__input">
-                                <input class="input" type="text" >
+                                <input class="input" type="text"  v-model="emp.departmentName">
                             </div>
                            
                         </div>
@@ -80,7 +84,7 @@
                                     
                                 </div>
                                 <div class="content__input">
-                                    <input class="input input__date" type="date" >
+                                    <input class="input input__date" type="date" v-model="emp.dateOfBirth" :max="maxDate" >
                                 </div>
                                
                             </div>
@@ -110,7 +114,7 @@
                                  Số CMND                                    
                                 </div>
                                 <div class="content__input">
-                                    <input class="input" type="text"  >
+                                    <input class="input" type="text" v-model="emp.identityNumber" >
                                 </div>                               
                             </div>
                             <div class="info__item ">
@@ -118,7 +122,7 @@
                                   Ngày cấp                                    
                                 </div>
                                 <div class="content__input">
-                                    <input class="input input__date" type="date" >
+                                    <input class="input input__date" type="date" v-model="emp.identityIssuedDate" :max="maxDate" >
                                 </div>                             
                             </div>
                         </div>
@@ -127,10 +131,9 @@
                                 Nơi cấp                                
                             </div>
                             <div class="content__input">
-                                <input class="input" type="text" >
+                                <input class="input" type="text" v-model="emp.identityIssuedPlace" >
                             </div>                           
-                        </div>
-                       
+                        </div>                       
                     </div>
                 </div>
                 <div class="content__address">
@@ -140,7 +143,7 @@
                                Địa chỉ                                
                             </div>
                             <div class="content__input">
-                                <input type="text" class="input">
+                                <input type="text" class="input" v-model="emp.address">
                             </div>
                            
                         </div>
@@ -151,7 +154,7 @@
                                ĐT di động                             
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input">
+                                 <input type="text" class="input" v-model="emp.phoneNumbermobile">
                              </div>
                         </div>
                         <div class=" info__item item__other">
@@ -159,7 +162,7 @@
                                 ĐT cố định                               
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input">
+                                 <input type="text" class="input" v-model="emp.phoneNumberlandline">
                              </div>
                         </div>
                         <div class="info__item item__other">
@@ -167,7 +170,7 @@
                                 Email                                
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input">
+                                 <input type="text" class="input" v-model="emp.email">
                              </div>
                         </div>
                     </div>
@@ -177,7 +180,7 @@
                                 Tài khoản ngân hàng                         
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input">
+                                 <input type="text" class="input" v-model="emp.accountBank">
                              </div>
                         </div>
                         <div class="info__item item__other">
@@ -185,7 +188,7 @@
                                 Tên ngân hàng                                
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input">
+                                 <input type="text" class="input" v-model="emp.nameBank">
                              </div>
                         </div>
                         <div class="info__item item__other">
@@ -193,7 +196,7 @@
                                 Chi nhánh                                
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input">
+                                 <input type="text" class="input" v-model="emp.branchBank">
                              </div>
                         </div>
                     </div>
@@ -210,7 +213,7 @@
                     <div class="btn btn__save">
                         Cất
                     </div>
-                    <div class="btn btn__saveAdd">Cất và thêm</div>
+                    <div class="btn btn__saveAdd"  @click="btnSaveOnClick" >Cất và thêm</div>
                 </div>
             </div>
         </div> 
@@ -219,22 +222,81 @@
 </template>
 <script>
     import MCombobox from '@/components/base/MCombobox.vue';
+    import eNum from '@/js/common/eNum';
+    import common from '@/js/common/common'
 export default {
     component:{MCombobox},
     name:"employeeDetail",
     props:{
         closeDialog: Function,
+        employeeSelected:Function,
+        formMode:Number,
+    },
+    created(){       
+        this.emp = this.employeeSelected;      
+    },
+    mounted(){
+        this.$refs['employeeCode'].focus();//focus vào item đầu tiên
+        this.formatDate();
     },
     data() {
         return{
-            showForm:true,
+            showForm:true,     
+            emp:{},
+            maxDate:common.maxDate(),
+               
         }
     },
+    
     methods:{
         closeEmpDetail(){
             this.closeDialog();
+        },
+        formatDate(){
+            if(this.formMode==eNum.formMode.Edit){
+                this.emp.dateOfBirth=common.formatDate(this.emp.dateOfBirth);
+                this.emp.identityIssuedDate=common.formatDate(this.emp.identityIssuedDate);
+            }
+        },
+        btnSaveOnClick() {
+        var me = this;
+        var method = "POST";
+        var url = "http://localhost:3000/employee";
+        // validate dữ liệu:
+
+        // Cất dữ liệu:
+
+        if (me.formMode == 2) {
+            method = "PUT";
+            url = url + `/${me.emp.id}`;
         }
-    }
+        console.log(url)
+        fetch(url, {
+            
+            method: method,
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(me.emp),
+        })
+            .then((res) => res.json())
+            .then((res) => {
+            var status = res.status;
+            if (status == 400) alert("Dữ liệu đầu vào không hợp lệ");
+            else if (status == 500) alert("Lỗi phía server!");
+            else {
+                alert("Thành công!");
+                me.$emit("closeDialog");
+            }
+            })
+            .catch((res) => {
+            console.log(res);
+            alert("Lỗi");
+            });
+        },
+    },
+  
+ 
 
 }
 </script>
