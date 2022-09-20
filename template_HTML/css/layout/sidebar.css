@@ -1,0 +1,16 @@
+.sidebar{
+    padding-top: 20px;
+}
+.sidebar__item{
+    height: 44px;
+    margin: 2px 0;
+    padding: 0px 12px;
+    display: flex;
+    justify-content: start;
+    color: #fff;
+    cursor: pointer;
+    align-items: center;
+}
+.sidebar__item:hover{
+    background-color: #ccc;
+}
