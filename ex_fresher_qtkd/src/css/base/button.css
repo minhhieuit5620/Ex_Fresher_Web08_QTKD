@@ -9,10 +9,7 @@
     border: none;
     line-height: 32px;
 }
-.btn:hover{
-    cursor: pointer;
-    box-shadow: 1px 1px 1px 0 #babec5;
-}
+
 .btn__save{
     background-color: var(--color--white);
     border: var(--boder--solid--input);
@@ -28,4 +25,15 @@
 .btn__aprove{
     background-color:var(--color--btn--primary); 
     color:var(--color--white);
+}
+.btn__cancel--delete{
+    background-color: var(--color--white);
+    color:var(--color--black);
+    border: var(--boder--solid--input);
+    float:left;
+}
+.dialog__two--bottom{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 16px;
 }

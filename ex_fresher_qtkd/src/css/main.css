@@ -12,6 +12,10 @@
 @import url(../css/base/tooltip.css);
 /* @import url(../css/base/combobox.css); */
 /* end import css base  */
+/* import css control  */
+@import url(../css/control/hover.css);
+@import url(../css/control/focus.css);
+/* end import css base  */
 
 /* import libary */
 @import url(../lib/combobox/css/combobox.css);
@@ -70,6 +74,11 @@ body{
 
 .color-red{
     color: var(--color--red);
+}
+.border-red{
+    outline: none;
+    border:1px solid #ff0000;
+    
 }
 
 .container{
@@ -167,18 +176,25 @@ body{
 }
 .dialog__infoEmp{
     
-    margin: auto;
-    margin-top: 100px;
-    width: 832px;
-  
+    /* margin: auto;
+    margin-top: 100px; */
+    width: 900px;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;  
     background-color: var(--color--white);  
     border:var(--boder--solid--input);
-   border-radius:var(--border--radius--input)
+    border-radius:var(--border--radius--input)
  }
  .dialog__infoEmp--top{
     display: flex;
     justify-content: space-between;
-     padding:16px;
+    padding: 16px 16px 16px 32px;
  }
  .dialog__info{
      display: flex;
@@ -203,7 +219,7 @@ body{
  }
  
  .dialog__infoEmp--content{
-     padding: 0 16px 6px 16px;
+     padding: 0 32px 6px 32px;
  }
  .content__info{
      display: flex;
@@ -211,7 +227,7 @@ body{
  .content__info--left{
      width: 50%;
      float: left;
-     margin-right: 32px;
+     margin-right: 26px;
  }
  
  .info__left--first{
@@ -240,7 +256,7 @@ body{
      margin-bottom: 16px;
  }
  .info__item--max input{
-    width: calc(100% - 16px);
+    width: calc(100% - 20px);
  }
  
  
@@ -251,7 +267,7 @@ body{
  .info__right--CMND{
     width: 100%;
     display: grid;
-    grid-template-columns: 60%  40%;
+    grid-template-columns: 57%  40%;
     grid-template-rows: 100%;
  }
  .item__CMND input{
@@ -261,10 +277,13 @@ body{
  .content__radio{
     display: flex;
     justify-content:start;
+    padding-top: 5px;
+    padding-left: 10px;
  }
  .radio__item{
     display: flex;
     align-items: center;
+    padding-right: 8px;
  }
  .info__right--first{
      width: 100%;
@@ -278,19 +297,19 @@ body{
     margin-top: 16px;
  }
  .address__item--max input{
-    width: calc(100% - 16px);
+    width: calc(100% - 20px);
  }
  .info__other{
     display: flex;
     justify-content: start;
  }
  .item__other input{
-    margin-right: 16px;
+    margin-right: 10px;
     width: 200px;
  }
  .dialog__infoEmp--bottom{
      height: 60px;
-     margin: 10px 24px;
+     margin: 10px 32px;
      display: flex;
      justify-content: space-between;
      align-items: center;
@@ -328,7 +347,7 @@ body{
 }
 .dialog__waring{
     margin: auto;
-    margin-top: 300px;
+    margin-top: 250px;
     width: 400px;
     z-index: 200;
     background-color: var(--color--white);  
@@ -336,11 +355,15 @@ body{
     border-radius: var(--border--radius--input);
    
 }
+.waring__content{
+    line-height: 45px;
+}
 .dialog__waring--content{
     display: flex;
     justify-content: start;
-   padding-bottom: 23px;
-   border-bottom:  var(--boder--solid--input);
+    padding-bottom: 23px;
+    border-bottom:  var(--boder--solid--input);
+    align-items: center;
 }
 .waring__icon{
     margin-right: 16px;
@@ -368,13 +391,31 @@ body{
 
 .dialog__error{
     margin: auto;
-    margin-top: 300px;
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
     width: 400px;
     z-index: 200;
     background-color: var(--color--white);  
     border:var(--color--white);
     border-radius:var(--border--radius--input)
-   
+    /* \
+
+
+    display: flex;
+    position: absolute;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    */
 }
 .wrap__ask{
     position: fixed;
@@ -398,23 +439,3 @@ body{
     font-weight: bold;
 }
 
-
-::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #f1f1f1;
-
-  }
-  
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: #bbb;    
-    cursor: pointer;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: #555;
-  }

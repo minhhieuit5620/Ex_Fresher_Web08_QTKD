@@ -6,7 +6,7 @@
                 Nhân viên
             </div>
             <div class="top__content--add">
-                <button class="btn add__emp" @click="addOnClick"> Thêm mới nhân viên</button>
+                <button class="btn btn__add--emp" @click="addOnClick"> Thêm mới nhân viên</button>
             </div>
         </div>
         <div class="inner__content">
@@ -26,7 +26,7 @@
                             <th>Tên nhân viên</th>
                             <th>Giới tính</th>
                             <th>Ngày sinh</th>
-                            <th class="tooltip">Số CMND <span class="tooltiptext">Số chứng minh nhân dân</span></th>                            
+                            <th > <div class="tooltip">Số CMND <span class="tooltiptext">Số chứng minh nhân dân</span></div> </th>                            
                             <th>Tên đơn vị</th>
                             <th>Chức danh</th>
                             <th>Số tài khoản</th>
@@ -36,28 +36,33 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for=" (item, index) in employee" :key="item.EmployeeId" 
+                        <tr v-for=" (item, index) in employee" :key="item.id" 
                             @dblclick="showEditForm(item)" >
                             <td class="column__sticky column__checkbox"  @dblclick.stop > <input type="checkbox" class="input__checkbox checkbox__item" /></td >
-                            <td style="width: 100px">{{item.employeeCode}}</td>
-                            <td style="width: 150px">{{item.employeeName}}</td>
-                            <td style="width: 60px">{{item.gender}}</td>
-                            <td style="width: 100px">{{formatDateTable(item.dateOfBirth)}}</td>
-                            <td style="width: 100px">{{item.phoneNumbermobile}}</td>
-                            <td style="width: 100px">{{item.departmentName}}</td>
-                            <td style="width: 100px">{{item.positionName}}</td>
-                            <td style="width: 100px">{{item.accountBank}}</td>
-                            <td style="width: 150px">{{item.nameBank}}</td>
-                            <td style="width: 200px">{{item.branchBank}}</td>
+                            <td class="width__100">{{item.employeeCode}}</td>
+                            <td class="width__150">{{item.employeeName}}</td>
+                            <td class="width__60">
+                                <span v-if="item.gender==0">Nam</span>
+                                <span v-if="item.gender==1">Nữ</span>
+                                <span v-if="item.gender==2">Khác</span>   
+                            </td>
+                            <td class="width__100">{{formatDateTable(item.dateOfBirth)}}</td>
+                            <td class="width__100">{{item.phoneNumbermobile}}</td>
+                            <td class="width__100">{{item.departmentName}}</td>
+                            <td class="width__100">{{item.positionName}}</td>
+                            <td class="width__100">{{item.accountBank}}</td>
+                            <td class="width__150">{{item.nameBank}}</td>
+                            <td class="width__200">{{item.branchBank}}</td>
                             
                             <div class="value__edit"  v-show="isShowDropList[index]" :style="{'top': `${topDropList}px`}" >
                                     <div class="edit__item">Nhân bản</div>
-                                    <div class="edit__item" @click="btnDelete(item,index)">Xóa</div>
+                                    <div class="edit__item" @click="showPopup(index,item.id)">Xóa</div>
+                                    <!-- @click="btnDelete(item,index)" -->
                                     <div class="edit__item">Ngừng sử dụng</div>
                             </div>    
-                            <td class="edit__td column__sticky column__edit" style="width: 100px" :ref="'row_'+index" @dblclick.stop> 
+                            <td class="edit__td column__sticky column__edit width__100"  :ref="'row_'+index" @dblclick.stop  @click="btnShowEdit(index)"> 
                                     Sửa
-                                    <div class="icon__drop icon icon__edit--drop"  @click="btnShowEdit(index)"></div>                                    
+                                    <div class="icon__drop icon icon__edit--drop" ></div>                                    
                             </td>
                                                   
                         </tr>
@@ -104,18 +109,36 @@
         :employeeSelected="empSelected"
         :closeDialog="closeDialog"
         :formMode="formMode"
-        @closeDialog="closeDialog"></emp-detail>        
+        @closeDialog="closeDialog"
+        @errorEmpty='errorEmpty'
+        @errorEmptyCode = 'errorEmptyCode'
+        @errorEmptyName = 'errorEmptyName'
+        @errorEmptyDepartment = 'errorEmptyDepartment'
+        ></emp-detail>        
     </div>
+    <MPopup  v-if="isShowPopup" :idEmployee='idEmployee' @employeeDelete='employeeDelete'
+    @closePopup='closePopup'  :content="'Bạn có thực sự muốn xóa nhân viên này? '" />
+    <MPopupError v-show='isShowPopupError' @closeError='closeError' :text='textError'/>
+   
 </template>
 <script>
 
-import empDetail from './employeeDetail.vue'
-import eNum from '../../js/common/eNum'
-import common from '@/js/common/common'
+import empDetail from './employeeDetail.vue';
+import MPopup from '../../components/base/MPopupWaring.vue';
+import MPopupError from '../../components/base/MPopupError.vue';
+import eNum from '../../js/common/eNum.js';
+import common from '@/js/common/common.js';
+import resource from '../../js/common/resource.js'
+
+    /**
+     * URL api 
+     */
+     var URL =process.env.VUE_APP_URL;
+
 export default {
 
     name: "employeeList",
-    components: { empDetail },
+    components: { empDetail,MPopup,MPopupError},
     created() {
         this.loadData();   
     },  
@@ -131,6 +154,11 @@ export default {
             topDropList:'',
             formMode:eNum.formMode.ADD,
             totalRecord:Number,
+            isShowPopup:false,
+            idEmployee: '',
+            isShowPopupError:false,
+            textError: '',
+          
         };
     },
     methods: {
@@ -171,6 +199,10 @@ export default {
             this.formMode=eNum.formMode.Edit;     
             this.empSelected=data;            
         }, 
+        /**
+         * format date hiển thị list danh sách nhân viên
+         * Author: HMHieu(18/09/22)
+         */
         formatDateTable(date){
            
             try {
@@ -179,13 +211,14 @@ export default {
             } catch (error) {
                 console.log(error);
             }
-        },     
+        },    
+        
         /**
          * Lấy toàn bộ nhân viên và tổng số bản ghi hiện có
          * Author: HMHieu(18/09/22)
          */
         loadData() {
-            fetch("http://localhost:3000/employee", { method: "GET" })
+            fetch(URL, { method: "GET" })
                 .then((res) => res.json())
                 .then((data) => {
                     this.employee = data;
@@ -195,35 +228,80 @@ export default {
                     console.log(res);            
                 });
         },
+        /**
+         * Đóng form chức năng xóa nhân viên 
+         * Author: HMHieu(19/09/22)
+         */
+        showPopup(index,id){
+            this.isShowPopup = true;
+            this.idEmployee=id;
+            console.log(id);
+            this.isShowDropList[index] = !this.isShowDropList[index];//ẩn hiện dropList
+        },
+        /**
+         * Đóng form chức năng xóa nhân viên 
+         * Author: HMHieu(19/09/22)
+         */
+        closePopup(){
+            this.isShowPopup = false;            
+        },
+
+        /**
+         * Hàm hiện cảnh báo mã nhân viên / tên/ đơn vị trống
+         * author:  HMHieu(21/09/22)
+         */
+         errorEmpty(msg){
+            try {
+                this.isShowPopupError = true;
+                switch(msg){
+                    case resource.popupError.EmptyCode.name:
+                        this.textError = resource.popupError.EmptyCode.content;
+                    break;
+                    case resource.popupError.EmptyName.name:
+                        this.textError =resource.popupError.EmptyName.content;
+                    break;
+                    case resource.popupError.EmptyDepartment.name:
+                        this.textError = resource.popupError.EmptyDepartment.content;
+                    break;
+                    default:
+                        break;
+                }
+            } catch (error) {
+                console.log(error);
+            }
+           
+        },
+        /**
+         * Đóng Popup error
+        * Author: HMHieu(21/09/22)
+         */
+        closeError(){
+            this.isShowPopupError = false;
+           
+        },
          /**
          * Xóa nhân viên theo ID
          * Author: HMHieu(19/09/22)
          */
-        btnDelete(employee,index){
-            var me = this;
-            var method = "Delete";
-            var url = "http://localhost:3000/employee/"+`${employee.id}`;
-            // validate dữ liệu:
-
+        employeeDelete(idEmployee){          
+            // var me = this;
+            var method = "Delete";             
+            var DeleteURL= URL+`/${idEmployee}`;                 
             // Xóa dữ liệu:            
-            fetch(url, {
-                
+            fetch(DeleteURL, {                
                 method: method,
                 headers: {
                 "Content-Type": "application/json",
-                },
-                
+                },                
             })
                 .then((res) => res.json())
-                .then((res) => {
-                var status = res.status;
-                    me.$emit("closeDialog");   
-                    this.isShowDropList[index] = !this.isShowDropList[index]; 
+                .then((res) => {               
+                     this.isShowPopup = false;                 
                     this.loadData();
-                    console.log(status);
+                    console.log(res);
                 })
                 .catch((res) => {
-                console.log(res);
+                    console.log(res);
                 
                 });
         },            

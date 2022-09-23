@@ -24,11 +24,7 @@
     padding-right: 8px;
     text-align: left;
 }
-.table tr:hover {
 
-    background-color: var(--color--hover--table);
-
-}
 .edit__td{
     display: flex;
     justify-content: start;
@@ -42,7 +38,7 @@
     z-index: 1;
     border-left: var(--border--dotted);
 }
-.column__checkbox{
+.column__checkbox {
 left: 0px;
 }
 .column__edit{
@@ -61,17 +57,20 @@ left: 0px;
     right: 110px;
     background-color: var(--color--white);
 }
-
 .edit__item{
     padding: 5px 10px;
 }
-.edit__item:hover{
-    background-color: var(--color--hover);
-   cursor: pointer;
-    color: var(--color--btn--primary);
+.width__60{
+    width: 60px;
 }
-table tr:hover td:first-child,
-table tr:hover td:last-child {
-    background-color: var(--color--hover--table);
+.width__100{
+    width: 100px;
+}
+.width__150{
+    width: 150px;
+}
+
+.width__200{
+    width: 200px;
 }
 

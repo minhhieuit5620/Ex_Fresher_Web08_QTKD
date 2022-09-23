@@ -48,6 +48,7 @@
 }
 
 .combobox-item-active{
+    /* background-color: #96D58A; */
     color: var(--light--green--400);
 }
 
@@ -58,9 +59,6 @@
     width: 16px;
     height: 16px;
     background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -1224px -360px; 
-}
-.combobox__item--selected{
-    background-color: #409330 !important;
 }
 
 .combobox-item-hidden{

@@ -1,0 +1,77 @@
+
+
+/* header  */
+.header__account--info:hover{
+    cursor: pointer;
+}
+/* sidebar  */
+.sidebar__item:hover{
+    background-color: #ccc;
+}
+/* Table  */
+
+.column__checkbox input:hover {
+    cursor: pointer;
+}
+.column__edit:hover{
+    cursor: pointer;
+}
+.edit__item:hover{
+    background-color: var(--color--hover);
+   cursor: pointer;
+    color: var(--color--btn--primary);
+}
+.table tr:hover td
+{
+    background-color: var(--color--hover--table);
+}
+
+/* input  */
+
+.radio__item:hover{
+    cursor: pointer;
+}
+
+/* button  */
+
+.btn:hover{
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 0 #babec5;    
+}
+.btn__cancel:hover,
+.btn__save:hover,
+.btn__cancel--delete:hover{
+    background-color: #d2d3d6;
+}
+.btn__saveAdd:hover,
+.btn__aprove:hover,
+.btn__add--emp:hover{
+background-color: #089740;
+}
+
+.icon:hover{
+    opacity: 0.6;
+}
+
+
+
+/* scrollbar  */
+::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #bbb;    
+    cursor: pointer;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
