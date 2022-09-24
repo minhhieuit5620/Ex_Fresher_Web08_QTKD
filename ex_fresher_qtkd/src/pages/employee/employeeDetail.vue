@@ -228,7 +228,7 @@
                                  maxlength="100" 
                                  @input="validateEmail"
                                  v-model="emp.email">
-                                 <div class="empty__input tooltip"  v-show="errorEmail">Email chưa đúng định dạng</div>
+                                 <div class="empty__input tooltiptext"  v-show="errorEmail">Email chưa đúng định dạng</div>
                             </div>
                         </div>
                     </div>
