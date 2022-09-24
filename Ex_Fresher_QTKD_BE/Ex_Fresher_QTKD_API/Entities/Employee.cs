@@ -5,13 +5,19 @@ namespace Ex_Fresher_QTKD_API.Entities
     /// <summary>
     /// các thành phần của bảng employee
     /// </summary>
+<<<<<<< HEAD
     /// CreatedBy: Hứa Minh Hiếu(18-09-22)
+=======
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
     public class Employee
     {
         /// <summary>
         /// Id nhân viên
         /// </summary>
+<<<<<<< HEAD
        // [PrimaryKey]
+=======
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
         public Guid EmployeeID { get; set; }
 
         /// <summary>

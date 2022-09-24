@@ -3,7 +3,10 @@
     /// <summary>
     /// các thành phần của bảng phòng ban
     /// </summary>
+<<<<<<< HEAD
     /// CreatedBy: Hứa minh hiếu(22-09-22)
+=======
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
     public class Deparment
     {
         /// <summary>

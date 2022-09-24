@@ -8,9 +8,17 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Ex_Fresher_QTKD_API
 build_property.RootNamespace = Ex_Fresher_QTKD_API
+<<<<<<< HEAD
 build_property.ProjectDir = C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_Fresher_QTKD_BE\Ex_Fresher_QTKD_API\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
 build_property.MSBuildProjectDirectory = C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_Fresher_QTKD_BE\Ex_Fresher_QTKD_API
+=======
+build_property.ProjectDir = C:\Users\MinhHieuDev\Desktop\New folder\Ex_Fresher_Web08_QTKD\Ex_Fresher_QTKD_BE\Ex_Fresher_QTKD_API\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\MinhHieuDev\Desktop\New folder\Ex_Fresher_Web08_QTKD\Ex_Fresher_QTKD_BE\Ex_Fresher_QTKD_API
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
 build_property._RazorSourceGeneratorDebug = 

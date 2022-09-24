@@ -2,13 +2,17 @@
 using Ex_Fresher_QTKD_API.Entities;
 using Ex_Fresher_QTKD_API.Entities.DTO;
 using Ex_Fresher_QTKD_API.Enums;
+<<<<<<< HEAD
 using Ex_Fresher_QTKD_API.Properties;
+=======
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
 using System;
 using System.Data;
 using System.Net.WebSockets;
+<<<<<<< HEAD
 using System.Reflection;
 using System.Resources;
 
@@ -18,6 +22,11 @@ namespace Ex_Fresher_QTKD_API.Controllers
     /// Các Api của bảng nhân viêng
     /// </summary>
     /// CreatedBy: Hứa Minh Hiếu (23-09-22)
+=======
+
+namespace Ex_Fresher_QTKD_API.Controllers
+{
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
     [Route("api/v1/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase
@@ -26,6 +35,7 @@ namespace Ex_Fresher_QTKD_API.Controllers
         string connectionString = "Server=localhost;Port=3306;Database=misa.qtkd.ex.hmhieu;Uid=root;Pwd=Hieu@5620;";
 
         #region get any table
+<<<<<<< HEAD
         /// <summary>
         /// Hàm lấy toàn bộ giá trị của bất kỳ bảng nào
         /// </summary>
@@ -34,6 +44,11 @@ namespace Ex_Fresher_QTKD_API.Controllers
         [HttpGet]
         [Route("getTable/{nameTable}")]
         public IActionResult GetAnyTable([FromRoute] string nameTable)
+=======
+        [HttpGet]
+        [Route("getTable/{nameTable}")]
+        public IActionResult Getakakak([FromRoute] string nameTable)
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
         {
             try
             {
@@ -42,10 +57,15 @@ namespace Ex_Fresher_QTKD_API.Controllers
                 var mysqlConnection = new MySqlConnection(connectionString);
 
                 string StoredProc = "Proc_employee_GetAllTable";
+<<<<<<< HEAD
 
                 //Chuẩn bị tham số đầu vào cho câu lệnh trên
                 var parameters = new DynamicParameters();
 
+=======
+                //Chuẩn bị tham số đầu vào cho câu lệnh trên
+                var parameters = new DynamicParameters();
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
                 parameters.Add("Table_name", nameTable);
 
                 //Thực hiện gọi vào DB
@@ -53,12 +73,19 @@ namespace Ex_Fresher_QTKD_API.Controllers
                 var employee = mysqlConnection.Query(StoredProc, parameters, commandType: System.Data.CommandType.StoredProcedure);
 
                 //Xử lý kết quả trả về từ DB
+<<<<<<< HEAD
+=======
+
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
                 return StatusCode(StatusCodes.Status200OK, employee);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+<<<<<<< HEAD
                 //Resource.DevMsg_InsertFailed
+=======
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
                 return StatusCode(StatusCodes.Status400BadRequest);
 
             }
@@ -66,11 +93,19 @@ namespace Ex_Fresher_QTKD_API.Controllers
         } 
         #endregion
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
         #region Get FilterEmployee 
         /// <summary>
         /// API lấy Filter nhân viên 
         /// </summary>
         /// <param name="search"></param>
+<<<<<<< HEAD
+=======
+        /// <param name="departmentID"></param>
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
         /// <param name="sort"></param>
         /// <param name="offset"></param>
         /// <param name="limit"></param>
@@ -84,8 +119,13 @@ namespace Ex_Fresher_QTKD_API.Controllers
         public IActionResult FilterEmployee(
             [FromQuery] string? search,          
             [FromQuery] string? sort,
+<<<<<<< HEAD
             [FromQuery] int pageIndex , 
             [FromQuery] int pageSize)
+=======
+            [FromQuery] int? offset = 1, 
+            [FromQuery] int? limit = 10)
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
         {           
             try
             {
@@ -96,9 +136,15 @@ namespace Ex_Fresher_QTKD_API.Controllers
                 //Chuẩn bị tham số đầu vào cho Proc
 
                 var parameters = new DynamicParameters();
+<<<<<<< HEAD
                 parameters.Add("v_Offset", (pageIndex-1)* pageSize);
 
                 parameters.Add("v_Limit", pageSize);
+=======
+                parameters.Add("v_Offset", offset);
+
+                parameters.Add("v_Limit", limit);
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
                 
                 parameters.Add("v_Sort", sort);
 
@@ -127,9 +173,13 @@ namespace Ex_Fresher_QTKD_API.Controllers
                     {
                         Data = employeeList.ToList(),
 
+<<<<<<< HEAD
                         TotalCount=totalCount,
 
                         TotalPage=totalCount/pageSize+1
+=======
+                        TotalCount=totalCount
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
 
                      });
                 }
@@ -151,7 +201,11 @@ namespace Ex_Fresher_QTKD_API.Controllers
         /// API lấy một  nhân viên 
         /// </summary>      
         /// <param name="employeeID"></param>
+<<<<<<< HEAD
         /// <returns>dữ liệu nhân viên tương ứng với mã đã nhập</returns>
+=======
+        /// <returns></returns>
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
         /// Created by: HMHieu(18/09/2022)
         [HttpGet("{employeeID}")]
         public IActionResult GetEmployeeByID([FromRoute] Guid employeeID)
@@ -183,6 +237,7 @@ namespace Ex_Fresher_QTKD_API.Controllers
         }
         #endregion
 
+<<<<<<< HEAD
         /// <summary>
         /// API tạo mã nhân viên mới
         /// </summary>
@@ -222,12 +277,18 @@ namespace Ex_Fresher_QTKD_API.Controllers
             }
         }
 
+=======
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
         #region  POST Employee
         /// <summary>
         /// API thêm mới một nhân viên 
         /// </summary>
         /// <param name="employee"></param>
+<<<<<<< HEAD
         /// <returns>mã nhân viên</returns>
+=======
+        /// <returns>Mã nhân viên tự động tăng</returns>
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
         /// Created by: HMHieu(18/09/2022)
         [HttpPost]
         public IActionResult InserEmployee([FromBody] Employee employee)
@@ -236,18 +297,27 @@ namespace Ex_Fresher_QTKD_API.Controllers
             {
                 //Khởi tạo kết nối tới DB MySQL 
                 string connectionString = "Server=localhost;Port=3306;Database=misa.qtkd.ex.hmhieu;Uid=root;Pwd=Hieu@5620;";
+<<<<<<< HEAD
                 
+=======
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
                 var mysqlConnection = new MySqlConnection(connectionString);
 
                 //Khai báo tên Proc
 
                 string nameProc = "Proc_employee_InsertOne";
+<<<<<<< HEAD
 
                 var guid = Guid.NewGuid();
 
                 // chuẩn bị tham số đầu vào cho proc
                 var parameters = new DynamicParameters();
 
+=======
+                var guid = Guid.NewGuid();
+                // chuẩn bị tham số đầu vào cho proc
+                var parameters = new DynamicParameters();
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
                 parameters.Add("$EmployeeID", guid);
 
                 parameters.Add("$EmployeeCode", employee.EmployeeCode);
@@ -310,8 +380,13 @@ namespace Ex_Fresher_QTKD_API.Controllers
             }
             catch (Exception ex)
             {
+<<<<<<< HEAD
                 Console.WriteLine(ex.Message);
 
+=======
+
+                Console.WriteLine(ex.Message);
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
                 return StatusCode(StatusCodes.Status400BadRequest);
             }          
         }
@@ -334,12 +409,18 @@ namespace Ex_Fresher_QTKD_API.Controllers
 
                 //tạo connection đến DB
                 var mySQlConnection=new MySqlConnection(connectionString);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
                 var procName = "Proc_employee_UpdateByID";
 
                 //chuẩn bị tham số đầu vào cho proc
                 var parameters = new DynamicParameters();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
                 parameters.Add("$EmployeeID", employee.EmployeeID);
 
                 parameters.Add("$EmployeeCode", employee.EmployeeCode);

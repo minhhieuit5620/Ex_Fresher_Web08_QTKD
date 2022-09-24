@@ -12,6 +12,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
+<<<<<<< HEAD
   <ItemGroup>
     <Compile Update="Properties\Resource.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -27,4 +28,6 @@
     </EmbeddedResource>
   </ItemGroup>
 
+=======
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
 </Project>

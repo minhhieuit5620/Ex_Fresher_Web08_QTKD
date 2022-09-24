@@ -305,11 +305,19 @@
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_Fresher_QTKD_BE\\Ex_Fresher_QTKD_API\\Ex_Fresher_QTKD_API.csproj",
       "projectName": "Ex_Fresher_QTKD_API",
       "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_Fresher_QTKD_BE\\Ex_Fresher_QTKD_API\\Ex_Fresher_QTKD_API.csproj",
       "packagesPath": "C:\\Users\\MinhHieuDev\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_Fresher_QTKD_BE\\Ex_Fresher_QTKD_API\\obj\\",
+=======
+      "projectUniqueName": "C:\\Users\\MinhHieuDev\\Desktop\\New folder\\Ex_Fresher_Web08_QTKD\\Ex_Fresher_QTKD_BE\\Ex_Fresher_QTKD_API\\Ex_Fresher_QTKD_API.csproj",
+      "projectName": "Ex_Fresher_QTKD_API",
+      "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\New folder\\Ex_Fresher_Web08_QTKD\\Ex_Fresher_QTKD_BE\\Ex_Fresher_QTKD_API\\Ex_Fresher_QTKD_API.csproj",
+      "packagesPath": "C:\\Users\\MinhHieuDev\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\MinhHieuDev\\Desktop\\New folder\\Ex_Fresher_Web08_QTKD\\Ex_Fresher_QTKD_BE\\Ex_Fresher_QTKD_API\\obj\\",
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

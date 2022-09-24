@@ -27,5 +27,8 @@ C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_Fresher_QTKD_BE\Ex_Fresher
 C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_Fresher_QTKD_BE\Ex_Fresher_QTKD_API\obj\Debug\net6.0\ref\Ex_Fresher_QTKD_API.dll
 C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_Fresher_QTKD_BE\Ex_Fresher_QTKD_API\bin\Debug\net6.0\Dapper.dll
 C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_Fresher_QTKD_BE\Ex_Fresher_QTKD_API\bin\Debug\net6.0\MySqlConnector.dll
+<<<<<<< HEAD
 C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_Fresher_QTKD_BE\Ex_Fresher_QTKD_API\obj\Debug\net6.0\Ex_Fresher_QTKD_API.Properties.Resource.resources
 C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_Fresher_QTKD_BE\Ex_Fresher_QTKD_API\obj\Debug\net6.0\Ex_Fresher_QTKD_API.csproj.GenerateResource.cache
+=======
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af

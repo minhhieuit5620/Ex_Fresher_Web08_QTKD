@@ -18,6 +18,7 @@
             /// Tổng số bản ghi thỏa mãn điều kiện
             /// </summary>
             public int TotalCount { get; set; }
+<<<<<<< HEAD
 
             /// <summary>
             /// Tổng số bản ghi thỏa mãn điều kiện
@@ -25,5 +26,8 @@
             public int TotalPage { get; set; }
 
 
+=======
+        
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af
     }
 }

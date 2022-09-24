@@ -1,3 +1,4 @@
+<<<<<<< HEAD:template_HTML/css/base/button.css
 .btn{
     height: 32px;
     padding: 0 16px;
@@ -28,4 +29,36 @@
 .btn__aprove{
     background-color: #019160;    
     color: #fff;
+=======
+.btn{
+    height: 32px;
+    padding: 0 16px;
+    border-radius: 4px;
+    color: #fff;
+    text-align: center;
+    background-color: #50B83C;
+    outline: none;
+    border: none;
+    line-height: 32px;
+}
+.btn:hover{
+    cursor: pointer;
+    box-shadow: 1px 1px 1px 0 #ccc;
+}
+.btn__save{
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #000;
+    margin-right: 16px;
+}
+.btn__cancel{
+    background-color: #fff;
+    color: #000;
+    border: 1px solid #ddd;
+  
+}
+.btn__aprove{
+    background-color: #019160;    
+    color: #fff;
+>>>>>>> 96525cc7b746a980cf84aeddf40f1f7abdf071af:css/base/button.css
 }
