@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "6pTyjOtuEB5nPzuIDBx6BEzc4WJBGyfEocsZOA/dNqF0+/a2paVDGgeTe31W07iXrZatq4kayk1i2ru9UqNQug==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_BL\\Ex_HMH_BL.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\mysqlconnector\\2.1.13\\mysqlconnector.2.1.13.nupkg.sha512"
+  ],
+  "logs": []
+}

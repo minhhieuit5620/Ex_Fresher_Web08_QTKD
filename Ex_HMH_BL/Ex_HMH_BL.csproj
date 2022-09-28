@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ex_HMH_Common\Ex_HMH_Common.csproj" />
+    <ProjectReference Include="..\Ex_HMH_DL\Ex_HMH_DL.csproj" />
+  </ItemGroup>
+
+</Project>
