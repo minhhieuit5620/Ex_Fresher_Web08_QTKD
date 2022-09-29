@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "G/5iPgLezmMQ48bKm5KEhUgxVSwMO2FSQPJWbOJOzJvmHxTnuFn5DUwVdu29CeDtIkAk/RUwZ6IvMo8f6P1btQ==",
+  "dgSpecHash": "bl72Rtr+tnd2I5kwOpKAaYPlajUamEVM3YpsHn2el+YBxRbsJFdYTMnNtD7xu2CJJ1nNDkqe+fmcVcvON52a2g==",
   "success": true,
   "projectFilePath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\Ex_HMH_DL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MinhHieuDev\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
-    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\mysqlconnector\\2.1.13\\mysqlconnector.2.1.13.nupkg.sha512"
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\mysqlconnector\\2.1.13\\mysqlconnector.2.1.13.nupkg.sha512",
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
   ],
   "logs": []
 }

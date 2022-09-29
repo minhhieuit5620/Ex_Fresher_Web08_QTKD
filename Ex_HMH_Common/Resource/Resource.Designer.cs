@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Ex_HMH_Common.Resource {
+namespace Ex_HMH_Common {
     using System;
     
     
@@ -57,6 +57,15 @@ namespace Ex_HMH_Common.Resource {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hứa Minh Hiếu.
+        /// </summary>
+        public static string DefaultUser {
+            get {
+                return ResourceManager.GetString("DefaultUser", resourceCulture);
             }
         }
         
@@ -111,6 +120,15 @@ namespace Ex_HMH_Common.Resource {
         public static string Moreinfo_InsertFailed {
             get {
                 return ResourceManager.GetString("Moreinfo_InsertFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proc_{0}_InsertOne.
+        /// </summary>
+        public static string Proc_InsertOne {
+            get {
+                return ResourceManager.GetString("Proc_InsertOne", resourceCulture);
             }
         }
         

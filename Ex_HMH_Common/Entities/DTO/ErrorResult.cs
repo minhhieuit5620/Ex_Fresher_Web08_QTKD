@@ -1,11 +1,10 @@
-﻿using Ex_QTKD_API.Enums;
+﻿using Ex_HMH_Common.Enums;
 
-
-namespace Ex_QTKD_API.Entities.DTO
+namespace Ex_QTKD_API.Entities
 {
     public class ErrorResult
     {
-        public ErrorResult(ErrorCode errorCode, string devMsg, string userMsg, string moreInfo, string traceId)
+        public ErrorResult(ErrorCode errorCode, string devMsg, string userMsg, string moreInfo, string? traceId=null)
         {
             ErrorCode = errorCode;
             DevMsg = devMsg;
@@ -32,7 +31,7 @@ namespace Ex_QTKD_API.Entities.DTO
         /// <summary>
         /// Mã để tra cứu thông tin log
         /// </summary>
-        public string TraceId { get; set; }
+        public string? TraceId { get; set; }
     }
    
 }

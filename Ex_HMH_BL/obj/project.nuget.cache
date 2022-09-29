@@ -1,11 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "6pTyjOtuEB5nPzuIDBx6BEzc4WJBGyfEocsZOA/dNqF0+/a2paVDGgeTe31W07iXrZatq4kayk1i2ru9UqNQug==",
+  "dgSpecHash": "zFxecPOj5XJODlm8B/l00lrSeBxWLyHTqxFT/DqHgae9gp7j81+DlriJcWvLHgy1APSzT7lneY1K65WPXxSNbQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_BL\\Ex_HMH_BL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MinhHieuDev\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
-    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\mysqlconnector\\2.1.13\\mysqlconnector.2.1.13.nupkg.sha512"
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\microsoft.extensions.primitives\\2.2.0\\microsoft.extensions.primitives.2.2.0.nupkg.sha512",
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\mysqlconnector\\2.1.13\\mysqlconnector.2.1.13.nupkg.sha512",
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\system.memory\\4.5.1\\system.memory.4.5.1.nupkg.sha512",
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\4.5.1\\system.runtime.compilerservices.unsafe.4.5.1.nupkg.sha512",
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\system.text.encodings.web\\4.5.0\\system.text.encodings.web.4.5.0.nupkg.sha512"
   ],
   "logs": []
 }

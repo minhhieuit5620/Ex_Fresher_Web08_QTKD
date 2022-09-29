@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Ex_HMH_Common.Entities
 {
-    public class Employee
+    public class Employee:BaseEntities
     {
         /// <summary>
         /// các thành phần của bảng employee
@@ -113,27 +113,6 @@ namespace Ex_HMH_Common.Entities
         /// Có phải là nhà cung cấp không
         /// </summary>
         public bool? IsSupplier { get; set; }
-
-
-        /// <summary>
-        /// Ngày tạo
-        /// </summary>
-        public DateTime? CreatedDate { get; set; }
-
-        /// <summary>
-        /// Người tạo
-        /// </summary>
-        public string? CreatedBy { get; set; }
-
-        /// <summary>
-        /// Ngày sửa gần nhất
-        /// </summary>
-        public DateTime? ModifiedDate { get; set; }
-
-        /// <summary>
-        /// Người sửa gần nhất
-        /// </summary>
-        public string? ModifiedBy { get; set; }
 
     }
 }

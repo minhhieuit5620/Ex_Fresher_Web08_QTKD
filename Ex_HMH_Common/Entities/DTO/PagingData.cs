@@ -1,4 +1,4 @@
-﻿namespace Ex_QTKD_API.Entities.DTO
+﻿namespace Ex_QTKD_API.Entities
 {
   
         /// <summary>

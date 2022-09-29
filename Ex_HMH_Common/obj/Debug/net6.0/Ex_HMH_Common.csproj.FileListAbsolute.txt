@@ -1,0 +1,14 @@
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\bin\Debug\net6.0\Ex_HMH_Common.deps.json
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\bin\Debug\net6.0\Ex_HMH_Common.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\bin\Debug\net6.0\Ex_HMH_Common.pdb
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\obj\Debug\net6.0\Ex_HMH_Common.csproj.AssemblyReference.cache
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\obj\Debug\net6.0\Ex_HMH_Common.Resource.Resource.resources
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\obj\Debug\net6.0\Ex_HMH_Common.csproj.GenerateResource.cache
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\obj\Debug\net6.0\Ex_HMH_Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\obj\Debug\net6.0\Ex_HMH_Common.AssemblyInfoInputs.cache
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\obj\Debug\net6.0\Ex_HMH_Common.AssemblyInfo.cs
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\obj\Debug\net6.0\Ex_HMH_Common.csproj.CoreCompileInputs.cache
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\obj\Debug\net6.0\Ex_HMH_Common.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\obj\Debug\net6.0\refint\Ex_HMH_Common.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\obj\Debug\net6.0\Ex_HMH_Common.pdb
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_Common\obj\Debug\net6.0\ref\Ex_HMH_Common.dll
