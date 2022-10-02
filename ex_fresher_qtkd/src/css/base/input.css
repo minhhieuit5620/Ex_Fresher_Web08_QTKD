@@ -4,6 +4,7 @@
     border: 1px solid #bbbbbb;
     border-radius: 4px;   
     padding-left: 16px;
+    outline: 0;
 }
 .input__date{
     height: 30px;

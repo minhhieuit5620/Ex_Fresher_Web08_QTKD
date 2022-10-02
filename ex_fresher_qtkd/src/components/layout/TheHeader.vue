@@ -15,26 +15,50 @@
                         
                     </div>
                     <div class="header__select--cbl">
-                        <hCombobox  :url="'https://cukcuk.manhnv.net/api/v1/CustomerGroups'" propValue="CustomerGroupId" propText="CustomerGroupName" >
-                        </hCombobox>
+                        <div class="option-company" @click="openToast">CÔNG TY TNHH SẢN XUẤT-THƯƠNG MẠI-DỊCH VỤ-QUI PHÚC</div>
+                        <div class="arrow-down-icon" @click="openToast"></div>
                     </div>
                 </div>
             </div>
            
             <div class="header__account">
-                <div class="header__account--ring icon icon__ring"></div>
-                <div class="header__account--info" >
-                    <div class="info__img icon icon__user" ></div>
+                <div class="header__account--ring icon icon__ring" @click="openToast"></div>
+                <div class="header__account--info" @click="openToast" >
+                    <div class="info__img icon icon__user"></div>
                     <div class="info__text">Hứa Minh Hiếu</div>
                 </div>
-                <div class="header__account--toggle icon icon__drop" ></div>
+                <div class="header__account--toggle icon icon__drop" @click="openToast" ></div>
             </div>
         </div> 
+        <transition name="toast-message">
+            <MToastMessage v-show='isShowToast' :content = 'contentOfToastMessage' 
+            @closeToastMessage='closeToastMessage' :class='{"toast-waring": isShowToast, "toast-error": isError}' />
+        </transition>
 </template>
 <script>
+    import resource from '@/js/common/resource';
+    import MToastMessage from '../../components/base/ToastMsg.vue';
 export default {
+    components:{MToastMessage},
     data() {
-        return{}
+        return{
+            isShowToast: false,
+            contentOfToastMessage: '', //nội dung toast message
+        }
     },
+    methods:{
+       
+        openToast(){ 
+            let me=this;
+            me.contentOfToastMessage = resource.ToastMessage.notComplete ;
+            me.isShowToast = true;          
+            setTimeout(function(){
+                me.isShowToast = false;
+            }, 2000);
+        },
+        closeToastMessage(){
+            this.isShowToast = false;
+        },
+    }
 }
 </script>

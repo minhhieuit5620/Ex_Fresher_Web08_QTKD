@@ -1,7 +1,7 @@
 <template>
      <!-- Detail Employee  -->
-     <div class="dialog__wrap"  >       
-          <div class="dialog__infoEmp" >
+     <div class="dialog__wrap"   >       
+          <div class="dialog__infoEmp" @keyup="escClose($event)" @keydown="saveBtn($event)">
             <div class="dialog__infoEmp--top">
                 <div class="dialog__info">
                     <div class="dialog__info--name">
@@ -20,9 +20,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="dialog__top--right">
-                    <div class="dialog__question icon icon__question" ></div>
-                    <div class="dialog__close icon icon__close"  @click="closeEmpDetail"></div>
+                <div class="dialog__top--right tooltip">
+                    <div class="dialog__question icon icon__question" tabIndex="22" ></div>
+                    <div class="dialog__close icon icon__close"  @click="closeEmpDetail" tabIndex="23" ></div>
                 </div>
             </div>
             <div class="dialog__infoEmp--content">
@@ -35,13 +35,13 @@
                                     <span class="color-red">*</span>
                                 </div>
                                 <div class="content__input tooltip" >
-                                    <input type="text" class="input" maxlength="20"
+                                    <input type="text" class="input"  tabIndex="1" maxlength="20"
                                     @keyup = 'validateEmptyCode'
                                     @focus = 'validateEmptyCode'
                                     :class="{'border-red' : emptyCode}"
                                     v-model="emp.employeeCode"
                                     :ref="'employeeCode'" >
-                                    <div class="empty__input tooltiptext"  v-show="emptyCode" >Mã không được để trống</div>
+                                    <div class="empty__input tooltiptext tooltipError"  v-show="emptyCode" >Mã không được để trống</div>
                                 </div>
                               
                                
@@ -52,12 +52,12 @@
                                     <span class="color-red">*</span>
                                 </div>
                                 <div class="content__input tooltip">
-                                    <input type="text" class="input" maxlength="100"
+                                    <input type="text" class="input"  tabIndex="2" maxlength="100"
                                     @keyup = 'validateEmptyName'
                                     @focus = 'validateEmptyName'
                                     :class="{'border-red': emptyName}"
                                      v-model="emp.employeeName">
-                                     <div class="empty__input tooltiptext"  v-show="emptyName">Tên không được để trống</div>
+                                     <div class="empty__input tooltiptext tooltipError"  v-show="emptyName">Tên không được để trống</div>
                                 </div>
                                
                                
@@ -69,23 +69,21 @@
                                 Đơn vị
                                 <span class="color-red">*</span>
                             </div>
+                            
                             <div class="content__input tooltip" >
-                                <hCombobox  :url="'http://localhost:3000/department'" 
-                                propValue="departmentID" propText="departmentName" 
-                                v-model="emp.departmentID"
-                                @getValue='getValue'
-                               
-                              
-                                 />
-                                 <!-- :class="{'border-red': emptyDepartment}" -->
-                                 <div class="empty__input tooltiptext" v-show="emptyDepartment">Đơn vị không được để trống</div>
+                            
+                                 <MCombobox :url="'http://localhost:5063/api/v1/Departments'" 
+                                 :code="'departmentCode'" 
+                                :text="'departmentName'" 
+                                @objectItemCombobox='objectItemCombobox'
+                                :valueRender='dataCombobox'
+                                                           
+                                :key = 'keyCombobox'  />
+
+                                 <div class="empty__input tooltiptext tooltipError" v-show="emptyDepartment">Đơn vị không được để trống</div>
                            
                                 
-                                 <!-- <MCombobox :url="'http://localhost:3000/department'" 
-                                :text="'departmentName'" 
-                                @itemCombobox='itemCombobox'
-                                :valueRender='dataCombobox'
-                                :key = 'keyCombobox'/> -->
+                                
                             </div>
                            
                         </div>
@@ -95,7 +93,7 @@
                                 
                             </div>
                             <div class="content__input">
-                                <input class="input" type="text"  maxlength="255" v-model="emp.positionName">
+                                <input class="input" type="text"   tabIndex="4" maxlength="255" v-model="emp.positionName">
                             </div>
                            
                         </div>
@@ -109,7 +107,19 @@
                                     
                                 </div>
                                 <div class="content__input">
-                                    <input class="input input__date" type="date" v-model="emp.dateOfBirth" :max="maxDate" >
+                                    <datePicker :tabIndex=5 class="datepickerCTM" 
+                                    placeholder="Ngày/Tháng/Năm"
+                                    :enterSubmit=true
+                                    :tabSubmit=true
+                                    :maxDate="new Date()"
+                                     format="dd/MM/yyyy" 
+                                    textInput 
+                                    :dayNames="['T2', 'T3', 'T4', 'T5', 'T6', 'T7','CN']"
+                                   
+                                    autoApply 
+                                    utc 
+                                       v-model="emp.dateOfBirth"/>
+                                    <!-- <input class="input input__date"   type="date" v-model="emp.dateOfBirth" :max="maxDate" > -->
                                 </div>
                                
                             </div>
@@ -121,19 +131,19 @@
                                 <div class="content__radio">
                                     
                                     <div class="radio__item">
-                                        <input type="radio" class="input__radio " id="radio__boy"  value="0" name="gender"                                           
+                                        <input type="radio" class="input__radio " checked  tabIndex="6" id="radio__boy"  value="0" name="gender"                                           
                                          v-model="chooseGender"                                       
                                          >
                                         <label for="radio__boy">Nam</label>
                                     </div>
                                     <div class="radio__item">
-                                        <input type="radio" class="input__radio " id="radio__girl" value="1" name="gender"                                         
+                                        <input type="radio" class="input__radio "  tabIndex="7" id="radio__girl" value="1" name="gender"                                         
                                         v-model="chooseGender"                                      
                                         >
                                         <label for="radio__girl">Nữ</label>
                                     </div>
                                     <div class="radio__item">
-                                        <input type="radio" class="input__radio "  id="radio__other" value="2" name="gender"                                             
+                                        <input type="radio" class="input__radio "  tabIndex="8"  id="radio__other" value="2" name="gender"                                             
                                         v-model="chooseGender"                                      
                                         >
                                         <label for="radio__other">Khác</label>
@@ -143,18 +153,22 @@
                         </div>
                         <div class="info__right--CMND">
                             <div class="info__item item__CMND">
-                                <div class="lable-input">
-                                 Số CMND                                    
+                                <div class="lable-input tooltip">
+                                    Số CMND  
+                                  
+                                        <span class="tooltiptext tooltipAronym">Số chứng minh nhân dân</span>
+                                  
+                                                                  
                                 </div>
                                 <div class="content__input tooltip">
-                                    <input class="input" 
+                                    <input class="input"  tabIndex="9"
                                      maxlength="25" type="text" 
                                      v-model="emp.identityNumber"
                                      @input="validateIdentity"
                                      :class="{'border-red': isIdentity}"
                                      
                                       >
-                                      <div class="empty__input tooltiptext"  v-show="isIdentity">Số CMND không đúng</div>   
+                                      <div class="empty__input tooltiptext tooltipError"  v-show="isIdentity">Số CMND không đúng</div>   
                                 </div>  
                                                          
                             </div>
@@ -163,7 +177,17 @@
                                   Ngày cấp                                    
                                 </div>
                                 <div class="content__input">
-                                    <input class="input input__date" type="date" v-model="emp.identityIssuedDate" :max="maxDate" >
+                                    <!-- <datePicker v-model="emp.identityIssuedDate" :format="format" /> -->
+                                    <datePicker tabIndex="10" class="datepickerCTM" 
+                                    :max="maxDate"
+                                    placeholder="Ngày/Tháng/Năm"
+                                     format="dd/MM/yyyy" 
+                                    textInput 
+                                    :dayNames="['T2', 'T3', 'T4', 'T5', 'T6', 'T7','CN']"
+                                    autoApply 
+                                    utc 
+                                    v-model="emp.identityIssuedDate"/>
+                                    <!-- <input class="input input__date"  tabIndex="10" type="date" v-model="emp.identityIssuedDate" :max="maxDate" > -->
                                 </div>                             
                             </div>
                         </div>
@@ -172,7 +196,7 @@
                                 Nơi cấp                                
                             </div>
                             <div class="content__input">
-                                <input class="input" type="text"  maxlength="255" v-model="emp.identityIssuedPlace" >
+                                <input class="input" type="text"  tabIndex="11"  maxlength="255" v-model="emp.identityIssuedPlace" >
                             </div>                           
                         </div>                       
                     </div>
@@ -184,37 +208,39 @@
                                Địa chỉ                                
                             </div>
                             <div class="content__input">
-                                <input type="text" class="input"  maxlength="255" v-model="emp.address">
+                                <input type="text" class="input"  tabIndex="12" maxlength="255" v-model="emp.address">
                             </div>
                            
                         </div>
                     </div>
                     <div class="info__other">
                         <div class="info__item item__other">
-                            <div class="lable-input">
-                               ĐT di động                             
+                            <div class="lable-input tooltip  tooltip__orther">
+                               ĐT di động      
+                               <span class="tooltiptext tooltipAronym">Điện thoại di động</span>                       
                              </div>
                              <div class="content__input tooltip">
                                  <input type="text" class="input"  maxlength="50" 
-                                 @input="validatePhoneNumber"
-                                 v-model="emp.phoneNumbermobile"
+                                 @input="validatePhoneNumber" tabIndex="13"
+                                 v-model="emp.mobile"
                                  :class="{'border-red': isPhone}"
                                  >
-                                 <div class="empty__input tooltiptext"  v-show="isPhone">Số điện thoại không đúng</div>  
+                                 <div class="empty__input tooltiptext tooltipError"  v-show="isPhone">Số điện thoại không đúng</div>  
                              </div>
                                  
                         </div>
                         <div class=" info__item item__other">
-                            <div class="lable-input">
-                                ĐT cố định                               
+                            <div class="lable-input tooltip tooltip__orther">
+                                ĐT cố định      
+                                <span class="tooltiptext tooltipAronym">Điện thoại cố định</span>                             
                              </div>
                              <div class="content__input tooltip">
-                                 <input type="text" class="input"  maxlength="50" 
+                                 <input type="text" class="input"  tabIndex="14"  maxlength="50" 
                                  @input="validatePhoneland"
-                                 v-model="emp.phoneNumberlandline"
+                                 v-model="emp.landlinePhone"
                                  :class="{'border-red': isPhoneLand}"
                                  >
-                                 <div class="empty__input tooltiptext"  v-show="isPhoneLand">Số điện thoại không đúng</div>  
+                                 <div class="empty__input tooltiptext tooltipError"  v-show="isPhoneLand">Số điện thoại không đúng</div>  
                              </div>
                              
                         </div>
@@ -224,11 +250,12 @@
                              </div>
                              <div class="content__input tooltip">
                                  <input type="text" class="input"  
+                                 tabIndex="15"
                                  :class="{'border-red': errorEmail}"  
                                  maxlength="100" 
                                  @input="validateEmail"
                                  v-model="emp.email">
-                                 <div class="empty__input tooltiptext"  v-show="errorEmail">Email chưa đúng định dạng</div>
+                                 <div class="empty__input tooltiptext tooltipError"  v-show="errorEmail">Email chưa đúng định dạng</div>
                             </div>
                         </div>
                     </div>
@@ -238,7 +265,7 @@
                                 Tài khoản ngân hàng                         
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input"  maxlength="25" v-model="emp.accountBank">
+                                 <input type="text" class="input" tabIndex="16" maxlength="25" v-model="emp.bankAccount">
                              </div>
                         </div>
                         <div class="info__item item__other">
@@ -246,7 +273,7 @@
                                 Tên ngân hàng                                
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input"  maxlength="255" v-model="emp.nameBank">
+                                 <input type="text" class="input" tabIndex="17"  maxlength="255" v-model="emp.bankName">
                              </div>
                         </div>
                         <div class="info__item item__other">
@@ -254,7 +281,7 @@
                                 Chi nhánh                                
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input"  maxlength="255" v-model="emp.branchBank">
+                                 <input type="text" class="input" tabIndex="18" maxlength="255" v-model="emp.bankBranch">
                              </div>
                         </div>
                     </div>
@@ -263,15 +290,15 @@
             </div>
             <div class="dialog__infoEmp--bottom">
                 <div class="dialog__left">
-                    <div class="btn btn__cancel" @click="closeEmpDetail" >
+                    <div class="btn btn__cancel" @click="closeEmpDetail" tabIndex="21" @keydown="keyCancel($event)">
                         Hủy
                     </div>
                 </div>
                 <div class="dialog__right">
-                    <div class="btn btn__save">
+                    <div class="btn btn__save" tabIndex="19" @click="btnSaveOnClick"  @keydown="keySave($event)">
                         Cất
                     </div>
-                    <div class="btn btn__saveAdd"  @click="btnSaveOnClick" >Cất và thêm</div>
+                    <div class="btn btn__saveAdd" tabIndex="20" @click="btnSaveOnClick" @keydown="keySave($event)" >Cất và thêm</div>
                 </div>
             </div>
         </div> 
@@ -280,15 +307,18 @@
 </template>
 <script>
     
-    import MCombobox from '@/components/base/MCombobox.vue';
+    // import MCombobox from '@/components/base/MCombobox.vue';
     import eNum from '@/js/common/eNum';
     import common from '@/js/common/common';
+    import Resource from '@/js/common/resource';
+
 
 
     /**
      * URL api 
      */
-    var URL =process.env.VUE_APP_URL;
+    var loadDataURL =process.env.VUE_APP_URL;
+    // var loadDataURL="http://localhost:5287/api/v1/";
 
      /**
      * Hàm validate
@@ -312,36 +342,64 @@
         
        
    }
-
+//    import { ref } from 'vue';
 export default {
     
-    component:{MCombobox},
+    // component:{MCombobox},
     name:"employeeDetail",
     
     props:{
         closeDialog: Function,
+        loadData:Function,
         employeeSelected:Function,
         formMode:Number,
+        /**
+         * `date-fns`-type formatting for a month view heading
+         */
+        monthHeadingFormat: {
+        type: String,
+        required: false,
+        default: 'LLLL yyyy',
+        },
+
     },
+   
+
     created(){       
+
         //gán data truyền từ cha sang con
         this.emp = this.employeeSelected;   
 
          //xử lý dữ liệu radio
-         if(!common.checkEmptyData(this.emp.gender))
-            this.chooseGender = this.emp.gender;          
+         if(!common.checkEmptyData(this.emp.gender)){
+            this.chooseGender = this.emp.gender;  
+            
+         }         
+            
+          //xử lý dữ liệu combobox
+        if(!common.checkEmptyData(this.emp.departmentName)){
+            this.dataCombobox = this.emp.departmentName;
+            this.emptyDepartment = false;        
+        }      
+
+    },   
+    updated(){
+       //update gender
+         this.emp.gender = Number(this.chooseGender)     
     },
     mounted(){
         this.$refs['employeeCode'].focus();//focus vào item đầu tiên
         this.formatDate();//thay đổi dữ liệu ngày tháng theo format trước khi hiển thị 
-    },   
+            
+    },    
     data() {
         return{
             showForm:true,     
             emp:{},
             maxDate:common.maxDate(),  
-            chooseGender:Number,  
+            chooseGender:null,  
             dataCombobox:'',
+            keyCombobox:null,
             emptyCode: false,
             emptyName: false,
             emptyDepartment: true,
@@ -349,6 +407,13 @@ export default {
             isPhone:false,  
             isPhoneLand:false,  
             isIdentity:false,  
+
+            datetime:'',
+            // dateVN:{
+            //     days:['T2','T3','T4','T5','T6','T7','CN'],
+            //     months:['Tháng 1','Tháng 2','Tháng 3','Tháng 4','Tháng 5','Tháng 6','Tháng 7','Tháng 8',
+            //     'Tháng 9','Tháng 10','Tháng 11','Tháng 12']
+            // }
         }
     },
     
@@ -401,7 +466,7 @@ export default {
          *
          */     
          validatePhoneNumber(){
-            if(common.checkNumber(this.emp.phoneNumbermobile)){
+            if(common.checkNumber(this.emp.mobile)){
             this.isPhone = true;
             }else{
                  this.isPhone = false;
@@ -410,7 +475,7 @@ export default {
             
         },
         validatePhoneland(){
-            if(common.checkNumber(this.emp.phoneNumberlandline)){
+            if(common.checkNumber(this.emp.landlinePhone)){
                 this.isPhoneLand = true;
             }else{
                  this.isPhoneLand = false;
@@ -436,19 +501,20 @@ export default {
                 this.emptyName = false;
             }
         },
-        getValue(items){       
-            this.emp.departmentID = items.departmentID;
-            this.emp.DepartmentName = items.DepartmentName;
-            this.emp.DepartmentCode = items.DepartmentCode;
-            this.empDepartmentName = this.emp.DepartmentName;   
-            if(common.checkEmptyData(this.emp.departmentID)){
-                this.emptyDepartment = true;
-            }else  this.emptyDepartment = false;
-            console.log('log',this.emp.departmentID)
+        
+        objectItemCombobox(item){                  
+            this.emp.departmentID = item.departmentID;
+            this.emp.departmentName = item.departmentName;
+            this.emp.DepartmentCode = item.departmentCode; 
+            this.empDepartmentName = this.emp.departmentName;
+            if(common.checkEmptyData(this.emp.departmentName)){
+                this.emptyDepartment = true;                 
+            }else 
+            { 
+                this.emptyDepartment = false;
+            }               
         },
 
-      
-          
         
          /**
          * Thêm mới hoặc sửa dữ liệu theo formMode
@@ -456,11 +522,10 @@ export default {
          */
        
         btnSaveOnClick() {
-            var me = this; 
-            console.log(this.emp.departmentName)
+            var me = this;  
               // validate dữ liệu:
             let checkEmpty = {
-                EmptyCode : this.emptyCode, EmptyName : this.emptyName//, EmptyDepartment : this.emptyDepartment
+                EmptyCode : this.emptyCode, EmptyName : this.emptyName, EmptyDepartment : this.emptyDepartment
             } 
             
            
@@ -468,30 +533,37 @@ export default {
             if(valid){
                 if(me.formMode===eNum.formMode.ADD){
                 var method = "POST";
-                fetch(URL, {                
+                fetch(loadDataURL+'Employees', {                
                 method: method,
                 headers: {
                 "Content-Type": "application/json",
                 },
                 body: JSON.stringify(me.emp),
-            })
+                 })
                 .then((res) => res.json())
                 .then((res) => {
-            
-                    me.$emit("closeDialog");    
-                    console.log(res);
+                    let status=res.status;
+                     console.log(status);
+                    if(status===eNum.errorBackEnd.Ser||status===eNum.errorBackEnd.User||status===eNum.errorBackEnd.NotFound){
+                            me.$emit('errorBackEnd',status);                           
+                    }
+                    else{ 
+                            this.$emit('openToast', Resource.ToastMessage.success);
+                            me.$emit("closeDialog");  
+                            me.$emit("loadData");                            
+                    }                  
                 })
                 .catch((res) => {
-                console.log(res);
-                
+                    console.log(res);
+                    this.$emit('openToast', Resource.ToastMessage.error);
                 });
-            }              
+                 }              
           
             // Cất dữ liệu:
 
             if (me.formMode === eNum.formMode.Edit) {
                 method = "PUT";
-                URL = URL + `/${me.emp.id}`;
+                let URL = loadDataURL + `Employees/${me.emp.employeeID}111`;
                 fetch(URL, {            
                     method: method,
                     headers: {
@@ -500,17 +572,99 @@ export default {
                     body: JSON.stringify(me.emp),})
                     .then((res) => res.json())
                     .then((res) => {
-                
-                        me.$emit("closeDialog");    
-                        console.log(res);
+                        let status=res.status;                       
+                        if(status===eNum.errorBackEnd.Ser||eNum.errorBackEnd.User||eNum.errorBackEnd.NotFound){
+                            me.$emit('errorBackEnd',status); 
+                            this.$emit('openToast', Resource.ToastMessage.error);                          
+                        }
+                        else{ 
+                            this.$emit('openToast', Resource.ToastMessage.success);
+                            me.$emit("closeDialog");  
+                            me.$emit("loadData");                            
+                        }
+                      
                     })
                     .catch((res) => {
-                        console.log(res);                    
+                        console.log(res);   
+                        this.$emit('openToast', Resource.ToastMessage.error);                 
                     });
             }  
             }         
            
-        },            
+        }, 
+        escClose(event){
+            let me=this;
+            try{
+                let key=event.keyCode;
+                switch(key){
+                    case eNum.KeyCode.ESC:
+                    me.$emit("closeDialog");
+                    console.log('clicked');
+                }   
+            }
+            catch(error){
+                console.log(error);
+            }
+        },
+        keySave(event){
+            // let me=this;
+            try{
+                let key=event.keyCode;
+                switch(key){
+                    case eNum.KeyCode.Enter:
+                   this.btnSaveOnClick();
+                    
+                }   
+            }
+            catch(error){
+                console.log(error);
+            }
+        },  
+        keyCancel(event){
+            let me=this;
+            try{
+                let key=event.keyCode;
+                switch(key){
+                    case eNum.KeyCode.Enter:
+                    me.$emit("closeDialog");
+                    
+                }   
+            }
+            catch(error){
+                console.log(error);
+            }
+        },
+        saveBtn(event){
+            // let me=this;
+            try{
+
+                if(event.keyCode==eNum.KeyCode.S && event.ctrlKey){
+                    event.preventDefault();
+                    this.btnSaveOnClick();
+                }
+                if(event.keyCode==eNum.KeyCode.S && event.ctrlKey&& event.shiftKey){
+                    event.preventDefault();
+                    this.btnSaveOnClick();
+                }
+
+
+                // let key=event.keyCode;
+
+                // switch(key){
+                //     case eNum.KeyCode.S && ctrlKey:
+                //         event.preventDefault();
+                //         this.btnSaveOnClick();    
+                //     break;     
+                //     case eNum.KeyCode.S && ctrlKey:
+                //         event.preventDefault();
+                //         this.btnSaveOnClick();    
+                //     break;                              
+                // }   
+            }
+            catch(error){
+                console.log(error);
+            }
+        }         
     },
 }
 </script>

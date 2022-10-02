@@ -10,6 +10,12 @@
 @import url(../css/base/input.css);
 @import url(../css/base/table.css);
 @import url(../css/base/tooltip.css);
+@import url(../css/base/toast.css);
+@import url(../css/base/droplist.css);
+@import url(../css/base/paging.css);
+@import url(../css/layout/paging.css);
+@import url(../css/base/datepicker.css);
+
 /* @import url(../css/base/combobox.css); */
 /* end import css base  */
 /* import css control  */
@@ -250,7 +256,7 @@ body{
     grid-row: 1/2;   
  }
  .info__name input{
-    width: calc(100% - 16px);
+    width: calc(100% - 20px);
  }
  .info__item{
      margin-bottom: 16px;

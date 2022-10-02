@@ -1,26 +1,37 @@
 .tooltip {
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
   /* border-bottom: 1px dotted black; */
 }
 
 .tooltip .tooltiptext {
   visibility: hidden;
-  /* width: 200px; */
-  background-color: #df6d6d;
-  color: #fff;
+  min-width: 50px;
   text-align: center;
   border-radius: 6px;
   padding: 5px 10px;
   position: absolute;
   z-index: 1;
-  top: 125%;
-  left: 25%;
+  top: 110%;
+  left: 35%;
   font-size: 12px;
   margin-left: -60px;
-  
+  transition-delay: 0.5s;
 }
+.tooltipError{
+  background-color: #df6d6d;
+  color: #fff;
+}
+.tooltipAronym{
 
+  width: 150px;
+  background-color: #f1f1f1;
+  /* color: #fff; */
+}
+.tooltip__orther{
+  display: block;
+}
+/* 
 .tooltip .tooltiptext::after {
   content: "";
   position: absolute;
@@ -30,7 +41,7 @@
   border-width: 5px;
   border-style: solid;
   border-color: transparent transparent  #df6d6d transparent;
-}
+} */
 
 .tooltip:hover .tooltiptext {
   visibility: visible;

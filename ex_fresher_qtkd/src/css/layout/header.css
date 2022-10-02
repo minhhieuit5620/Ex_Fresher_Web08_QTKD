@@ -36,3 +36,18 @@ flex-direction: row;
 .header__account--ring{
     margin-right: 24px;
 }
+.header__select--cbl{
+    display: flex;
+    align-items: center;
+}
+.option-company{
+    margin-left: 16px;
+    cursor: pointer;
+}
+.arrow-down-icon{
+    height: 24px;
+    width: 24px;
+    margin-left: 4px;
+    background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -1125px -357px;
+    cursor: pointer;
+}

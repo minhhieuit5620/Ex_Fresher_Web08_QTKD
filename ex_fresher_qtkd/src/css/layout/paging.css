@@ -7,11 +7,7 @@
     display: flex;
     position: relative;
 }
-.paging__select input[type=text]{
-    width: 222px;
-    padding: 0 0 0 16px;
 
-}
 .drop__paging{
     position: absolute;
     top: -475%;
@@ -36,13 +32,18 @@
 .page__number{
     display: flex;
     margin-left: 16px;
+   
 }
 .page__item{
    margin-left: 8px; 
 }
 .page__number--next{
-    margin-left: 16px;
+    margin-left: 8px;
 }
 .page__active{
     border: 1px solid #ddd;
+}
+.page__number--next:hover,
+.page__number--previous:hover{
+        cursor: pointer;
 }

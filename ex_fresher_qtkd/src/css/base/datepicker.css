@@ -1,0 +1,28 @@
+
+.datepickerCTM{
+    font-size: 14px;
+    font-family: Misa fonts !important;
+}
+.datepickerCTM input{
+    height: 32px;  
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: Misa fonts;
+    outline: 0;
+    width: 174px;
+}
+.datepickerCTM input:focus{
+    outline: none;
+    border: 1px solid #019160
+}
+.datepickerCTM input::placeholder{
+    font-size: 13px;
+}
+.dp__input_icon_pad :focus{
+    outline: none;
+    border: 1px solid #019160 !important;
+}
+.dp__input_wrap:focus {   
+    border:  none !important;
+}
