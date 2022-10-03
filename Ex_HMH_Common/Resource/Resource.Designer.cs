@@ -61,6 +61,15 @@ namespace Ex_HMH_Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1.
+        /// </summary>
+        public static string DefaultStatus {
+            get {
+                return ResourceManager.GetString("DefaultStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hứa Minh Hiếu.
         /// </summary>
         public static string DefaultUser {

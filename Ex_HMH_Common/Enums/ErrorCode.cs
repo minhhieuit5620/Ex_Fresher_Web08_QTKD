@@ -25,7 +25,12 @@
         /// <summary>
         /// Dữ liệu đầu vào bị lỗi
         /// </summary>
-        InvalidInput = 4
+        InvalidInput = 4,
+
+        /// <summary>
+        /// Mã nhân viên không đúng địng dạng
+        /// </summary>
+        InvalidEmployeeCode = 5
 
 
     }

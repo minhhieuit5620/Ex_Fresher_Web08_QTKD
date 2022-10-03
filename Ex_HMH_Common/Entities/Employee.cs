@@ -27,7 +27,7 @@ namespace Ex_HMH_Common.Entities
         /// Tên nhân viên
         /// </summary>
         [IsNotNullOrEmpty("Tên nhân viên không được để trống")]
-        public string FullName { get; set; }
+        public string EmployeeName { get; set; }
 
         /// <summary>
         /// Giới tính
@@ -113,6 +113,11 @@ namespace Ex_HMH_Common.Entities
         /// Có phải là nhà cung cấp không
         /// </summary>
         public bool? IsSupplier { get; set; }
+
+        /// <summary>
+        /// Trạng thái làm việc
+        /// </summary>
+        public Status? Status { get; set; } =Enums.Status.Working;
 
     }
 }

@@ -1,4 +1,5 @@
 using Ex_HMH_BL;
+using Ex_HMH_BL.BaseBL;
 using Ex_HMH_BL.DepartmentBL;
 using Ex_HMH_DL;
 using Ex_HMH_DL.BaseDL;
@@ -13,11 +14,25 @@ try
 {
     var builder = WebApplication.CreateBuilder(args);
 
+    var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
     // Add services to the container.
 
     builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     {
         options.SuppressModelStateInvalidFilter = true;
+    });
+
+    //add CORS
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy(MyAllowSpecificOrigins,
+                              policy =>
+                              {
+                                  policy.AllowAnyOrigin()
+                                  .AllowAnyHeader()
+                                  .AllowAnyMethod();
+                              });
     });
 
     // NLog: Setup NLog for Dependency injection
@@ -50,6 +65,8 @@ try
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+
+    app.UseCors(MyAllowSpecificOrigins);
 
     app.UseAuthorization();
 

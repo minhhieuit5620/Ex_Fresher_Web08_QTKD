@@ -16,4 +16,17 @@
 
 
     }
+    
+    public enum Status
+    {
+        /// <summary>
+        /// trạng thái đang làm việc
+        /// </summary>
+        Working=1,
+
+        /// <summary>
+        /// trạng thái ngưng làm việc
+        /// </summary>
+        UnWorking = 0
+    }
 }

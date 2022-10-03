@@ -2,14 +2,12 @@
 
 namespace Ex_HMH_Common.Entities
 {
+    /// <summary>
+    /// các thành phần của bảng phòng ban
+    /// </summary>
+    /// CreatedBy: Hứa minh hiếu(22-09-22)
     public class Department:BaseEntities
-    {
-        /// <summary>
-        /// các thành phần của bảng phòng ban
-        /// </summary>
-        /// CreatedBy: Hứa minh hiếu(22-09-22)
-
-      
+    {      
             /// <summary>
             /// ID phòng ban
             /// </summary>
@@ -21,7 +19,7 @@ namespace Ex_HMH_Common.Entities
             /// </summary>
           
             [IsNotNullOrEmpty("Mã phòng ban không được để trống")]
-            public string DeparmentCode { get; set; }
+            public string DepartmentCode { get; set; }
 
             /// <summary>
             /// Tên phòng ban

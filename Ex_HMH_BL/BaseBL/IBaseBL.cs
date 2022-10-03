@@ -6,13 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex_HMH_DL
+namespace Ex_HMH_BL.BaseBL
 {
-    public interface IBaseDL<T>
+    public interface IBaseBL<T>
     {
         /// <summary>
         /// lấy toàn bộ giá trị bản ghi của một bảng
         /// </summary>
+        /// <param name="nameTable"></param>
         /// <returns>tất cả các giá trị của bảng được nhập</returns>   
         /// CreatedBy: HMHieu (29-09-2022)
         public IEnumerable<T> GetAllRecords();
@@ -29,6 +30,14 @@ namespace Ex_HMH_DL
         public PagingData<T> Filter(string? search, string? sort, int pageIndex, int pageSize);
 
         /// <summary>
+        /// Thêm một bản ghi mới
+        /// </summary>
+        /// <param name="record">dữ liệu của bản ghi mới</param>
+        /// <returns>ID của bản ghi</returns>
+        /// CreatedBy Hứa Minh Hiếu
+        public ServiceResponse Insert(T record);
+
+        /// <summary>
         ///lấy một bản ghi theo mã
         /// </summary>      
         /// <param name="ID"></param>
@@ -37,21 +46,13 @@ namespace Ex_HMH_DL
         public T RecordByID(Guid ID);
 
         /// <summary>
-        ///  thêm mới một bản ghi
-        /// </summary>
-        /// <param name="record"> Đối tượng cần thêm mới</param> 
-        /// <returns>Return về Guid mới, Guid rỗng nếu thất bại</returns>
-        /// Created by: HMHieu(28/09/2022)
-        public Guid Insert(T record);
-
-        /// <summary>
         /// sửa một bản ghi 
         /// </summary>
         /// Created by: HMHieu(29/09/2022)
         /// <param name="ID"></param>
         /// <param name="record"></param>
         /// <returns>Return về Guid vừa sửa, Guid rỗng nếu thất bại </returns>      
-        public Guid Update(Guid ID, T record);
+        public ServiceResponse Update(Guid ID, T record);
 
         /// <summary>
         /// xóa một bản ghi 

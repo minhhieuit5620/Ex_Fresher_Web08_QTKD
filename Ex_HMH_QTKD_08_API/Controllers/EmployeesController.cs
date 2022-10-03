@@ -11,154 +11,103 @@ using Ex_QTKD_API.Entities;
 using System;
 using Ex_HMH_DL;
 using NLog;
+using Ex_HMH_BL.BaseBL;
+using Microsoft.Extensions.Logging;
 
 namespace Ex_HMH_QTKD_08_API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class EmployeesController : ControllerBase
+    public class EmployeesController : BasesController<Employee>
     {
 
         #region Feild
-        private readonly ILogger<EmployeesController> _logger;
+
+        private readonly ILogger<Employee> _logger;
+
         private IEmployeeBL _employeeBL;
 
         #endregion
 
-        #region Contructor
+        #region Contructor               
 
-        public EmployeesController (ILogger<EmployeesController> logger, IEmployeeBL employeeBL)
+        public EmployeesController(ILogger<Employee> logger, IEmployeeBL employeeBL) : base(logger, employeeBL)
         {
-            _logger = logger;
             _employeeBL = employeeBL;
+            _logger = logger;
         }
 
         #endregion
 
         #region Method
 
-        #region Get FilterEmployee 
         /// <summary>
-        /// API lấy Filter nhân viên 
+        /// API tạo mã nhân viên mới
         /// </summary>
-        /// <param name="search"></param>
-        /// <param name="departmentID"></param>
-        /// <param name="sort"></param>
-        /// <param name="offset"></param>
-        /// <param name="limit"></param>
-        /// <returns>
-        /// + Danh sách nhân viên thỏa mãn điều kiện lọc và phân trang
-        /// + Tổng số nhân viên thỏa mã các điều kiện lọc
-        /// </returns>
-        /// Created by: HMHieu(18/09/2022)
-        /// 
-        [HttpGet("filter")]
-        public IActionResult FilterEmployee(
-            [FromQuery] string? search,
-            [FromQuery] string? sort,
-            [FromQuery] int pageIndex,
-            [FromQuery] int pageSize)
-
+        /// <returns>mã hân viên mới</returns>
+        /// CreatedBy: Hứa minh hiếu (24-09-2022)
+        [HttpGet("new-code-employee")]
+        public IActionResult newCodeEmployee()
         {
             try
             {
-                var result = _employeeBL.FilterEmployee(search,sort,pageIndex,pageSize);
-                if (result != null)
+                var maxCode = _employeeBL.NewEmployeeCode();
+
+                if (maxCode != "")
                 {
-                    return StatusCode(StatusCodes.Status200OK, new PagingData<Employee>()
-                    {
-                        Data = result.Data.ToList(),
 
-                        TotalCount = result.TotalCount,
 
-                        TotalPage = result.TotalCount / pageSize + 1,
-
-                    });                   
-                }                
+                    return StatusCode(StatusCodes.Status200OK, maxCode);
+                }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
+                        ErrorCode.InvalidEmployeeCode,
+                        Resource.DevMsg_DuplicateCode,
+                        Resource.UserMsg_DuplicateCode,
+                        Resource.Moreinfo_InsertFailed
+                        ));
                 }
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError("Error", exception);
-                _logger.LogTrace("Trace", exception);
-                return StatusCode(StatusCodes.Status400BadRequest, exception);
-            }
 
+
+
+            }
+            catch (Exception ex)
+            {
+
+                _logger.LogError("Error", ex);
+                _logger.LogTrace("Trace", ex);
+
+                return StatusCode(StatusCodes.Status500InternalServerError);
+
+            }
         }
-        #endregion
 
-        #region  Get EmployeeByID
         /// <summary>
-        /// API lấy một  nhân viên 
-        /// </summary>      
-        /// <param name="employeeID"></param>
-        /// <returns>dữ liệu nhân viên tương ứng với mã đã nhập</returns>
-        /// Created by: HMHieu(18/09/2022)
-        [HttpGet("{employeeID}")]
-        public IActionResult EmployeeByID([FromRoute] Guid employeeID)
+        /// API thay đổi trạng thái làm việc của nhân viên
+        /// </summary>
+        /// <param name="statusEmployee"></param>
+        /// <param name="EmployeeID"></param>
+        /// <returns>ID của nhân viên thay đổi</returns>
+        [HttpPut("change-status")]
+        public IActionResult ChangeStatus(Status statusEmployee, Guid EmployeeID)
         {
             try
             {
-                var employee = _employeeBL.EmployeeByID(employeeID);
+                var employeeChange = _employeeBL.ChangeStatus(statusEmployee, EmployeeID);
 
-                if(employee != null)
+                if (employeeChange != Guid.Empty)
                 {
-                    return StatusCode(StatusCodes.Status200OK, employee);
+                    return StatusCode(StatusCodes.Status200OK, employeeChange);
                 }
                 else
                 {
-               
                     return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
                         ErrorCode.Exception,
                         Resource.DevMsg_Exception,
                         Resource.UserMsg_Exception,
-                        Resource.Moreinfo_InsertFailed                       
+                        Resource.Moreinfo_InsertFailed
                         ));
-                }            
-            }
-            catch (Exception exception)
-            {              
-                _logger.LogError("Error",exception);
-                _logger.LogTrace("Trace", exception);
-                return StatusCode(StatusCodes.Status400BadRequest, exception);
-            }
-
-        }
-        #endregion
-
-
-        #region  POST Employee
-        /// <summary>
-        /// API thêm mới một nhân viên 
-        /// </summary>
-        /// <param name="employee"></param>
-        /// <returns>mã nhân viên</returns>
-        /// <returns>Mã nhân viên tự động tăng</returns>
-        /// Created by: HMHieu(18/09/2022)
-        [HttpPost]
-        public IActionResult Employee([FromBody] Employee employee)
-        {
-            try
-            {
-                var result = _employeeBL.InsertEmployee(employee);
-
-                if (result.Success)
-                {
-                    return StatusCode(StatusCodes.Status201Created, result.Data);
-                }
-                else
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest,
-                                       new ErrorResult(
-                                           ErrorCode.InvalidInput,
-                                           Resource.DevMsg_validateFailed,
-                                           Resource.UserMsg_validateFailed,
-                                           Resource.Moreinfo_InsertFailed,
-                                           HttpContext.TraceIdentifier
-                                      ));
                 }
             }
             catch (Exception ex)
@@ -166,95 +115,10 @@ namespace Ex_HMH_QTKD_08_API.Controllers
                 _logger.LogError("Error", ex);
                 _logger.LogTrace("Trace", ex);
 
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                                    new ErrorResult(
-                                             ErrorCode.Exception,
-                                             Resource.DevMsg_Exception,
-                                             Resource.UserMsg_Exception,
-                                             Resource.Moreinfo_InsertFailed,
-                                             HttpContext.TraceIdentifier
-                                         ));
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
-        #endregion
 
-        #region PUT Employee 
-        /// <summary>
-        /// API sửa một nhân viên 
-        /// </summary>
-        /// Created by: HMHieu(18/09/2022)
-        /// <param name="employeeID"></param>
-        /// <param name="employee"></param>
-        /// <returns>nhân viên vừa sửa </returns>
-        [HttpPut("{employeeID}")]
-        public IActionResult Employee([FromRoute] Guid employeeID, [FromBody] Employee employee)
-        {
-
-            try
-            {
-                var employeeUpdate = _employeeBL.UpdateEmployee(employeeID,employee);
-
-                //xử lý dữ liệu trả về
-                if (employeeUpdate.Success)
-                {
-                    return StatusCode(StatusCodes.Status200OK, employeeUpdate.Data);
-                }
-                else
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest,
-                                       new ErrorResult(
-                                           ErrorCode.InvalidInput,
-                                           Resource.DevMsg_validateFailed,
-                                           Resource.UserMsg_validateFailed,
-                                           Resource.Moreinfo_InsertFailed,
-                                           HttpContext.TraceIdentifier
-                                      ));
-                }           
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError("Error", exception);
-                _logger.LogTrace("Trace", exception);
-                return StatusCode(StatusCodes.Status400BadRequest, exception);
-
-            }
-
-        }
-        #endregion
-
-        #region Delete Employee
-        /// <summary>
-        /// API xóa mới một nhân viên 
-        /// </summary>
-        /// Created by: HMHieu(18/09/2022)
-        /// <param name="employeeID"></param>
-        /// <returns>Id của nhân viên vừa xóa </returns>
-        [HttpDelete("{employeeID}")]
-        public IActionResult Employee([FromRoute] Guid employeeID)
-        {
-            try
-            {
-                var employeeDelete = _employeeBL.DeleteEmployee(employeeID);
-
-                if (employeeDelete!=Guid.Empty)
-                {
-                    return StatusCode(StatusCodes.Status200OK, employeeID);
-                }
-                else
-                {
-                    
-                    return StatusCode(StatusCodes.Status400BadRequest);
-                }
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError("Error", exception);
-                _logger.LogTrace("Trace", exception);
-
-                return StatusCode(StatusCodes.Status400BadRequest, exception);
-            }
-        }
-        #endregion
         #endregion
 
 

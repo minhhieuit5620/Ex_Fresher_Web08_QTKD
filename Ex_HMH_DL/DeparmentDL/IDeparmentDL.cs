@@ -1,4 +1,5 @@
 ﻿using Ex_HMH_Common.Entities;
+using Ex_HMH_DL.BaseDL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Ex_HMH_DL.DeparmentDL
 {
-    public interface IDeparmentDL
+    public interface IDeparmentDL:IBaseDL<Department>
     {
         /// <summary>
         ///lấy danh sách phòng ban 
         /// </summary>              
         /// <returns>dữ liệu danh sách phòng ban</returns>
         /// Created by: HMHieu(29/09/2022)
-        public IEnumerable<Department> AllDepartment();
+       // public IEnumerable<Department> AllDepartment();
     }
 }
