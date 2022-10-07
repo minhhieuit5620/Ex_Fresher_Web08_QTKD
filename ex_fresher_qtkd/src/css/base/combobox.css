@@ -6,6 +6,16 @@
     border-radius: 4px;
     /* border: 1px solid #019160; */
 }
+.combobox-container:focus{
+    border: 1px solid #019160;
+    outline: none;
+}
+
+.cbx:focus{
+    /* border: none; */
+    border: 1px solid #019160;
+    outline: none;
+}
 
 .input-container{ 
     display: flex;

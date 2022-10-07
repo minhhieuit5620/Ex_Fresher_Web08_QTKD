@@ -1,7 +1,7 @@
 <template>
   <div class="combobox-container" @keydown="directItemDownUp($event)" @keyup="openDataCombobox($event)">
     <div class="input-container">
-      <input type="text" class="combobox input" @input="search" v-model="dataSelected" tabIndex="3" :ref="'input'">
+      <input type="text" class=" input" @input="search" v-model="dataSelected" tabIndex="3" :ref="'input'">
       <div id="icon-combobox" class="icon-combobox" @click="showDataList=!showDataList">
         <div class="icon-drop-combobox" @click="loadDepartment"></div>
       </div>

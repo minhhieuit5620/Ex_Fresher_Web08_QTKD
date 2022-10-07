@@ -6,7 +6,10 @@
 }
 /* sidebar  */
 .sidebar__item:hover{
-    background-color: #ccc;
+    background-color: #6e6b6b;
+}
+.sidebar__item:active{
+    background-color: #6e6b6b;
 }
 /* Table  */
 

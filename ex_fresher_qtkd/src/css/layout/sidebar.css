@@ -12,3 +12,11 @@
     align-items: center;
     text-decoration: none;
 }
+.exact-active-link {
+    color: var(#fff);
+    /* font-weight: 500; */
+    background-color: #6e6b6b;
+    /* font-family: GoogleSans-Medium; */
+    border-left: 6px solid var(--color--btn--primary);
+    padding-left: 6px ;
+}

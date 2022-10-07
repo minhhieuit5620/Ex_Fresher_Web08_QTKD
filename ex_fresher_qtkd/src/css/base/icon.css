@@ -37,15 +37,16 @@ margin:12px 10px 12px 16px ;
 .icon__drop{
     background-position:-460px -400px;
     background-repeat: no-repeat;
-
 }
 .icon__combobox{
     background-position:-1122px -355px;
     background-repeat: no-repeat;
-    
-
 }
 
+.icon__drop--multiple{
+    background-position:-550px -353px;
+    background-repeat: no-repeat;   
+}
 /* icon sidebar  */
 .icon__sidebar{
     margin-right: 8px;
@@ -124,7 +125,14 @@ margin:12px 10px 12px 16px ;
 .content__reload{
     margin: 8px 16px;
 }
-
+.icon__excel{
+    background-position: -614px -834px;
+    background-repeat: no-repeat;
+    width: 26px;
+}
+.content__excel{
+    margin: 8px 16px 0px 0px;
+}
 .icon__edit--drop{
     background-position: -888px -351px;
     background-repeat: no-repeat;
@@ -168,8 +176,12 @@ margin:12px 10px 12px 16px ;
 }
 
 .icon__ask{
-    background-position: -832px -462px;
+    background-position: -831px -456px;
     background-repeat: no-repeat;
     width: 37px;
     height: 37px;
+}
+.icon__date{
+    background-position: -128px -312px;
+    background-repeat: no-repeat;
 }

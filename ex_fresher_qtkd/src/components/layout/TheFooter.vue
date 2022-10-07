@@ -10,7 +10,7 @@
                     
                     </div>
                     <div class="page__number">
-                        <div class="page__number--previous " @click="prev">Trước</div>
+                        <div class="page__number--previous " @click="prev" v-show="!chooseOne">Trước</div>
                         <div class="page__item page__number--item first  " v-show="lastPage" @click="chooseNumber(1)" :class="{'active': choose === 1}">1</div>
                         <div class="page__number--item "  v-show="viewLast">...</div>
                         <div class="page__item page__number--item second"  @click="chooseNumber(second)" :class="{'active': choose === second}" v-show="viewFirst">{{second}}</div>
@@ -18,7 +18,7 @@
                         <div class="page__item page__number--item fourth" @click="chooseNumber(fourth)" :class="{'active': choose === fourth}" v-show="viewLast">{{fourth}}</div>
                         <div class="page__number--item "   v-show="viewFirst">...</div>                        
                         <div class="page__item page__number--item last" v-show="lastPage" @click="chooseNumber(totalPage)" :class="{'active': choose === totalPage}">{{totalPage}}</div>
-                        <div class="page__number--next  "  @click="next">Sau</div>
+                        <div class="page__number--next  "  @click="next" v-show="chooseLast">Sau</div>
                     </div>
                 </div>
             </div>
@@ -47,6 +47,8 @@
                 fourth: null,
                 choose: 1, //trang được chọn
                 contentPage: Resource.textNumPages, //Nội dung lựa chọn số bản ghi 1 trang
+                chooseOne:false,
+                chooseLast:true,
         
             }
         },
@@ -58,7 +60,18 @@
          */
         chooseNumber(numberPage){
             this.choose = numberPage; 
-            this.$emit('selectPage', this.choose);    
+            this.$emit('selectPage', this.choose);  
+            if(this.choose > 1){               
+                this.chooseOne=false;
+            }if(this.choose === 1){
+                this.chooseOne=true;
+            }  
+            if(this.choose < this.totalPage){         
+                this.chooseLast=true;
+            }
+             if(this.choose === this.totalPage){
+                this.chooseLast=false;
+            }            
         },
         /**
          * Thay đổi giao diện khi ở giữa trang
@@ -94,7 +107,10 @@
         prev(){
             if(this.choose > 1){
                 this.chooseNumber(this.choose - 1);
-            }
+                this.chooseOne=false;
+            }if(this.choose === 1){
+                this.chooseOne=true;
+            }           
         },
 
         /**
@@ -104,7 +120,11 @@
         next(){
             if(this.choose < this.totalPage){
                 this.chooseNumber(this.choose + 1);
+                this.chooseLast=false;
             }
+             if(this.choose == this.totalPage){
+                this.chooseLast=true;
+            }           
         },
         /**
          * Gửi số bản ghi trong 1 trang khi chọn
@@ -120,6 +140,11 @@
         choose(newChoose){
             if(this.totalPage > 3){
                 this.lastPage = true;
+                if(newChoose==1){ 
+                    this.chooseOne=true;
+               
+
+                }
                 if(newChoose <= 2){ // hiện giao diện khi ở trang đầu
                     this.viewLast = false;
                     this.viewFirst = true;
@@ -135,6 +160,9 @@
                     this.viewFirst = false;
                     this.changeViewNumberLast();
 
+                }
+                if(newChoose==this.totalPage){
+                    this.chooseLast=false;
                 }
             }
         },
@@ -154,6 +182,8 @@
                     this.lastPage = false;
                     this.viewMiddle = true;
                     this.third = 1;
+                    this.chooseOne=true;
+                    this.chooseLast=false;
                 }
                 if(newPage == 2){ // chỉ có 2 trang
                     this.viewMiddle = false;

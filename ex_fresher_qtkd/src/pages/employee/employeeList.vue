@@ -11,72 +11,131 @@
         </div>
         <div class="inner__content">
             <div class="inner__top">
-                <div class="content__search--data">
+                <div class="inner__top--left">
+                    <button class="btn btn__multiple" @click="activeMultiple" :disabled="this.listSelectedEmployee.length <2" >
+                         Thực hiện hàng loạt
+                         <div class="icon icon__drop--multiple"  ></div>
+                    </button>
+                    <button class="btn btn__delete--multiple" v-show="showMultiple"   :class="{'show__delete' : this.listSelectedEmployee.length< 1}"  @click="showPopupMultiple" >
+                        Xóa 
+                    </button>
+                   
+                </div>
+                <div class="inner__top--right">
+                    <div class="content__search--data">
                     <input type="text" class="input fontsize__input" 
                     v-model="searchKey"
-                    @input="loadData"
-                    @keyup.enter="loadData"
+                    @input="keySearch"
+                    @keyup.enter="keySearch"
                     placeholder="Tìm kiếm theo mã, tên nhân viên">
                     <div class="search icon icon__search" ></div>
                 </div>
-                <div class="content__reload icon icon__reload" @click="loadData"></div>
+                <div class="tooltip">
+                    <div class="content__reload icon icon__reload" @click="reLoad">   </div>
+                    <span class="tooltiptext tooltipIcon">Lấy lại dữ liệu</span>
+                </div>
+                <div class="tooltip">
+                    <div class="content__excel icon icon__excel" @click="exportExcel"></div>
+                    <span class="tooltiptext tooltipIcon">Xuất ra excel</span>
+                </div>
+               
+                </div>
+                
+          
+               
             </div>
             <div class="content__data">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th class="column__sticky column__checkbox "><input class="input__checkbox" type="checkbox" /> </th>
-                            <th class="width__150">Mã nhân viên</th>
+                            <th class="column__sticky column__checkbox ">
+                                <input class="input__checkbox" 
+                                type="checkbox"
+                                @click="selectAllEmployee"
+                                 /> 
+                            </th>
+                            <th class="width__100">Mã nhân viên</th>
                             <th class="width__200">Tên nhân viên</th>
-                            <th class="width__100">Giới tính</th>
+                            <th class="width__60">Giới tính</th>
                             <th class="width__100">Ngày sinh</th>
                             <th class="width__100"> <div class="tooltip">Số CMND <span class="tooltiptext tooltipAronym">Số chứng minh nhân dân</span></div> </th>                            
                             <th class="width__150">Tên đơn vị</th>
                             <th class="width__150">Chức danh</th>
                             <th class="width__100">Số tài khoản</th>
-                            <th class="width__250">Tên ngân hàng</th>
-                            <th class="width__300">
+                            <th class="width__340">Tên ngân hàng</th>
+                            <th class="width__250">
                                 <div class="tooltip">Chi nhánh TK ngân hàng <span class="tooltiptext tooltipAronym">Chi nhánh tài khoản ngân hàng</span></div>
                             </th>
-                            <th class=" column__sticky column__edit column__edit--th">Chức năng</th>
+                            <th class=" column__sticky column__edit column__edit--th width__100">Chức năng</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for=" (item, index) in employee" :key="item.employeeID" 
                             @dblclick="showEditForm(item)" >
-                            <td class="column__sticky column__checkbox"  @dblclick.stop > <input type="checkbox" class="input__checkbox checkbox__item" /></td >
-                            <td class="width__150">{{item.employeeCode}}</td>
-                            <td class="width__200">{{item.employeeName}}</td>
-                            <td class="width__100">
+                            <td class="column__sticky column__checkbox loading__checkbox"  @dblclick.stop > 
+                                <input type="checkbox" class="input__checkbox checkbox__item" 
+                                :checked="isCheckedAll"                               
+                                @input="selectEmployee(item)"
+                                />
+                                <MLoadTable v-if="isLoad"/>  
+                            </td >
+                            <td class="width__100 text__left td__loading">
+                                {{item.employeeCode}}
+                                <MLoadTable v-if="isLoad"/>  
+                            </td>
+                            <td class="width__200 text__left td__loading">
+                                {{item.employeeName}}
+                                <MLoadTable  v-if="isLoad"/>  
+                            </td>
+                            <td class="width__60 text__left td__loading">
                                 <span v-if="item.gender===this.male">Nam </span>
                                 <span v-if="item.gender===this.feMale">Nữ</span>
-                                <span v-if="item.gender===this.other">Khác</span>   
+                                <span v-if="item.gender===this.other">Khác</span> 
+                                <MLoadTable  v-if="isLoad"/>  
                             </td>
                            
-                            <td class="width__100">{{formatDateTable(item.dateOfBirth)}}</td>
-                            <td class="width__100">{{item.identityNumber}}</td>
-                            <td class="width__150">{{item.departmentName}}</td>
-                            <td class="width__150">{{item.positionName}}</td>
-                            <td class="width__100">{{item.bankAccount}}</td>
+                            <td class="width__100 text__center td__loading">
+                                {{formatDateTable(item.dateOfBirth)}}
+                                <MLoadTable v-if="isLoad"/>  
+                            </td>
+                            <td class="width__100 text__right td__loading">
+                                {{item.identityNumber}}
+                                <MLoadTable v-if="isLoad"/>  
+                            </td>
+                            <td class="width__150 text__left td__loading">
+                                {{item.departmentName}}
+                                <MLoadTable v-if="isLoad"/>  
+                            </td>
+                            <td class="width__150 text__left td__loading">
+                                {{item.positionName}}
+                                <MLoadTable v-if="isLoad"/>  
+                            </td>
+                            <td class="width__100 text__right td__loading">
+                                {{item.bankAccount}}
+                                <MLoadTable v-if="isLoad"/>  
+                            </td>
                             
-                            <td class="width__250">{{item.bankName}}</td>
-                            <td class="width__250">{{item.bankBranch}}</td>
-                         
-                           
-                     
-                          
-                            
-                            <div class="value__edit"  v-show="isShowDropList[index]" :style="{'top': `${topDropList}px`}" >
-                                    <div class="edit__item">Nhân bản</div>
-                                    <div class="edit__item" @click="showPopup(index,item.employeeID)">Xóa</div>                                
+                            <td class="width__250 text__left td__loading">
+                                {{item.bankName}}
+                                <MLoadTable v-if="isLoad"/>  
+                            </td>
+                            <td class="width__250 text__left td__loading">
+                                {{item.bankBranch}}
+                                <MLoadTable v-if="isLoad"/>  
+                            </td>
+
+                            <div class="value__edit "  v-show="isShowDropList[index]" :style="{'top': `${topDropList}px`}" >
+                                    <div class="edit__item" @click="duplicateItem(item,index)">Nhân bản</div>
+                                    <div class="edit__item" @click="showPopup(index,item.employeeID,item.employeeCode)">Xóa</div>                                
                                     <div class="edit__item" @click="changeStatus(item.employeeID,item.status,index)">
                                         <span v-if="item.status===this.work">Ngừng sử dụng </span>
                                         <span v-if="item.status===this.unWork">Sử dụng</span>                                   
                                     </div>
                             </div>    
-                            <td class="edit__td column__sticky column__edit width__100"  :ref="'row_'+index" @dblclick.stop > 
+                            <td class="edit__td column__sticky column__edit width__100 td__loading"  :ref="'row_'+index" @dblclick.stop > 
                                     <div @click="showEditForm(item)"> Sửa</div>
-                                    <div class="icon__drop icon icon__edit--drop"  @click="btnShowEdit(index)" ></div>                                    
+                                    <div class="icon__drop icon icon__edit--drop"  @click="btnShowEdit(index)" ></div>   
+                                    <MLoadTable v-if="isLoad"/>                                   
                             </td>
                                                   
                         </tr>
@@ -92,24 +151,28 @@
         :employeeSelected="empSelected"
         :closeDialog="closeDialog"
         :formMode="formMode"
+        @askPopUp="askPopUp"
         @closeDialog="closeDialog"
         @errorEmpty='errorEmpty'
         @errorEmptyCode = 'errorEmptyCode'
         @errorEmptyName = 'errorEmptyName'
         @errorEmptyDepartment = 'errorEmptyDepartment'
         @openToast = 'openToast'
-
+        @errorDuplicate='errorDuplicate'
         @errorBackEnd='errorBackEnd'
         ></emp-detail>        
     </div>
-    <MPopup  v-if="isShowPopup" :idEmployee='idEmployee' @employeeDelete='employeeDelete'
-    @closePopup='closePopup'  :content="'Bạn có thực sự muốn xóa nhân viên này? '" />
+    <MPopup  v-if="isShowPopup" :idEmployee='idEmployee' @employeeDelete='employeeDelete' :popUpMode="popUpMode"
+    @deleteMultiple="deleteMultiple" :listSelectedEmployee="listSelectedEmployee"
+    @closePopup='closePopup'  :content='content' />
     <MPopupError v-show='isShowPopupError' @closeError='closeError' :text='textError'/>
     <transition name="toast-message">
         <MToastMessage v-show='isShowToast' :content = 'contentOfToastMessage' 
         @closeToastMessage='closeToastMessage' :class='{"toast-success": !isError , "toast-error": isError}' />
     </transition>
-   
+     <MLoad v-if="isLoadFull" />
+     <MPopupWaringDuplicate v-show='isShowPopupDuplicate' @closeErrorDuplicate='closeErrorDuplicate' :contentDuplicate='contentDuplicate'/>
+
 </template>
 <script>
 import TheFooterVue from '@/components/layout/TheFooter.vue';
@@ -119,20 +182,25 @@ import MPopupError from '../../components/base/MPopupError.vue';
 import eNum from '../../js/common/eNum.js';
 import common from '@/js/common/common.js';
 import resource from '../../js/common/resource.js';
-import MToastMessage from '../../components/base/ToastMsg.vue';
+import MToastMessage from '../../components/base/MToastMsg.vue';
+import MLoadTable from '../../components/base/MLoadTable.vue';
+import MLoad from '../../components/base/MLoad.vue';
+import MPopupWaringDuplicate from '@/components/base/MPopupWaringDuplicate.vue';
+
+
 
     /**
      * URL api 
      */
-    var loadDataURL =process.env.VUE_APP_URL;
+    const loadDataURL =process.env.VUE_APP_URL;
 
 export default {
 
     name: "employeeList",
-    components: { empDetail,MPopup,MPopupError,MToastMessage,TheFooterVue},
+    components: { empDetail, MPopup, MPopupError, MToastMessage, TheFooterVue, MLoadTable, MLoad, MPopupWaringDuplicate },
     created() {
         this.loadData(); 
-       
+        this.isLoad = true;
     },  
     props:{        
     },
@@ -145,6 +213,10 @@ export default {
             empSelected: {},
             topDropList:'',
             formMode:eNum.formMode.ADD,
+            popUpMode:eNum.popUpMode.DeleteOne,
+            //loading
+            isLoadFull:false,
+            isLoad:false,
             //gender
             male:eNum.gender.Male,
             feMale:eNum.gender.Femail,
@@ -157,8 +229,13 @@ export default {
             totalPage:Number,
             isShowPopup:false,
             idEmployee: '',
+            content:'',
             isShowPopupError:false,
             textError: '',
+          
+
+            isShowPopupDuplicate:false,
+            contentDuplicate:'',
 
             isShowToast: false,
             contentOfToastMessage: '', //nội dung toast message
@@ -168,6 +245,11 @@ export default {
             pageIndex: 1,
             searchKey:'',
           
+            // xóa nhiều
+            isDisable:true,
+            showMultiple:false,
+            isCheckedAll: false,
+            listSelectedEmployee: [],
         };
     },
     methods: {
@@ -221,7 +303,12 @@ export default {
                 console.log(error);
             }
         },    
-        
+       reLoad(){
+        this.loadData();
+        this.isLoad = true;
+       },
+
+
         /**
          * Lấy toàn bộ nhân viên và tổng số bản ghi hiện có
          * Author: HMHieu(18/09/22)
@@ -232,7 +319,9 @@ export default {
                 .then((data) => {
                     this.employee = data.data;                   
                     this.totalRecord=data.totalCount;
-                    this.totalPage=data.totalPage                           
+                    this.totalPage=data.totalPage;
+                    setTimeout(() => (this.isLoad = false), 500);      
+                    setTimeout(() => (this.isLoadFull = false), 500);                    
                 })
                 .catch((res) => {
                     console.log(res);            
@@ -257,21 +346,34 @@ export default {
             this.pageSize = numRecord;
             this.loadData();
         },
+
         /**
-         * Đóng form chức năng xóa nhân viên 
+         * Hiện popUp  chức năng xóa nhân viên 
          * Author: HMHieu(19/09/22)
          */
-        showPopup(index,id){
+        showPopup(index,id,code){
             this.isShowPopup = true;
-            this.idEmployee=id;         
+            this.idEmployee=id;      
+            this.content= `Bạn có thực sự muốn xóa nhân viên <${code}> không?` ;
             this.isShowDropList[index] = !this.isShowDropList[index];//ẩn hiện dropList
+            this.popUpMode=eNum.popUpMode.DeleteOne;
+        },
+        /**
+         * Hiện popUp  chức năng xóa nhiều nhân viên 
+         * Author: HMHieu(06/10/22)
+         */
+        showPopupMultiple(){
+            this.isShowPopup = true;        
+            this.content= `Bạn có thực sự muốn xóa những nhân viên đã chọn không?` ;
+            this.popUpMode=eNum.popUpMode.DeleteMultiple;           
         },
         /**
          * Đóng form chức năng xóa nhân viên 
          * Author: HMHieu(19/09/22)
          */
         closePopup(){
-            this.isShowPopup = false;            
+            this.isShowPopup = false;    
+            this.showMultiple=false; 
         },
 
         /**
@@ -284,6 +386,7 @@ export default {
                 switch(msg){
                     case resource.popupError.EmptyCode.name:
                         this.textError = resource.popupError.EmptyCode.content;
+                       
                     break;
                     case resource.popupError.EmptyName.name:
                         this.textError =resource.popupError.EmptyName.content;
@@ -316,11 +419,16 @@ export default {
                     else if(sts===eNum.errorBackEnd.Ser){
                         this.textError = resource.popupErrorBackend.Server.content;
                     }
+                     else if(sts===eNum.errorBackEnd.InsertFailCode){
+                        this.textError = resource.popupErrorBackend.User.content;
+                    }
                     else{
                         this.isShowPopupError = false; 
-                        this.openToast(resource.ToastMessage.success);
+                      
                         this.closeDialog();
+                        this.isLoadFull=true                      
                         this.loadData();
+                        this.openToast(resource.ToastMessage.success);
                     }           
             } 
             catch (error) {
@@ -328,6 +436,21 @@ export default {
             }
            
         },
+
+        errorDuplicate(employeeCode){
+            this.isShowPopupDuplicate=true;
+            this.contentDuplicate=`Mã nhân viên <${employeeCode}>đã tồn tại trong hệ thống, vui lòng kiểm tra lại.`;
+        },
+          /**
+         * Đóng Popup error duplicate
+        * Author: HMHieu(21/09/22)
+         */
+         closeErrorDuplicate(){
+            this.isShowPopupDuplicate=false;
+           
+        },
+      
+
         /**
          * Đóng Popup error
         * Author: HMHieu(21/09/22)
@@ -362,6 +485,37 @@ export default {
                 me.isShowToast = false;
             }, 1200);
         },
+
+        /**
+         * 
+         * @param {*} event 
+         */
+        keySearch(event){
+            let me=this;
+            try{
+              //  let key=event.keyCode;
+
+                if(event.keyCode===eNum.KeyCode.Enter){
+                fetch(loadDataURL+`Employees/filter?search=${this.searchKey}&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`, { method: "GET" })
+                .then((res) => res.json())
+                .then((data) => {
+                    me.employee = data.data;                   
+                    me.totalRecord=data.totalCount;
+                    me.totalPage=data.totalPage;
+                    setTimeout(() => (this.isLoad = false), 500);      
+                    setTimeout(() => (this.isLoadFull = false), 500);                    
+                })
+                .catch((res) => {
+                    console.log(res);            
+                });
+                }
+                              
+            }
+            catch(error){
+                console.log(error);
+            }                              
+        },
+
          /**
          * Xóa nhân viên theo ID
          * Author: HMHieu(19/09/22)
@@ -383,7 +537,10 @@ export default {
                         this.errorBackEnd(status);                                                     
                     }                   
                     else {                              
-                        this.isShowPopup = false;                 
+                        this.isShowPopup = false;  
+                        this.isLoadFull=true;
+                        setTimeout(() => (this.isLoadFull=true), 500);     
+                                      
                         this.loadData();                                                                                                                                                                             
                     }
                 })
@@ -427,9 +584,125 @@ export default {
                     this.openToast(resource.ToastMessage.error);                               
                 });
         },   
-        duplicateItem(){
-            
-        }  
+          /**
+         * Nhân đôi thông tin của nhân viên
+         * Author: HMHieu(01/10/22)
+         */
+        duplicateItem(data,index){
+
+           // console.log(data);
+            this.isShow = true,
+            this.formMode = eNum.formMode.Duplicate,
+            this.empSelected=data
+            this.isShowDropList[index] = !this.isShowDropList[index];//ẩn hiện dropList
+        },
+        /**
+         * Xuất dữ liệu ra file excel
+         * Author: HMHieu(01/10/22)
+         */
+        exportExcel(){                       
+            var  changeURL=loadDataURL+`Employees/export-excel`                                                                                      
+            fetch(changeURL)
+                .then((res) => { return res.blob(); })
+                .then((data) => {
+                var a = document.createElement("a");
+                a.href = window.URL.createObjectURL(data);
+                a.download = "Danh_sach_nhan_vien.xlsx";
+                a.click();           
+                this.loadData();              
+            }).catch((res) => {
+                    console.log(res);                 
+                    this.openToast(resource.ToastMessage.error);                               
+                });            
+        } ,
+        
+      /**
+       * ẩn hiện button xóa
+       */
+        activeMultiple(){
+            if (this.listSelectedEmployee.length  > 1) {
+                this.showMultiple=!this.showMultiple;                
+            }
+            if(this.listSelectedEmployee.length  <1){
+                this.showMultiple=false;
+            }                    
+        },       
+       
+        // Xử lý sự kiện click vào input checkbox nhân viên
+        // Author: HMHieu(04-10-22)
+        selectEmployee(data) {
+            if (!this.listSelectedEmployee.includes(data.employeeID)) {
+                this.listSelectedEmployee.push(data.employeeID);
+            } else {
+                this.listSelectedEmployee.splice(
+                    this.listSelectedEmployee.indexOf(this.employeeID) + 1,
+                    1
+                );
+                this.showMultiple=false;
+            } 
+            console.log(this.listSelectedEmployee);               
+        },
+
+         // Xử lý sự kiện click vào input checkbox tổng
+        // Author: HMHieu  04-10-22
+        selectAllEmployee() {
+            this.isCheckedAll = !this.isCheckedAll;
+            if (
+                this.listSelectedEmployee.length != this.employee.length ||
+                (this.listSelectedEmployee.length == this.employee.length &&
+                    this.isCheckedAll)
+            ) {
+                this.employee.forEach((e) => {
+                    if (!this.listSelectedEmployee.includes(e.employeeID))
+                        this.listSelectedEmployee.push(e.employeeID);
+                });
+            } else {
+                this.listSelectedEmployee = [];
+                this.showMultiple=false;
+            }
+            console.log(this.listSelectedEmployee);                   
+        },
+
+        /**
+         * Chức năng xóa nhiều nhân viên
+         * CreatedBy: HMHieu (04-10-22)
+         */
+        deleteMultiple(listEmplyeeDelete){
+            const me=this;
+            var method = "POST";
+                fetch(loadDataURL+'Employees/delete-multiple', {                
+                method: method,
+                headers: {
+                "Content-Type": "application/json",
+                },
+                body: JSON.stringify(listEmplyeeDelete),
+                 })
+                .then((res) => res.json())
+                .then((res) => {                 
+                    let status=res.status;                   
+                    if(status===eNum.errorBackEnd.Ser||status===eNum.errorBackEnd.User||status===eNum.errorBackEnd.NotFound){
+                            me.errorBackEnd(status);    
+                         //   me.$emit('errorBackEnd',status);                           
+                    }
+                    else{ 
+                            //this.$emit('openToast', resource.ToastMessage.success);
+                            this.isShowPopup = false;  
+                            this.isLoadFull=true;
+                            setTimeout(() => (this.isLoadFull=true), 500);                             
+                            me.openToast(res+resource.ToastMessage.successDeleteMultiple);  
+                            // me.$emit("closeDialog");
+                            me.loadData();   
+                            me.showMultiple=false;                                                                   
+                    }
+                    this.listSelectedEmployee=[];                 
+                })
+                .catch((res) => {
+                    console.log(res);
+                    this.openToast(resource.ToastMessage.error);  
+                   
+                });
+        }
+
     }
 }
 </script>

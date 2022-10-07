@@ -1,5 +1,6 @@
 .tooltip {
   position: relative;
+  cursor: pointer;
   /* display: inline-block; */
   /* border-bottom: 1px dotted black; */
 }
@@ -11,9 +12,9 @@
   border-radius: 6px;
   padding: 5px 10px;
   position: absolute;
-  z-index: 1;
+  z-index: 300;
   top: 110%;
-  left: 35%;
+  left: 10%;
   font-size: 12px;
   margin-left: -60px;
   transition-delay: 0.5s;
@@ -27,6 +28,24 @@
   width: 150px;
   background-color: #f1f1f1;
   /* color: #fff; */
+}
+.tooltipIcon{
+
+ padding: 0 16px;
+  /* height: 20px; */
+  background-color:#1c1d1ee8;
+   /* #7571719d; */
+  color:#fff;
+  z-index: 300;
+  /* color: #fff; */
+}
+.tooltip__right{
+  position: absolute;
+  left: 70px !important;
+}
+.tooltip__large{
+ 
+  width: 160px;
 }
 .tooltip__orther{
   display: block;

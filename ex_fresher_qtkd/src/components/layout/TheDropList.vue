@@ -1,5 +1,5 @@
 <template>
-    <div class="dropList-page">
+    <div class="dropList-page" >
         <div class="dropList-text">{{text}}</div>
         <div class="dropList-data" v-show="isShow">
             <div class="data-item" v-for="(textNumPage, index) in contentPage" :key="index" 

@@ -3,6 +3,7 @@ let Resource = {};
 
 Resource.ToastMessage = {
     success: 'Thành công',
+    successDeleteMultiple: ' nhân viên đã xóa thành công',
     error: 'Thất bại',
     notComplete:'Chức năng đang trong quá trình thi công'
 }
@@ -58,6 +59,6 @@ Resource.popupErrorBackend = {
   NotFound: {
     name: 'NotFound',
     content: "Không tìm thấy"
-  }
+  },
 }
 export default Resource;

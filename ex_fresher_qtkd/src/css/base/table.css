@@ -22,12 +22,15 @@
 .table td{
     padding-left: 10px;
     padding-right: 8px;
-    text-align: left;
+    /* text-align: left; */
 }
+.td__loading{
+    position: relative;
+  }
 
 .edit__td{
     display: flex;
-    justify-content: start;
+    justify-content: center;
     line-height: 48px;
     position: relative;
 }
@@ -55,29 +58,38 @@ left: 0px;
     z-index: 9;
     width: 125px;
     top: 260px;
-    right: 110px;
+    right: 80px;
     background-color: var(--color--white);
 }
 .edit__item{
     padding: 5px 10px;
 }
 .width__60{
-    width: 60px;
+    min-width: 60px;
 }
 .width__100{
-    width: 100px;
+    min-width: 100px;
 }
 .width__150{
-    width: 150px;
+    min-width: 150px;
 }
 
 .width__200{
-    width: 200px;
+    min-width: 200px;
 }
 .width__250{
-    width: 250px;
+    min-width: 250px;
 }
-.width__300{
-    width: 300px;
+.width__340{
+    min-width: 340px;
 }
 
+.text__left{
+    text-align: left;
+}
+.text__center{
+    text-align: center;
+}
+.text__right{
+    text-align: right;
+}

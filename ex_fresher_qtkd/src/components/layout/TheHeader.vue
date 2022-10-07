@@ -5,7 +5,7 @@
                     <div class="header__logo--icon icon icon__logo" >
                      
                     </div>
-                    <router-link to="/" class="header__logo--img">
+                    <router-link to="avbc" class="header__logo--img">
                         <img src="../../assets/img/Logo_Module_TiengViet_White.66947422.svg" alt="">
                     </router-link>
                  
@@ -22,9 +22,13 @@
             </div>
            
             <div class="header__account">
-                <div class="header__account--ring icon icon__ring" @click="openToast"></div>
+                <div class="tooltip">
+                 <div class="header__account--ring icon icon__ring" @click="openToast"></div>
+                 <span class="tooltiptext tooltipIcon">Thông báo</span>
+                </div>
                 <div class="header__account--info" @click="openToast" >
                     <div class="info__img icon icon__user"></div>
+                   
                     <div class="info__text">Hứa Minh Hiếu</div>
                 </div>
                 <div class="header__account--toggle icon icon__drop" @click="openToast" ></div>
@@ -32,12 +36,12 @@
         </div> 
         <transition name="toast-message">
             <MToastMessage v-show='isShowToast' :content = 'contentOfToastMessage' 
-            @closeToastMessage='closeToastMessage' :class='{"toast-waring": isShowToast, "toast-error": isError}' />
+            @closeToastMessage='closeToastMessage' :class='{"toast-waring": isShowToast}' />
         </transition>
 </template>
 <script>
     import resource from '@/js/common/resource';
-    import MToastMessage from '../../components/base/ToastMsg.vue';
+    import MToastMessage from '../../components/base/MToastMsg.vue';
 export default {
     components:{MToastMessage},
     data() {
