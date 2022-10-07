@@ -26,6 +26,8 @@ namespace Ex_HMH_Common.Entities
             /// </summary>
             [IsNotNullOrEmpty("Tên phòng ban không được để trống")]
             public string DepartmentName { get; set; }
-        
+
+      
+
     }
 }

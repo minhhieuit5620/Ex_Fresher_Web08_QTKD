@@ -1,6 +1,7 @@
 ﻿using Ex_HMH_Common.Attributes;
 using Ex_HMH_Common.Enums;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Ex_HMH_Common.Entities
 {
@@ -28,7 +29,7 @@ namespace Ex_HMH_Common.Entities
         /// </summary>
         [IsNotNullOrEmpty("Tên nhân viên không được để trống")]
         public string EmployeeName { get; set; }
-
+       
         /// <summary>
         /// Giới tính
         /// </summary>
@@ -119,5 +120,16 @@ namespace Ex_HMH_Common.Entities
         /// </summary>
         public Status? Status { get; set; } =Enums.Status.Working;
 
+        //public string Age
+        //{
+        //    get
+        //    {
+        //        return EmployeeName + EmployeeCode;
+        //    }
+        //    set
+        //    {
+        //        Age = value;
+        //    }
+        //}
     }
 }

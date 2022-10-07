@@ -162,18 +162,28 @@ namespace Ex_HMH_DL.BaseDL
             int numberOfAffecttedRows = 0;
             using (var mySQLConnection = new MySqlConnection(DataContext.MySqlConnectionString))
             {
-                string nameProc = $"Proc_{typeof(T).Name.ToLower()}_InsertOne";
+                if (mySQLConnection.State != System.Data.ConnectionState.Open)
+                {
+                    mySQLConnection.Open();
+                }
+                //mySQLConnection.Open();
+                using (var tran = mySQLConnection.BeginTransaction())
+                {
+                    string nameProc = $"Proc_{typeof(T).Name.ToLower()}_InsertOne";
 
-                 numberOfAffecttedRows = mySQLConnection.Execute(nameProc, parameters, commandType: System.Data.CommandType.StoredProcedure);
-
-            }
-            if (numberOfAffecttedRows > 0)
-            {
-                return newID;
-            }
-            else
-            {
-                return Guid.Empty;
+                    numberOfAffecttedRows = mySQLConnection.Execute(nameProc, parameters, transaction: tran, commandType: System.Data.CommandType.StoredProcedure);
+           
+                    if (numberOfAffecttedRows > 0)
+                    {
+                        tran.Commit();
+                        return newID;
+                    }
+                    else
+                    {
+                        tran.Rollback();
+                        return Guid.Empty;
+                    }
+                }
             }
         }
 
@@ -237,19 +247,30 @@ namespace Ex_HMH_DL.BaseDL
 
             using (var mySQLConnection = new MySqlConnection(DataContext.MySqlConnectionString))
             {
-                string nameProc = $"Proc_{typeof(T).Name.ToLower()}_UpdateByID";
-            
-                numberOfAffecttedRows = mySQLConnection.Execute(nameProc, parameters, commandType: System.Data.CommandType.StoredProcedure);
+                if (mySQLConnection.State != System.Data.ConnectionState.Open)
+                {
+                    mySQLConnection.Open();
+                }
+                //mySQLConnection.Open();
+                using (var tran = mySQLConnection.BeginTransaction())
+                {
+                    string nameProc = $"Proc_{typeof(T).Name.ToLower()}_UpdateByID";
 
+                    numberOfAffecttedRows = mySQLConnection.Execute(nameProc, parameters, transaction: tran, commandType: System.Data.CommandType.StoredProcedure);
+
+                    if (numberOfAffecttedRows > 0)
+                    {
+                        tran.Commit();
+                        return ID;
+                    }
+                    else
+                    {
+                        tran.Rollback();
+                        return Guid.Empty;
+                    }
+                }
             }
-            if (numberOfAffecttedRows > 0)
-            {
-                return ID;
-            }
-            else
-            {
-                return Guid.Empty;
-            }
+          
         }
 
       

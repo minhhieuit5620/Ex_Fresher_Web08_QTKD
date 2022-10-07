@@ -8,6 +8,7 @@ using Ex_HMH_Common;
 using Ex_QTKD_API.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MySqlConnector;
 
 namespace Ex_HMH_QTKD_08_API.Controllers
 {
@@ -53,8 +54,8 @@ namespace Ex_HMH_QTKD_08_API.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogError("Error", exception);
-                _logger.LogTrace("Trace", exception);
+                _logger.LogError("Error", exception.Message);
+                _logger.LogTrace("Trace", exception.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
@@ -72,42 +73,42 @@ namespace Ex_HMH_QTKD_08_API.Controllers
         /// + Tổng số bản ghi thỏa mã các điều kiện lọc
         /// </returns>
         /// Created by: HMHieu(18/09/2022)
-        [HttpGet("filter")]
-        public IActionResult FilterRecord(
-            [FromQuery] string? search,
-            [FromQuery] string? sort,
-            [FromQuery] int pageIndex,
-            [FromQuery] int pageSize)
+        //[HttpGet("filter")]
+        //public IActionResult FilterRecord(
+        //    [FromQuery] string? search,
+        //    [FromQuery] string? sort,
+        //    [FromQuery] int pageIndex,
+        //    [FromQuery] int pageSize)
 
-        {
-            try
-            {
-                var result = _baseBL.Filter(search, sort, pageIndex, pageSize);
-                if (result != null)
-                {
-                    return StatusCode(StatusCodes.Status200OK, new PagingData<T>()
-                    {
-                        Data = result.Data.ToList(),
+        //{
+        //    try
+        //    {
+        //        var result = _baseBL.Filter(search, sort, pageIndex, pageSize);
+        //        if (result != null)
+        //        {
+        //            return StatusCode(StatusCodes.Status200OK, new PagingData<T>()
+        //            {
+        //                Data = result.Data.ToList(),
 
-                        TotalCount = result.TotalCount,
+        //                TotalCount = result.TotalCount,
 
-                        TotalPage = result.TotalCount / pageSize + 1,
+        //                TotalPage = result.TotalCount / pageSize + 1,
 
-                    });
-                }
-                else
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest);
-                }
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError("Error", exception);
-                _logger.LogTrace("Trace", exception);
-                return StatusCode(StatusCodes.Status500InternalServerError, exception);
-            }
+        //            });
+        //        }
+        //        else
+        //        {
+        //            return StatusCode(StatusCodes.Status400BadRequest);
+        //        }
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        _logger.LogError("Error", exception.Message);
+        //        _logger.LogTrace("Trace", exception.Message);
+        //        return StatusCode(StatusCodes.Status500InternalServerError);
+        //    }
 
-        }
+        //}
 
         /// <summary>
         /// API lấy một  bản ghi
@@ -139,9 +140,9 @@ namespace Ex_HMH_QTKD_08_API.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogError("Error", exception);
-                _logger.LogTrace("Trace", exception);
-                return StatusCode(StatusCodes.Status500InternalServerError, exception);
+                _logger.LogError("Error", exception.Message);
+                _logger.LogTrace("Trace", exception.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
         }
@@ -176,10 +177,35 @@ namespace Ex_HMH_QTKD_08_API.Controllers
                                       ));
                 }
             }
+            catch (MySqlException mySqlException)
+            {
+
+                if (mySqlException.ErrorCode == MySqlErrorCode.DuplicateKeyEntry) // trùng mã nhân viên
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
+                                            ErrorCode.DuplicateCode,
+                                            Resource.DevMsg_DuplicateCode,
+                                            Resource.UserMsg_DuplicateCode,
+                                            Resource.Moreinfo_InsertFailed,
+                                            HttpContext.TraceIdentifier
+                                        ));
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                   new ErrorResult(
+                                           ErrorCode.Exception,
+                                           Resource.DevMsg_Exception,
+                                           Resource.UserMsg_Exception,
+                                           Resource.Moreinfo_InsertFailed,
+                                           HttpContext.TraceIdentifier
+                                       )
+                                );
+            }
+
+
             catch (Exception ex)
             {
-                _logger.LogError("Error", ex);
-                _logger.LogTrace("Trace", ex);
+                _logger.LogError("Error", ex.Message);
+                _logger.LogTrace("Trace", ex.Message);
 
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                     new ErrorResult(
@@ -198,7 +224,7 @@ namespace Ex_HMH_QTKD_08_API.Controllers
         /// Created by: HMHieu(18/09/2022)
         /// <param name="ID"></param>
         /// <param name="record"></param>
-        /// <returns>bản ghi vừa sửa </returns>
+        /// <returns>ID bản ghi vừa sửa </returns>
         [HttpPut("{ID}")]
         public IActionResult Record([FromRoute] Guid ID, [FromBody] T record)
         {
@@ -215,6 +241,7 @@ namespace Ex_HMH_QTKD_08_API.Controllers
                 {
                     return StatusCode(StatusCodes.Status400BadRequest,
                                        new ErrorResult(
+                                         
                                            ErrorCode.InvalidInput,
                                            Resource.DevMsg_validateFailed,
                                            Resource.UserMsg_validateFailed,
@@ -223,11 +250,36 @@ namespace Ex_HMH_QTKD_08_API.Controllers
                                       ));
                 }
             }
+
+            catch (MySqlException mySqlException)
+            {
+
+                if (mySqlException.ErrorCode == MySqlErrorCode.DuplicateKeyEntry) // trùng mã nhân viên
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
+                                            ErrorCode.DuplicateCode,
+                                            Resource.DevMsg_DuplicateCode,
+                                            Resource.UserMsg_DuplicateCode,
+                                            Resource.Moreinfo_InsertFailed,
+                                            HttpContext.TraceIdentifier
+                                        ));
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                                   new ErrorResult(
+                                           ErrorCode.Exception,
+                                           Resource.DevMsg_Exception,
+                                           Resource.UserMsg_Exception,
+                                           Resource.Moreinfo_InsertFailed,
+                                           HttpContext.TraceIdentifier
+                                       )
+                                );
+            }
+
             catch (Exception exception)
             {
-                _logger.LogError("Error", exception);
-                _logger.LogTrace("Trace", exception);
-                return StatusCode(StatusCodes.Status500InternalServerError, exception);
+                _logger.LogError("Error", exception.Message);
+                _logger.LogTrace("Trace", exception.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError);
 
             }
 
@@ -257,10 +309,10 @@ namespace Ex_HMH_QTKD_08_API.Controllers
             }
             catch (Exception exception)
             {
-                _logger.LogError("Error", exception);
-                _logger.LogTrace("Trace", exception);
+                _logger.LogError("Error", exception.Message);
+                _logger.LogTrace("Trace", exception.Message);
 
-                return StatusCode(StatusCodes.Status500InternalServerError, exception);
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
 

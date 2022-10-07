@@ -33,6 +33,22 @@ namespace Ex_HMH_BL
         #endregion
 
         #region Method
+
+        /// <summary>
+        /// Lấy danh sách nhân viên theo filter
+        /// </summary>
+        /// <param name="search">chuỗi cần tìm kiếm</param>
+        /// <param name="sort">sắp xếp</param>
+        /// <param name="pageIndex">số trang </param>
+        /// <param name="pageSize">số bản ghi trên 1 trang</param>
+        /// <returns>Danh sách nhân viên thỏa mãn điều kiện filter</returns>
+        /// Created by: HMHieu(28/09/2022)
+        public PagingData<Employee> FilterEmployee(string? search, string? sort, int pageIndex, int pageSize)
+        {
+            return _employeeDL.FilterEmployee(search, sort, pageIndex, pageSize);
+        }
+    
+
         /// <summary>
         /// lấy giá trị mã nhân viên mới
         /// </summary>
@@ -71,7 +87,16 @@ namespace Ex_HMH_BL
             return _employeeDL.ChangeStatus(statusEmployee, EmployeeID);
         }
 
-
+        /// <summary>
+        /// Xóa nhiều nhân viên cùng lúc
+        /// </summary>
+        /// <param name="listEmployeeID"></param>
+        /// <returns>Số bản ghi đã xóa</returns>
+        public int DeleteMultiple(List<Guid> listEmployeeID)
+        {
+            return _employeeDL.DeleteMultiple(listEmployeeID);
+        }
+        
         #endregion
 
 
