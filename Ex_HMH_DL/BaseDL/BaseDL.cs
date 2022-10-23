@@ -1,7 +1,7 @@
 ﻿using Dapper;
-using Ex_HMH_Common.Attributes;
-using Ex_HMH_Common.Entities;
-using Ex_QTKD_API.Entities;
+using Misa.AMIS.Common.Attributes;
+using Misa.AMIS.Common.Entities;
+using Misa.AMIS.Common.Entities;
 using MySqlConnector;
 using System;
 using System.Collections;
@@ -11,9 +11,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex_HMH_DL.BaseDL
+namespace Misa.AMIS.DL.BaseDL
 {
-    public class BaseDL<T> :IBaseDL<T>
+    public class BaseDL<T> : IBaseDL<T>
     {
         /// <summary>
         /// lấy toàn bộ các bản ghi
@@ -28,10 +28,10 @@ namespace Ex_HMH_DL.BaseDL
             using (var mySQLConnection = new MySqlConnection(DataContext.MySqlConnectionString))
             {
                 var listRecords = mySQLConnection.Query<T>(procName, commandType: System.Data.CommandType.StoredProcedure);
-                
-                return listRecords; 
+
+                return listRecords;
             }
-             
+
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Ex_HMH_DL.BaseDL
         /// <param name="ID"></param>
         /// <returns>Id của bản ghi vừa xóa </returns>
         public Guid Delete(Guid ID)
-        {          
+        {
             var procName = $"Proc_{typeof(T).Name.ToLower()}_DeleteByID";
 
             var parameters = new DynamicParameters();
@@ -53,15 +53,15 @@ namespace Ex_HMH_DL.BaseDL
             using (var mySQLConnection = new MySqlConnection(DataContext.MySqlConnectionString))
             {
                 recordDelete = mySQLConnection.Execute(procName, parameters, commandType: System.Data.CommandType.StoredProcedure);
-              
+
             }
-            if(recordDelete > 0)
+            if (recordDelete > 0)
             {
                 return ID;
             }
             else
             {
-                return Guid.Empty; 
+                return Guid.Empty;
             }
         }
 
@@ -88,7 +88,7 @@ namespace Ex_HMH_DL.BaseDL
 
             string vWhere = "";
 
-            var recordCode=$"{typeof(T).Name}Code";
+            var recordCode = $"{typeof(T).Name}Code";
 
             var recordName = $"{typeof(T).Name}Name";
 
@@ -125,7 +125,7 @@ namespace Ex_HMH_DL.BaseDL
                 }
 
             }
-          
+
         }
 
         /// <summary>
@@ -133,58 +133,73 @@ namespace Ex_HMH_DL.BaseDL
         /// </summary>
         /// <param name="record">dữ liệu của bản ghi mới</param>
         /// <returns>ID của bản ghi</returns>
-        public Guid Insert(T record)
-        {                    
+        public string Insert(T record)
+        {
             var newID = Guid.NewGuid();
 
+            var properties = typeof(T).GetProperties();
+
             var parameters = new DynamicParameters();
+            
+            //Guid id = checkDuplicateEmployeeCode(record);
 
-            var properties=typeof(T).GetProperties();
+            ////Nếu chưa tồn tại thì thực hiện
+            //if (id == Guid.Empty)
+            //{
 
-            foreach (var prop in properties)
-            {
-                string propName = prop.Name;
-
-                object propValue;
-
-                var primaryKeyAttribute = (Primarykey?)Attribute.GetCustomAttribute(prop, typeof(Primarykey));
-
-                if(primaryKeyAttribute != null)
+                foreach (var prop in properties)
                 {
-                    propValue = newID;
-                }
-                else
-                {
-                    propValue = prop.GetValue(record, null);
-                }
-                parameters.Add("v_" + propName,propValue);
-            }
-            int numberOfAffecttedRows = 0;
-            using (var mySQLConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                if (mySQLConnection.State != System.Data.ConnectionState.Open)
-                {
-                    mySQLConnection.Open();
-                }
-                //mySQLConnection.Open();
-                using (var tran = mySQLConnection.BeginTransaction())
-                {
-                    string nameProc = $"Proc_{typeof(T).Name.ToLower()}_InsertOne";
+                    string propName = prop.Name;
 
-                    numberOfAffecttedRows = mySQLConnection.Execute(nameProc, parameters, transaction: tran, commandType: System.Data.CommandType.StoredProcedure);
-           
-                    if (numberOfAffecttedRows > 0)
+                    object propValue;
+
+                    var primaryKeyAttribute = (Primarykey?)Attribute.GetCustomAttribute(prop, typeof(Primarykey));
+
+                    if (primaryKeyAttribute != null)
                     {
-                        tran.Commit();
-                        return newID;
+                        propValue = newID;
                     }
                     else
                     {
-                        tran.Rollback();
-                        return Guid.Empty;
+                        propValue = prop.GetValue(record, null);
+                    }
+                    parameters.Add("v_" + propName, propValue);
+                }
+                int numberOfAffecttedRows = 0;
+
+                using (var mySQLConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+                {
+                    if (mySQLConnection.State != System.Data.ConnectionState.Open)
+                    {
+                        mySQLConnection.Open();
+                    }
+                    //mySQLConnection.Open();
+                    using (var tran = mySQLConnection.BeginTransaction())
+                    {
+                        string nameProc = $"Proc_{typeof(T).Name.ToLower()}_InsertOne";
+
+                        numberOfAffecttedRows = mySQLConnection.Execute(nameProc, parameters, transaction: tran, commandType: System.Data.CommandType.StoredProcedure);
+
+                        if (numberOfAffecttedRows > 0)
+                        {
+                            tran.Commit();
+                            return newID.ToString();
+                        }
+                        else
+                        {
+                            tran.Rollback();
+                            return Guid.Empty.ToString();
+                        }
                     }
                 }
-            }
+
+            //}
+            //else
+            //{
+            //    return null;
+            //}
+
+
         }
 
         /// <summary>
@@ -219,60 +234,120 @@ namespace Ex_HMH_DL.BaseDL
         /// <param name="ID"></param>
         /// <param name="record"></param>
         /// <returns>Return về Guid vừa sửa, Guid rỗng nếu thất bại </returns> 
-        public Guid Update(Guid ID, T record)
+        public string Update(Guid ID, T record)
         {
-            var parameters = new DynamicParameters();
-
             var properties = typeof(T).GetProperties();
 
-            foreach (var prop in properties)
-            {
-                string propName = prop.Name;
+            var parameters = new DynamicParameters();          
 
-                object propValue;
+           // Guid id = checkDuplicateEmployeeCode(record);        
 
-                var primaryKeyAttribute = (Primarykey?)Attribute.GetCustomAttribute(prop, typeof(Primarykey));
+            ////Nếu chưa tồn tại thì thực hiện
+            //if (id == Guid.Empty)
+            //{
 
-                if (primaryKeyAttribute != null)
+                foreach (var prop in properties)
                 {
-                    propValue = ID;
-                }
-                else
-                {
-                    propValue = prop.GetValue(record, null);
-                }
-                parameters.Add("v_" + propName, propValue);
-            }
-            int numberOfAffecttedRows = 0;
+                    string propName = prop.Name;
 
-            using (var mySQLConnection = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                if (mySQLConnection.State != System.Data.ConnectionState.Open)
-                {
-                    mySQLConnection.Open();
-                }
-                //mySQLConnection.Open();
-                using (var tran = mySQLConnection.BeginTransaction())
-                {
-                    string nameProc = $"Proc_{typeof(T).Name.ToLower()}_UpdateByID";
+                    object propValue;
 
-                    numberOfAffecttedRows = mySQLConnection.Execute(nameProc, parameters, transaction: tran, commandType: System.Data.CommandType.StoredProcedure);
+                    var primaryKeyAttribute = (Primarykey?)Attribute.GetCustomAttribute(prop, typeof(Primarykey));
 
-                    if (numberOfAffecttedRows > 0)
+                    if (primaryKeyAttribute != null)
                     {
-                        tran.Commit();
-                        return ID;
+                        propValue = ID;
                     }
                     else
                     {
-                        tran.Rollback();
-                        return Guid.Empty;
+                        propValue = prop.GetValue(record, null);
+                    }
+                    parameters.Add("v_" + propName, propValue);
+                }
+                int numberOfAffecttedRows = 0;
+
+                using (var mySQLConnection = new MySqlConnection(DataContext.MySqlConnectionString))
+                {
+                    if (mySQLConnection.State != System.Data.ConnectionState.Open)
+                    {
+                        mySQLConnection.Open();
+                    }
+                    //mySQLConnection.Open();
+                    using (var tran = mySQLConnection.BeginTransaction())
+                    {
+                        string nameProc = $"Proc_{typeof(T).Name.ToLower()}_UpdateByID";
+
+                        numberOfAffecttedRows = mySQLConnection.Execute(nameProc, parameters, transaction: tran, commandType: System.Data.CommandType.StoredProcedure);
+
+                        if (numberOfAffecttedRows > 0)
+                        {
+                            tran.Commit();
+                            return ID.ToString();
+                        }
+                        else
+                        {
+                            tran.Rollback();
+                            return Guid.Empty.ToString();
+                        }
                     }
                 }
-            }
-          
+
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
         }
 
-      
+        /// <summary>
+        /// Kiểm tra mã trùng
+        /// CreatedBy: HMHieu(9/10/2022)
+        /// </summary>
+        /// <param name="record">bản ghi nhân viên</param>
+        /// <returns>Mã nhân viên nếu bị trùng</returns>
+        public Guid checkDuplicateEmployeeCode(T record)
+        {
+
+            //khai báo store proceduce
+            string storedProceduceName = $"Proc_{typeof(T).Name.ToLower()}_CheckDuplicate";        
+
+            var parameters = new DynamicParameters();
+
+            var props = typeof(T).GetProperties();
+            foreach (var prop in props)
+            {
+                string propName = prop.Name;
+
+                string nameCheckCode = "EmployeeCode";
+              
+                if (propName == nameCheckCode)
+                {
+                    var propValue = prop.GetValue(record, null);
+                    parameters.Add("v_EmployeeCode", propValue);
+                    break;
+                }
+                var isPrimarykey = (Primarykey?)Attribute.GetCustomAttribute(prop, typeof(Primarykey));
+                if (isPrimarykey != null)
+                {
+                    var propValue = prop.GetValue(record, null);
+
+                    parameters.Add("v_EmployeeID", propValue);
+                }
+                else parameters.Add("v_EmployeeID", Guid.Empty);
+
+            }
+
+
+            //kết nối đến db
+            using (MySqlConnection connect = new MySqlConnection(DataContext.MySqlConnectionString))
+            {
+                //thực hiện câu lệnh 
+                var idEmp = connect.QueryFirstOrDefault<Guid>(storedProceduceName, parameters, commandType: System.Data.CommandType.StoredProcedure);
+
+                // Trả về dữ liệu cho client
+                return idEmp;
+
+            }
+        }
     }
 }

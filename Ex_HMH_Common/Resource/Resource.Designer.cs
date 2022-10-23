@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Ex_HMH_Common {
+namespace Misa.AMIS.Common {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Ex_HMH_Common {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Ex_HMH_Common.Resource.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Misa.AMIS.Common.Resource.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -124,6 +124,42 @@ namespace Ex_HMH_Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Họ và tên không được để trống.
+        /// </summary>
+        public static string EmployeeNameNotNUll {
+            get {
+                return ResourceManager.GetString("EmployeeNameNotNUll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email không đúng định dạng.
+        /// </summary>
+        public static string ErrorEmail {
+            get {
+                return ResourceManager.GetString("ErrorEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông tin {0} không được lớn hơn ngày hiện tại.
+        /// </summary>
+        public static string ErrorMaxDate {
+            get {
+                return ResourceManager.GetString("ErrorMaxDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông tin {0} không được để trống.
+        /// </summary>
+        public static string ErrorValidNotNull {
+            get {
+                return ResourceManager.GetString("ErrorValidNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://openapi.misa.com.vn/errorcode/4.
         /// </summary>
         public static string Moreinfo_InsertFailed {
@@ -151,7 +187,7 @@ namespace Ex_HMH_Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Mã đối tượng người dùng nhập bị trùng .
+        ///   Looks up a localized string similar to Mã nhân viên đã tồn tại trong hệ thống.
         /// </summary>
         public static string UserMsg_DuplicateCode {
             get {

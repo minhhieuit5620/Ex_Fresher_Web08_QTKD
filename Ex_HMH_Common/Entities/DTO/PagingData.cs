@@ -1,4 +1,4 @@
-﻿namespace Ex_QTKD_API.Entities
+﻿namespace Misa.AMIS.Common.Entities
 {
   
         /// <summary>

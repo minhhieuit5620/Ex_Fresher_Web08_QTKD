@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ex_HMH_Common\Ex_HMH_Common.csproj" />
-    <ProjectReference Include="..\Ex_HMH_DL\Ex_HMH_DL.csproj" />
+    <ProjectReference Include="..\Ex_HMH_Common\Misa.AMIS.Common.csproj" />
+    <ProjectReference Include="..\Ex_HMH_DL\Misa.AMIS.DL.csproj" />
   </ItemGroup>
 
 </Project>

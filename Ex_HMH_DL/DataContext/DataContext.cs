@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex_HMH_DL
+namespace Misa.AMIS.DL
 {
     public class DataContext
     {

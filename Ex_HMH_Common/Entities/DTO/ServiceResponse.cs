@@ -4,13 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex_HMH_Common.Entities 
+namespace Misa.AMIS.Common.Entities 
 {
     /// <summary>
     /// Dữ liệu trả về từ BL
     /// </summary>
     public class ServiceResponse
     {
+        /// <summary>
+        /// DuplicateCode
+        /// </summary>
+        public bool Duplicate { get; set; }
+
         /// <summary>
         /// Thành công hay thất bại
         /// </summary>

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "mTO45amENqmkWXGCWNLmN9kMLeeKOuHOi/CZIEuSqT2cO7qmsQTXT9Jytp4hhQFsGkECfrcQ+x6PuK6imdUitg==",
+  "dgSpecHash": "1vf9jtU3igRMhZMTmq9cBsznmWrJbF2cQO2i8aK62O8EkeaZaYOBxA4ppofEF58B4VT3u0BNWAQqv2M0QfPgbg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_QTKD_08_API\\Ex_HMH_QTKD_08_API.csproj",
+  "projectFilePath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_QTKD_08_API\\Misa.AMIS.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MinhHieuDev\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\MinhHieuDev\\.nuget\\packages\\epplus\\6.0.8\\epplus.6.0.8.nupkg.sha512",

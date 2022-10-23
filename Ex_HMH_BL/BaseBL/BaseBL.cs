@@ -1,23 +1,28 @@
-﻿using Ex_HMH_Common;
-using Ex_HMH_Common.Entities;
-using Ex_HMH_Common.Enums;
-using Ex_HMH_DL;
-using Ex_HMH_BL;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ex_HMH_Common.Attributes;
-using Ex_QTKD_API.Entities;
+using Microsoft.AspNetCore.Http;
+using Misa.AMIS.Common.Entities;
+using Misa.AMIS.Common.Enums;
+using Misa.AMIS.Common;
+using Misa.AMIS.Common.Attributes;
+using Misa.AMIS.DL;
+using System.Text.RegularExpressions;
 
-namespace Ex_HMH_BL.BaseBL
+namespace Misa.AMIS.BL.BaseBL
 {
     public class BaseBL<T> : IBaseBL<T>
     {
         #region Feild
 
         private IBaseDL<T> _baseDL;
+
+       // protected List<string> ValidateErrorsMsg;
+        protected List<string> validateFailed;
+        // var validateFailed = new List<string>();
 
         #endregion
 
@@ -26,6 +31,8 @@ namespace Ex_HMH_BL.BaseBL
         public BaseBL(IBaseDL<T> baseDL) 
         {
             _baseDL = baseDL;
+            //ValidateErrorsMsg = new List<string>();
+            validateFailed = new List<string>();
         }
 
     
@@ -71,27 +78,27 @@ namespace Ex_HMH_BL.BaseBL
             if (validateResults != null && validateResults.Success)
             {
                 var newRecordID = _baseDL.Insert(record);
-                if (newRecordID != Guid.Empty)
+                if (newRecordID != Guid.Empty.ToString())
                 {
                     return new ServiceResponse
                     {
-                        Data = newRecordID,
-                        Success = true
-                    };
+                        Success = true,
+                        Data = newRecordID
+                    };                
                 }
                 else
                 {
                     return new ServiceResponse
                     {
-                        Success = false,
+                        Success = false,                     
 
                         Data = new ErrorResult(
 
-                        ErrorCode.InsertFailed,
+                        ErrorCode.InvalidInput,
 
                         Resource.DevMsg_InsertFailed,
 
-                        Resource.DevMsg_validateFailed,
+                        userMsg: validateFailed[0],
 
                         Resource.Moreinfo_InsertFailed
                     )
@@ -103,8 +110,16 @@ namespace Ex_HMH_BL.BaseBL
                 return new ServiceResponse
                 {
                     Success = false,
+                   
+                    Data = new ErrorResult(
 
-                    Data = validateResults.Data
+                        ErrorCode.InvalidInput,
+
+                        Resource.DevMsg_InsertFailed,
+
+                        userMsg: validateFailed[0],
+
+                        Resource.Moreinfo_InsertFailed)
                 };
             }
         }
@@ -133,7 +148,67 @@ namespace Ex_HMH_BL.BaseBL
 
             if (validateResults != null && validateResults.Success)
             {
-                var recordID = _baseDL.Update(ID, record);
+                var newRecordID = _baseDL.Update(ID,record);
+                if (newRecordID != Guid.Empty.ToString())
+                {
+                    return new ServiceResponse
+                    {
+                        Success = true,
+                        Data=newRecordID
+                    };
+                }
+                else
+                {
+                    return new ServiceResponse
+                    {
+                        Success = false,
+
+                        Data = new ErrorResult(
+
+                        ErrorCode.InvalidInput,
+
+                        Resource.DevMsg_InsertFailed,
+
+                        userMsg: validateFailed[0],
+
+                        Resource.Moreinfo_InsertFailed
+                    )
+                    };
+                }
+            }
+            else
+            {
+                return new ServiceResponse
+                {
+                    Success = false,
+                    Duplicate = false,
+
+                    Data = new ErrorResult(
+
+                        ErrorCode.InvalidInput,
+
+                        Resource.DevMsg_InsertFailed,
+
+                        userMsg: validateFailed[0],
+
+                        Resource.Moreinfo_InsertFailed)
+
+
+                    
+                };
+            }
+        }
+
+
+        /// <summary>
+        /// xóa một bản ghi 
+        /// </summary>
+        /// Created by: HMHieu(29/09/2022)
+        /// <param name="ID"></param>
+        /// <returns>Id của bản ghi vừa xóa </returns>
+        public ServiceResponse Delete(Guid ID)
+        {            
+                var recordID = _baseDL.Delete(ID);
 
                 if (recordID != Guid.Empty)
                 {
@@ -151,38 +226,18 @@ namespace Ex_HMH_BL.BaseBL
 
                         Data = new ErrorResult(
 
-                        ErrorCode.InsertFailed,
+                        ErrorCode.InvalidEmployeeCode,
 
-                        Resource.DevMsg_InsertFailed,
+                        Resource.DevMsg_DeleteFailed,
 
-                        Resource.DevMsg_validateFailed,
+                        Resource.UserMsg_DeleteFailed,
 
                         Resource.Moreinfo_InsertFailed
                     )
                     };
-                }
-            }
-            else
-            {
-                return new ServiceResponse
-                {
-                    Success = false,
+                }           
 
-                    Data = validateResults.Data
-                };
-            }
-        }
-
-
-        /// <summary>
-        /// xóa một bản ghi 
-        /// </summary>
-        /// Created by: HMHieu(29/09/2022)
-        /// <param name="ID"></param>
-        /// <returns>Id của bản ghi vừa xóa </returns>
-        public Guid Delete(Guid ID)
-        {
-            return _baseDL.Delete(ID);
+            //return _baseDL.Delete(ID);
         }
 
         /// <summary>
@@ -195,7 +250,7 @@ namespace Ex_HMH_BL.BaseBL
             //validate dữ liệu truyền vào
             var properties = typeof(T).GetProperties();
 
-            var validateFailed = new List<string>();
+           
 
             foreach (var property in properties)
             {
@@ -210,24 +265,42 @@ namespace Ex_HMH_BL.BaseBL
                 {
                     validateFailed.Add(isNotNullOrEmptyAttr.ErrorMessage);
                 }
-            }
 
+                // định dạng mail
+                //var isNotEmail = (IsNotEmailAttribute?)Attribute.GetCustomAttribute(property, typeof(IsNotEmailAttribute));
+                //string regexEmail = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" + @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" + @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+                //Regex email = new Regex(regexEmail);
+                //if (propertyValue != null && isNotEmail != null)
+                //{
+                //    if (propertyValue != "")
+                //    {
+                //        string emailValue = propertyValue.ToString();
+                //        //var a = email.IsMatch(emailValue);
+                //        if (emailValue != null && !email.IsMatch(emailValue))
+                //            validateFailed.Add(isNotEmail.msg);
+                //    }
+                //}
+
+                //// validate ngày tháng
+                //var isDate = (DateAttribute?)Attribute.GetCustomAttribute(property, typeof(DateAttribute));
+                //if (isDate != null && propertyValue != null)
+                //{
+                //    if ((DateTime)propertyValue > DateTime.Now)
+                //    {
+                //        validateFailed.Add(isDate.msg);
+                //    }
+
+                //}
+            }
+            ValidateObjectCustom(record);
             if (validateFailed.Count > 0)
             {
                 return new ServiceResponse
                 {
                     Success = false,
 
-                    Data = new ErrorResult(
-
-                        ErrorCode.InvalidInput,
-
-                        Resource.DevMsg_InsertFailed,
-
-                        Resource.DevMsg_validateFailed,
-
-                        String.Join(" ,", validateFailed)
-                    )
+                    Data = validateFailed.FirstOrDefault().ToString()
+                    
                 };
             }
             else
@@ -237,6 +310,17 @@ namespace Ex_HMH_BL.BaseBL
                     Success = true
                 };
             }
+            
+        }
+        /// <summary>
+        /// </summary>
+        /// <param name="entity">Đối tượng cần validate</param>
+        /// <returns>List string các lỗi validate</returns>
+        /// Thực hiện validate dữ liệu
+        /// CreatedBy: HMHieu (20/10/2022)
+        protected virtual List<string> ValidateObjectCustom(T entity)
+        {
+            return null;
         }
         #endregion
     }

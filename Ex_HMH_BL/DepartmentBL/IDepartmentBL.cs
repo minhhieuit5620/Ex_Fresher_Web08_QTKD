@@ -1,12 +1,13 @@
-﻿using Ex_HMH_BL.BaseBL;
-using Ex_HMH_Common.Entities;
+﻿
+using Misa.AMIS.BL.BaseBL;
+using Misa.AMIS.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex_HMH_BL.DepartmentBL
+namespace Misa.AMIS.BL.DepartmentBL
 {
     public interface IDepartmentBL:IBaseBL<Department>
     {

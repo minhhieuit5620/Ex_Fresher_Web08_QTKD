@@ -2,16 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Dapper;
 using MySqlConnector;
-using Ex_HMH_Common.Entities;
-using Ex_HMH_Common.Attributes;
-using Ex_HMH_Common.Enums;
-using Ex_HMH_Common;
-using Ex_HMH_BL;
-using Ex_QTKD_API.Entities;
+using Misa.AMIS.Common.Entities;
+using Misa.AMIS.Common.Attributes;
+using Misa.AMIS.Common.Enums;
+using Misa.AMIS.Common;
+
 using System;
-using Ex_HMH_DL;
+
 using NLog;
-using Ex_HMH_BL.BaseBL;
+
 using Microsoft.Extensions.Logging;
 using System.IO;
 using Microsoft.AspNetCore.StaticFiles;
@@ -23,9 +22,10 @@ using OfficeOpenXml.Style;
 using System.Globalization;
 using System.Reflection.PortableExecutable;
 using System.Net;
+using Misa.AMIS.BL;
 //using Syncfusion.XlsIO;
 
-namespace Ex_HMH_QTKD_08_API.Controllers
+namespace Misa.AMIS.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -99,7 +99,7 @@ namespace Ex_HMH_QTKD_08_API.Controllers
             {
                 _logger.LogError("Error", exception);
                 _logger.LogTrace("Trace", exception);
-                return StatusCode(StatusCodes.Status400BadRequest, exception);
+                return StatusCode(StatusCodes.Status500InternalServerError, exception);
             }
 
         }
@@ -118,24 +118,19 @@ namespace Ex_HMH_QTKD_08_API.Controllers
             {
                 var maxCode = _employeeBL.NewEmployeeCode();
 
-                if (maxCode != "")
-                {
-
-
+                if (maxCode.Success)
+                {                    
                     return StatusCode(StatusCodes.Status200OK, maxCode);
                 }
                 else
                 {
                     return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
-                        ErrorCode.InvalidEmployeeCode,
-                        Resource.DevMsg_DuplicateCode,
-                        Resource.UserMsg_DuplicateCode,
+                        ErrorCode.InvalidInput,
+                        Resource.DevMsg_InsertFailed,
+                        Resource.UserMsg_InsertFailed,
                         Resource.Moreinfo_InsertFailed
                         ));
                 }
-
-
-
             }
             catch (Exception ex)
             {
@@ -161,14 +156,14 @@ namespace Ex_HMH_QTKD_08_API.Controllers
             {
                 var employeeChange = _employeeBL.ChangeStatus(statusEmployee, EmployeeID);
 
-                if (employeeChange != Guid.Empty)
+                if (employeeChange.Success)
                 {
                     return StatusCode(StatusCodes.Status200OK, employeeChange);
                 }
                 else
                 {
                     return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
-                        ErrorCode.Exception,
+                        ErrorCode.InvalidInput,
                         Resource.DevMsg_Exception,
                         Resource.UserMsg_Exception,
                         Resource.Moreinfo_InsertFailed
@@ -201,7 +196,13 @@ namespace Ex_HMH_QTKD_08_API.Controllers
 
                 if (listEmployee == null)
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
+                                          ErrorCode.InvalidInput,
+                                          Resource.DevMsg_InsertFailed,
+                                          Resource.UserMsg_InsertFailed,
+                                          Resource.Moreinfo_InsertFailed,
+                                          HttpContext.TraceIdentifier
+                                     )); ;
                 }
                 else
                 {
@@ -360,7 +361,7 @@ namespace Ex_HMH_QTKD_08_API.Controllers
                         worksheet.Column(9).Width = 45;
                         worksheet.Column(10).Width = 26;
                         worksheet.Column(5).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                        worksheet.Column(8).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
+                       // worksheet.Column(8).Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Right;
 
                         worksheet.Cells.Style.Font.Name = "Arial";
 
@@ -391,13 +392,18 @@ namespace Ex_HMH_QTKD_08_API.Controllers
             {
                 var numberEmployeeDelete = _employeeBL.DeleteMultiple(listEmployeeID);
 
-                if (numberEmployeeDelete > 0)
+                if (numberEmployeeDelete.Success)
                 {
                     return StatusCode(StatusCodes.Status200OK, numberEmployeeDelete);
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
+                       ErrorCode.InvalidInput,
+                       Resource.DevMsg_DeleteFailed,
+                       Resource.UserMsg_DeleteFailed,
+                       Resource.Moreinfo_InsertFailed
+                       ));
                 }
             }
             catch (Exception ex)

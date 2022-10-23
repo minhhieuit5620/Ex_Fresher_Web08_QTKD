@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Ex_HMH_BL\Ex_HMH_BL.csproj" />
-    <ProjectReference Include="..\Ex_HMH_Common\Ex_HMH_Common.csproj" />
+    <ProjectReference Include="..\Ex_HMH_BL\Misa.AMIS.BL.csproj" />
+    <ProjectReference Include="..\Ex_HMH_Common\Misa.AMIS.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

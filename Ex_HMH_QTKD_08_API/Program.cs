@@ -1,9 +1,10 @@
-using Ex_HMH_BL;
-using Ex_HMH_BL.BaseBL;
-using Ex_HMH_BL.DepartmentBL;
-using Ex_HMH_DL;
-using Ex_HMH_DL.BaseDL;
-using Ex_HMH_DL.DeparmentDL;
+
+using Misa.AMIS.BL;
+using Misa.AMIS.BL.BaseBL;
+using Misa.AMIS.BL.DepartmentBL;
+using Misa.AMIS.DL;
+using Misa.AMIS.DL.BaseDL;
+using Misa.AMIS.DL.DeparmentDL;
 using NLog;
 using NLog.Web;
 using System.Transactions;

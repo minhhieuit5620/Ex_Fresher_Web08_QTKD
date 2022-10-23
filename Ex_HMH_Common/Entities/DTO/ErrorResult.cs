@@ -1,6 +1,6 @@
-﻿using Ex_HMH_Common.Enums;
+﻿using Misa.AMIS.Common.Enums;
 
-namespace Ex_QTKD_API.Entities
+namespace Misa.AMIS.Common.Entities
 {
     public class ErrorResult
     {

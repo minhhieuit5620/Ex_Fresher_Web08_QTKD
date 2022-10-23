@@ -1,14 +1,14 @@
-﻿using Ex_HMH_BL.BaseBL;
-using Ex_HMH_Common.Entities;
-using Ex_HMH_Common.Enums;
-using Ex_QTKD_API.Entities;
+﻿
+using Misa.AMIS.BL.BaseBL;
+using Misa.AMIS.Common.Entities;
+using Misa.AMIS.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex_HMH_BL
+namespace Misa.AMIS.BL
 {
     public interface IEmployeeBL: IBaseBL<Employee>
     {
@@ -29,22 +29,22 @@ namespace Ex_HMH_BL
         /// </summary>
         /// <returns>Mã nhân viên mới</returns>
         /// CreatedBy: Hứa Minh Hiếu
-        public string NewEmployeeCode();
+        public ServiceResponse NewEmployeeCode();
 
         /// <summary>
         /// Thay đổi trạng thái người dùng
         /// </summary>
         /// <returns>Guid nhân viên</returns>
         /// CreatedBy: Hứa Minh Hiếu
-        public Guid ChangeStatus(Status statusEmployee, Guid EmployeeID);
+        public ServiceResponse ChangeStatus(Status statusEmployee, Guid EmployeeID);
 
         /// <summary>
         /// Xóa nhiều nhân viên cùng lúc
         /// </summary>
         /// <param name="listEmployeeID"></param>
         /// <returns>Số bản ghi đã xóa</returns>
-        /// CreatedBy: Hứa Minh Hiếu(05-10-2000)
-        public int DeleteMultiple(List<Guid> listEmployeeID);
+        /// CreatedBy: Hứa Minh Hiếu(05-10-2022)
+        public ServiceResponse DeleteMultiple(List<Guid> listEmployeeID);
 
      
     }

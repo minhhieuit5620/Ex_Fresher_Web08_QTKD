@@ -1,13 +1,13 @@
-﻿using Ex_HMH_BL;
-using Ex_HMH_BL.BaseBL;
-using Ex_HMH_BL.DepartmentBL;
-using Ex_HMH_Common.Entities;
+﻿
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Misa.AMIS.BL.BaseBL;
+using Misa.AMIS.Common.Entities;
 using MySqlConnector;
 using System;
 
-namespace Ex_HMH_QTKD_08_API.Controllers
+namespace Misa.AMIS.API.Controllers
 {
    // [Route("api/[controller]")]
     [ApiController]

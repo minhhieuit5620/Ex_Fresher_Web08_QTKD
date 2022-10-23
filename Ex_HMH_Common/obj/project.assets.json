@@ -14,9 +14,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\Ex_HMH_Common.csproj",
-      "projectName": "Ex_HMH_Common",
-      "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\Ex_HMH_Common.csproj",
+      "projectUniqueName": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\Misa.AMIS.Common.csproj",
+      "projectName": "Misa.AMIS.Common",
+      "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\Misa.AMIS.Common.csproj",
       "packagesPath": "C:\\Users\\MinhHieuDev\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\obj\\",
       "projectStyle": "PackageReference",

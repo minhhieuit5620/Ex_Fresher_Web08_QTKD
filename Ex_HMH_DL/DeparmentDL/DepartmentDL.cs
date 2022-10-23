@@ -1,6 +1,6 @@
 ﻿using Dapper;
-using Ex_HMH_Common.Entities;
-using Ex_HMH_DL.BaseDL;
+using Misa.AMIS.Common.Entities;
+using Misa.AMIS.DL.BaseDL;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex_HMH_DL.DeparmentDL
+namespace Misa.AMIS.DL.DeparmentDL
 {
     public class DepartmentDL:BaseDL<Department>,IDeparmentDL
     {

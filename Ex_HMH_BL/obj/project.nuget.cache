@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zFxecPOj5XJODlm8B/l00lrSeBxWLyHTqxFT/DqHgae9gp7j81+DlriJcWvLHgy1APSzT7lneY1K65WPXxSNbQ==",
+  "dgSpecHash": "yXl5+dNHUIsQqTdF4HByYK5RDq3LkhyJZjOKRkxJediCb/Yls/Q+4xstU7zYEc3xHkXs7/ugWFbnGISzyXGxpg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_BL\\Ex_HMH_BL.csproj",
+  "projectFilePath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_BL\\Misa.AMIS.BL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\MinhHieuDev\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\MinhHieuDev\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",

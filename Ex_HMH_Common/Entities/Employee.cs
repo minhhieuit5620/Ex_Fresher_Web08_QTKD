@@ -1,9 +1,10 @@
-﻿using Ex_HMH_Common.Attributes;
-using Ex_HMH_Common.Enums;
+﻿using Misa.AMIS.Common.Attributes;
+using Misa.AMIS.Common;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
+using Misa.AMIS.Common.Enums;
 
-namespace Ex_HMH_Common.Entities
+namespace Misa.AMIS.Common.Entities
 {
     public class Employee:BaseEntities
     {
@@ -38,6 +39,7 @@ namespace Ex_HMH_Common.Entities
         /// <summary>
         /// Ngày sinh
         /// </summary>
+        [Date("Ngày sinh không được lớn hơn hiện tại.")]
         public DateTime? DateOfBirth { get; set; }
 
         /// <summary>
@@ -48,6 +50,7 @@ namespace Ex_HMH_Common.Entities
         /// <summary>
         /// Ngày cấp CMND
         /// </summary>
+        [Date("Ngày cấp không được lớn hơn hiện tại.")]
         public DateTime? IdentityIssuedDate { get; set; }
 
         /// <summary>
@@ -73,6 +76,7 @@ namespace Ex_HMH_Common.Entities
         /// <summary>
         /// Email
         /// </summary>
+        [IsNotEmail("Không đúng định dạng email")]
         public string? Email { get; set; }
 
         /// <summary>
@@ -93,11 +97,13 @@ namespace Ex_HMH_Common.Entities
         /// <summary>
         /// ID phòng ban
         /// </summary>
+        [IsNotNullOrEmpty("Đơn vị không được để trống.")]
         public Guid DepartmentID { get; set; }
 
         /// <summary>
         /// Tên phòng ban
         /// </summary>
+        [IsNotNullOrEmpty("Đơn vị không được để trống.")]
         public string DepartmentName { get; set; }
 
         /// <summary>

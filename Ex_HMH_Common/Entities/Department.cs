@@ -1,6 +1,6 @@
-﻿using Ex_HMH_Common.Attributes;
+﻿using Misa.AMIS.Common.Attributes;
 
-namespace Ex_HMH_Common.Entities
+namespace Misa.AMIS.Common.Entities
 {
     /// <summary>
     /// các thành phần của bảng phòng ban

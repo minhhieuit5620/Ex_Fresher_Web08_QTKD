@@ -1,12 +1,12 @@
-﻿using Ex_HMH_Common.Entities;
-using Ex_QTKD_API.Entities;
+﻿
+using Misa.AMIS.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex_HMH_BL.BaseBL
+namespace Misa.AMIS.BL.BaseBL
 {
     public interface IBaseBL<T>
     {
@@ -60,6 +60,6 @@ namespace Ex_HMH_BL.BaseBL
         /// Created by: HMHieu(29/09/2022)
         /// <param name="ID"></param>
         /// <returns>Id của bản ghi vừa xóa </returns>
-        public Guid Delete(Guid ID);
+        public ServiceResponse Delete(Guid ID);
     }
 }

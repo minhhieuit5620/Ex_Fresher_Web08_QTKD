@@ -1,12 +1,12 @@
-﻿using Ex_HMH_Common.Entities;
-using Ex_QTKD_API.Entities;
+﻿using Misa.AMIS.Common.Entities;
+using Misa.AMIS.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex_HMH_DL
+namespace Misa.AMIS.DL
 {
     public interface IBaseDL<T>
     {
@@ -42,7 +42,7 @@ namespace Ex_HMH_DL
         /// <param name="record"> Đối tượng cần thêm mới</param> 
         /// <returns>Return về Guid mới, Guid rỗng nếu thất bại</returns>
         /// Created by: HMHieu(28/09/2022)
-        public Guid Insert(T record);
+        public string Insert(T record);
 
         /// <summary>
         /// sửa một bản ghi 
@@ -51,7 +51,7 @@ namespace Ex_HMH_DL
         /// <param name="ID"></param>
         /// <param name="record"></param>
         /// <returns>Return về Guid vừa sửa, Guid rỗng nếu thất bại </returns>      
-        public Guid Update(Guid ID, T record);
+        public string Update(Guid ID, T record);
 
         /// <summary>
         /// xóa một bản ghi 
@@ -60,5 +60,13 @@ namespace Ex_HMH_DL
         /// <param name="ID"></param>
         /// <returns>Id của bản ghi vừa xóa </returns>
         public Guid Delete(Guid ID);
+
+        /// <summary>
+        /// Kiểm tra mã trùng
+        /// CreatedBy: HMHieu(9/10/2022)
+        /// </summary>
+        /// <param name="record">bản ghi nhân viên</param>
+        /// <returns>IDs nếu bị trùng</returns>
+        public Guid checkDuplicateEmployeeCode(T record);
     }
 }

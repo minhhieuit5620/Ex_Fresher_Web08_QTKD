@@ -627,45 +627,45 @@
           }
         }
       },
-      "Ex_HMH_BL/1.0.0": {
+      "Misa.AMIS.BL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
-          "Ex_HMH_Common": "1.0.0",
-          "Ex_HMH_DL": "1.0.0",
-          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0"
+          "Microsoft.AspNetCore.Http.Abstractions": "2.2.0",
+          "Misa.AMIS.Common": "1.0.0",
+          "Misa.AMIS.DL": "1.0.0"
         },
         "compile": {
-          "bin/placeholder/Ex_HMH_BL.dll": {}
+          "bin/placeholder/Misa.AMIS.BL.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Ex_HMH_BL.dll": {}
+          "bin/placeholder/Misa.AMIS.BL.dll": {}
         }
       },
-      "Ex_HMH_Common/1.0.0": {
+      "Misa.AMIS.Common/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "compile": {
-          "bin/placeholder/Ex_HMH_Common.dll": {}
+          "bin/placeholder/Misa.AMIS.Common.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Ex_HMH_Common.dll": {}
+          "bin/placeholder/Misa.AMIS.Common.dll": {}
         }
       },
-      "Ex_HMH_DL/1.0.0": {
+      "Misa.AMIS.DL/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "Dapper": "2.0.123",
-          "Ex_HMH_Common": "1.0.0",
+          "Misa.AMIS.Common": "1.0.0",
           "MySqlConnector": "2.1.13",
           "Newtonsoft.Json": "13.0.1"
         },
         "compile": {
-          "bin/placeholder/Ex_HMH_DL.dll": {}
+          "bin/placeholder/Misa.AMIS.DL.dll": {}
         },
         "runtime": {
-          "bin/placeholder/Ex_HMH_DL.dll": {}
+          "bin/placeholder/Misa.AMIS.DL.dll": {}
         }
       }
     }
@@ -1623,27 +1623,27 @@
         "version.txt"
       ]
     },
-    "Ex_HMH_BL/1.0.0": {
+    "Misa.AMIS.BL/1.0.0": {
       "type": "project",
-      "path": "../Ex_HMH_BL/Ex_HMH_BL.csproj",
-      "msbuildProject": "../Ex_HMH_BL/Ex_HMH_BL.csproj"
+      "path": "../Ex_HMH_BL/Misa.AMIS.BL.csproj",
+      "msbuildProject": "../Ex_HMH_BL/Misa.AMIS.BL.csproj"
     },
-    "Ex_HMH_Common/1.0.0": {
+    "Misa.AMIS.Common/1.0.0": {
       "type": "project",
-      "path": "../Ex_HMH_Common/Ex_HMH_Common.csproj",
-      "msbuildProject": "../Ex_HMH_Common/Ex_HMH_Common.csproj"
+      "path": "../Ex_HMH_Common/Misa.AMIS.Common.csproj",
+      "msbuildProject": "../Ex_HMH_Common/Misa.AMIS.Common.csproj"
     },
-    "Ex_HMH_DL/1.0.0": {
+    "Misa.AMIS.DL/1.0.0": {
       "type": "project",
-      "path": "../Ex_HMH_DL/Ex_HMH_DL.csproj",
-      "msbuildProject": "../Ex_HMH_DL/Ex_HMH_DL.csproj"
+      "path": "../Ex_HMH_DL/Misa.AMIS.DL.csproj",
+      "msbuildProject": "../Ex_HMH_DL/Misa.AMIS.DL.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net6.0": [
       "EPPlus >= 6.0.8",
-      "Ex_HMH_BL >= 1.0.0",
-      "Ex_HMH_Common >= 1.0.0",
+      "Misa.AMIS.BL >= 1.0.0",
+      "Misa.AMIS.Common >= 1.0.0",
       "NLog >= 5.0.4",
       "NLog.Web.AspNetCore >= 5.1.4",
       "Swashbuckle.AspNetCore >= 6.2.3"
@@ -1656,9 +1656,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_QTKD_08_API\\Ex_HMH_QTKD_08_API.csproj",
-      "projectName": "Ex_HMH_QTKD_08_API",
-      "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_QTKD_08_API\\Ex_HMH_QTKD_08_API.csproj",
+      "projectUniqueName": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_QTKD_08_API\\Misa.AMIS.API.csproj",
+      "projectName": "Misa.AMIS.API",
+      "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_QTKD_08_API\\Misa.AMIS.API.csproj",
       "packagesPath": "C:\\Users\\MinhHieuDev\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_QTKD_08_API\\obj\\",
       "projectStyle": "PackageReference",
@@ -1682,11 +1682,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_BL\\Ex_HMH_BL.csproj": {
-              "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_BL\\Ex_HMH_BL.csproj"
+            "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_BL\\Misa.AMIS.BL.csproj": {
+              "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_BL\\Misa.AMIS.BL.csproj"
             },
-            "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\Ex_HMH_Common.csproj": {
-              "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\Ex_HMH_Common.csproj"
+            "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\Misa.AMIS.Common.csproj": {
+              "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\Misa.AMIS.Common.csproj"
             }
           }
         }

@@ -36,8 +36,8 @@
               "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\Ex_HMH_Common.csproj": {
                 "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\Ex_HMH_Common.csproj"
               },
-              "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\Ex_HMH_DL.csproj": {
-                "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\Ex_HMH_DL.csproj"
+              "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\Misa.AMIS.DL.csproj": {
+                "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\Misa.AMIS.DL.csproj"
               }
             }
           }
@@ -137,12 +137,12 @@
         }
       }
     },
-    "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\Ex_HMH_DL.csproj": {
+    "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\Misa.AMIS.DL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\Ex_HMH_DL.csproj",
-        "projectName": "Ex_HMH_DL",
-        "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\Ex_HMH_DL.csproj",
+        "projectUniqueName": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\Misa.AMIS.DL.csproj",
+        "projectName": "Misa.AMIS.DL",
+        "projectPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\Misa.AMIS.DL.csproj",
         "packagesPath": "C:\\Users\\MinhHieuDev\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_DL\\obj\\",
         "projectStyle": "PackageReference",

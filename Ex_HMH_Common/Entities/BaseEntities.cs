@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Ex_HMH_Common;
+using Misa.AMIS.Common;
 
-namespace Ex_HMH_Common
+
+namespace Misa.AMIS.Common
 {
     public class BaseEntities
     {

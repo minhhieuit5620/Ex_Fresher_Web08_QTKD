@@ -1,8 +1,8 @@
 ﻿using Dapper;
-using Ex_HMH_Common.Entities;
-using Ex_HMH_Common.Enums;
-using Ex_HMH_DL.BaseDL;
-using Ex_QTKD_API.Entities;
+
+using Misa.AMIS.Common.Entities;
+using Misa.AMIS.Common.Enums;
+using Misa.AMIS.DL.BaseDL;
 using MySqlConnector;
 using Newtonsoft.Json;
 using System;
@@ -13,7 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 
-namespace Ex_HMH_DL
+namespace Misa.AMIS.DL
 {
     public class EmployeeDL : BaseDL<Employee>, IEmployeeDL
     {

@@ -1,4 +1,4 @@
-﻿namespace Ex_HMH_Common.Enums
+﻿namespace Misa.AMIS.Common.Enums
 {
     /// <summary>
     /// Các mã lỗi

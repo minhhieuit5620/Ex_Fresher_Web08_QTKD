@@ -145,6 +145,22 @@
     <value>One more or validation error occurred</value>
     <comment>Message cho dev đọc ki insert đầu vào thất bại</comment>
   </data>
+  <data name="EmployeeNameNotNUll" xml:space="preserve">
+    <value>Họ và tên không được để trống</value>
+    <comment>Thông báo nếu họ và tên nhân viện bị trống</comment>
+  </data>
+  <data name="ErrorEmail" xml:space="preserve">
+    <value>Email không đúng định dạng</value>
+    <comment>Thông báo nếu email nhập vào không hợp lệ</comment>
+  </data>
+  <data name="ErrorMaxDate" xml:space="preserve">
+    <value>Thông tin {0} không được lớn hơn ngày hiện tại</value>
+    <comment>Thông báo nếu ngày nhập vào lơn hơn ngày hiện tại</comment>
+  </data>
+  <data name="ErrorValidNotNull" xml:space="preserve">
+    <value>Thông tin {0} không được để trống</value>
+    <comment>Thông báo nếu thông tin NotNull bị trống</comment>
+  </data>
   <data name="Moreinfo_InsertFailed" xml:space="preserve">
     <value>https://openapi.misa.com.vn/errorcode/4</value>
     <comment>Đường dẫn tới trang mô tả lỗi insert bản ghi vào database thất bại</comment>
@@ -158,7 +174,7 @@
     <comment>Message cho user đọc khi xóa một đối tượng thất bại</comment>
   </data>
   <data name="UserMsg_DuplicateCode" xml:space="preserve">
-    <value>Mã đối tượng người dùng nhập bị trùng </value>
+    <value>Mã nhân viên đã tồn tại trong hệ thống</value>
     <comment>Messafe cho user đọc khi mã đối tượng bị trùng</comment>
   </data>
   <data name="UserMsg_Exception" xml:space="preserve">

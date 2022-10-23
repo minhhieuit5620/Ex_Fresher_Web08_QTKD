@@ -1,0 +1,15 @@
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\bin\Debug\net6.0\Misa.AMIS.DL.deps.json
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\bin\Debug\net6.0\Misa.AMIS.DL.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\bin\Debug\net6.0\Misa.AMIS.DL.pdb
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\bin\Debug\net6.0\Misa.AMIS.Common.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\bin\Debug\net6.0\Misa.AMIS.Common.pdb
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\obj\Debug\net6.0\Misa.AMIS.DL.csproj.AssemblyReference.cache
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\obj\Debug\net6.0\Misa.AMIS.DL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\obj\Debug\net6.0\Misa.AMIS.DL.AssemblyInfoInputs.cache
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\obj\Debug\net6.0\Misa.AMIS.DL.AssemblyInfo.cs
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\obj\Debug\net6.0\Misa.AMIS.DL.csproj.CoreCompileInputs.cache
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\obj\Debug\net6.0\Misa.AMIS.DL.csproj.CopyComplete
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\obj\Debug\net6.0\Misa.AMIS.DL.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\obj\Debug\net6.0\refint\Misa.AMIS.DL.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\obj\Debug\net6.0\Misa.AMIS.DL.pdb
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_DL\obj\Debug\net6.0\ref\Misa.AMIS.DL.dll

@@ -1,16 +1,14 @@
-﻿ 
-using Ex_HMH_BL;
-using Ex_HMH_BL.BaseBL;
-using Ex_HMH_BL.DepartmentBL;
-using Ex_HMH_Common.Entities;
-using Ex_HMH_Common.Enums;
-using Ex_HMH_Common;
-using Ex_QTKD_API.Entities;
+﻿
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
+using Misa.AMIS.BL.BaseBL;
+using Misa.AMIS.Common.Entities;
+using Misa.AMIS.Common.Enums;
+using Misa.AMIS.Common;
 
-namespace Ex_HMH_QTKD_08_API.Controllers
+namespace Misa.AMIS.API.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
@@ -48,8 +46,21 @@ namespace Ex_HMH_QTKD_08_API.Controllers
             try
             {
                 var records = _baseBL.GetAllRecords();
+                if(records != null)
+                {
+                    return StatusCode(StatusCodes.Status200OK, records);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status400BadRequest ,new ErrorResult(
+                        ErrorCode.Exception,
+                        Resource.DevMsg_Exception,
+                        Resource.UserMsg_Exception,
+                        Resource.Moreinfo_InsertFailed
+                        ));
+                }
 
-                return StatusCode(StatusCodes.Status200OK, records);
+              
                 
             }
             catch (Exception exception)
@@ -131,9 +142,9 @@ namespace Ex_HMH_QTKD_08_API.Controllers
                 {
 
                     return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
-                        ErrorCode.Exception,
-                        Resource.DevMsg_Exception,
-                        Resource.UserMsg_Exception,
+                        ErrorCode.InvalidInput,
+                        Resource.DevMsg_InsertFailed,
+                        Resource.UserMsg_InsertFailed,
                         Resource.Moreinfo_InsertFailed
                         ));
                 }
@@ -153,7 +164,8 @@ namespace Ex_HMH_QTKD_08_API.Controllers
         /// </summary>
         /// <param name="record"></param>
         /// <returns>mã bản ghi</returns>
-        /// Created by: HMHieu(18/09/2022)
+        /// Created by: HMHieu(18/09/2022)		result.Success	true	bool
+
         [HttpPost]
         public IActionResult InsertRecord([FromBody] T record)
         {
@@ -163,33 +175,15 @@ namespace Ex_HMH_QTKD_08_API.Controllers
 
                 if (result.Success)
                 {
-                    return StatusCode(StatusCodes.Status201Created, result.Data);
+                    return StatusCode(StatusCodes.Status201Created, result);
                 }
                 else
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest,
-                                       new ErrorResult(
-                                           ErrorCode.InvalidInput,
-                                           Resource.DevMsg_validateFailed,
-                                           Resource.UserMsg_validateFailed,
-                                           Resource.Moreinfo_InsertFailed,
-                                           HttpContext.TraceIdentifier
-                                      ));
+                {                    
+                        return StatusCode(StatusCodes.Status400BadRequest,result);                                      
                 }
             }
             catch (MySqlException mySqlException)
-            {
-
-                if (mySqlException.ErrorCode == MySqlErrorCode.DuplicateKeyEntry) // trùng mã nhân viên
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
-                                            ErrorCode.DuplicateCode,
-                                            Resource.DevMsg_DuplicateCode,
-                                            Resource.UserMsg_DuplicateCode,
-                                            Resource.Moreinfo_InsertFailed,
-                                            HttpContext.TraceIdentifier
-                                        ));
-                }
+            {              
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                    new ErrorResult(
                                            ErrorCode.Exception,
@@ -200,7 +194,6 @@ namespace Ex_HMH_QTKD_08_API.Controllers
                                        )
                                 );
             }
-
 
             catch (Exception ex)
             {
@@ -232,38 +225,21 @@ namespace Ex_HMH_QTKD_08_API.Controllers
             {
                 var recordUpdate = _baseBL.Update(ID, record);
 
-                //xử lý dữ liệu trả về
-                if (recordUpdate.Success)
+                var result = _baseBL.Update(ID,record);
+
+                if (result.Success)
                 {
-                    return StatusCode(StatusCodes.Status200OK, recordUpdate.Data);
+                    return StatusCode(StatusCodes.Status200OK, result);
                 }
                 else
                 {
                     return StatusCode(StatusCodes.Status400BadRequest,
-                                       new ErrorResult(
-                                         
-                                           ErrorCode.InvalidInput,
-                                           Resource.DevMsg_validateFailed,
-                                           Resource.UserMsg_validateFailed,
-                                           Resource.Moreinfo_InsertFailed,
-                                           HttpContext.TraceIdentifier
-                                      ));
+                                 result);                  
+
                 }
             }
-
             catch (MySqlException mySqlException)
             {
-
-                if (mySqlException.ErrorCode == MySqlErrorCode.DuplicateKeyEntry) // trùng mã nhân viên
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest, new ErrorResult(
-                                            ErrorCode.DuplicateCode,
-                                            Resource.DevMsg_DuplicateCode,
-                                            Resource.UserMsg_DuplicateCode,
-                                            Resource.Moreinfo_InsertFailed,
-                                            HttpContext.TraceIdentifier
-                                        ));
-                }
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                    new ErrorResult(
                                            ErrorCode.Exception,
@@ -274,13 +250,11 @@ namespace Ex_HMH_QTKD_08_API.Controllers
                                        )
                                 );
             }
-
             catch (Exception exception)
             {
                 _logger.LogError("Error", exception.Message);
                 _logger.LogTrace("Trace", exception.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError);
-
             }
 
         }
@@ -293,18 +267,27 @@ namespace Ex_HMH_QTKD_08_API.Controllers
         /// <returns>Id của bản ghi vừa xóa </returns>
         [HttpDelete("{ID}")]
         public IActionResult Record([FromRoute] Guid ID)
-        {
+        {           
             try
             {
                 var recordDelete = _baseBL.Delete(ID);
 
-                if (recordDelete != Guid.Empty)
+                //xử lý dữ liệu trả về
+                if (recordDelete.Success)
                 {
-                    return StatusCode(StatusCodes.Status200OK, ID);
+                    return StatusCode(StatusCodes.Status200OK, recordDelete);
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status400BadRequest);
+                    return StatusCode(StatusCodes.Status400BadRequest,
+                                       new ErrorResult(
+
+                                           ErrorCode.InvalidInput,
+                                           Resource.DevMsg_validateFailed,
+                                           Resource.UserMsg_validateFailed,
+                                           Resource.Moreinfo_InsertFailed,
+                                           HttpContext.TraceIdentifier
+                                      ));
                 }
             }
             catch (Exception exception)
@@ -315,6 +298,7 @@ namespace Ex_HMH_QTKD_08_API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
         }
+       
 
         #endregion
     }
