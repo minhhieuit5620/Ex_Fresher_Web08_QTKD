@@ -1,6 +1,6 @@
 <template>
 
-    <div class="content">
+    <div class="content" >
         <div class="top__content">
             <div class="top__content--title fontsize__tile">
                 Nhân viên
@@ -27,7 +27,7 @@
                     v-model="searchKey"
                     @input="keySearch"
                     @keyup.enter="keySearch"
-                    placeholder="Tìm kiếm theo mã, tên nhân viên">
+                    placeholder="Tìm kiếm theo mã, tên, số điện thoại">
                     <div class="search icon icon__search" ></div>
                 </div>
                 <div class="tooltip">
@@ -74,8 +74,8 @@
                             @dblclick="showEditForm(item)" >
                             <td class="column__sticky column__checkbox loading__checkbox"  @dblclick.stop > 
                                 <input type="checkbox" class="input__checkbox checkbox__item" 
-                                :checked="isCheckedAll"                               
-                                @input="selectEmployee(item)"
+                                :checked="isCheckedAll"                                  
+                                @input="selectEmployee(item)"                               
                                 />
                                 <MLoadTable v-if="isLoad"/>  
                             </td >
@@ -98,7 +98,7 @@
                                 {{formatDateTable(item.dateOfBirth)}}
                                 <MLoadTable v-if="isLoad"/>  
                             </td>
-                            <td class="width__100 text__right td__loading">
+                            <td class="width__100 text__left td__loading">
                                 {{item.identityNumber}}
                                 <MLoadTable v-if="isLoad"/>  
                             </td>
@@ -110,7 +110,7 @@
                                 {{item.positionName}}
                                 <MLoadTable v-if="isLoad"/>  
                             </td>
-                            <td class="width__100 text__right td__loading">
+                            <td class="width__100 text__left td__loading">
                                 {{item.bankAccount}}
                                 <MLoadTable v-if="isLoad"/>  
                             </td>
@@ -123,15 +123,18 @@
                                 {{item.bankBranch}}
                                 <MLoadTable v-if="isLoad"/>  
                             </td>
-
-                            <div class="value__edit "  v-show="isShowDropList[index]" :style="{'top': `${topDropList}px`}" >
-                                    <div class="edit__item" @click="duplicateItem(item,index)">Nhân bản</div>
-                                    <div class="edit__item" @click="showPopup(index,item.employeeID,item.employeeCode)">Xóa</div>                                
-                                    <div class="edit__item" @click="changeStatus(item.employeeID,item.status,index)">
-                                        <span v-if="item.status===this.work">Ngừng sử dụng </span>
-                                        <span v-if="item.status===this.unWork">Sử dụng</span>                                   
-                                    </div>
-                            </div>    
+                            <div     >
+                                <div class="value__edit " v-if="isShowDropList[index]" :style="{'top': `${topDropList}px`}" >
+                                    <!-- <div  v-clickoutside="hideDropList"  > -->
+                                        <div class="edit__item"  @click="duplicateItem(item,index)">Nhân bản</div>
+                                        <div class="edit__item" @click="showPopup(index,item.employeeID,item.employeeCode)">Xóa</div>                                
+                                        <div class="edit__item" @click="changeStatus(item.employeeID,item.status,index)">
+                                            <span v-if="item.status===this.work">Ngừng sử dụng </span>
+                                            <span v-if="item.status===this.unWork">Sử dụng</span>                                   
+                                        </div>
+                                        <!-- </div> -->
+                                </div>  
+                             </div>  
                             <td class="edit__td column__sticky column__edit width__100 td__loading"  :ref="'row_'+index" @dblclick.stop > 
                                     <div @click="showEditForm(item)"> Sửa</div>
                                     <div class="icon__drop icon icon__edit--drop"  @click="btnShowEdit(index)" ></div>   
@@ -151,8 +154,14 @@
         :employeeSelected="empSelected"
         :closeDialog="closeDialog"
         :formMode="formMode"
+        :focus = 'focus'
+        :key = 'keyForm'
+        @reLoadForm = 'reLoadForm'
         @askPopUp="askPopUp"
+        @waringEmail = 'waringEmail'
+        @waringMaxDate='waringMaxDate'
         @closeDialog="closeDialog"
+        @addOnClick="addOnClick"
         @errorEmpty='errorEmpty'
         @errorEmptyCode = 'errorEmptyCode'
         @errorEmptyName = 'errorEmptyName'
@@ -193,10 +202,40 @@ import MPopupWaringDuplicate from '@/components/base/MPopupWaringDuplicate.vue';
      * URL api 
      */
     const loadDataURL =process.env.VUE_APP_URL;
+    //enable debugger
+    /* eslint-disable */
+
+ /**
+ * Gán sự kiện nhấn click chuột ra ngoài combobox data (ẩn data list đi)
+ * HMHieu (09/10/2022)
+ */
+const clickoutside = {
+  mounted(el, binding) {
+    el.clickOutsideEvent = (event) => {
+      //click ra ngoài
+      // event: đối tượng click
+      if (
+        !(( el === event.target || // click phạm vi của combobox-value
+            el.previousElementSibling.contains(event.target)
+          )) //click vào ele trước combobox-value
+        ) 
+      {
+        binding.value();
+      }
+    };
+    document.body.addEventListener("click", el.clickOutsideEvent);
+  },
+  beforeUnmount: (el) => {
+    document.body.removeEventListener("click", el.clickOutsideEvent);
+  },
+};
 
 export default {
 
     name: "employeeList",
+    directives: {
+      clickoutside,
+    },
     components: { empDetail, MPopup, MPopupError, MToastMessage, TheFooterVue, MLoadTable, MLoad, MPopupWaringDuplicate },
     created() {
         this.loadData(); 
@@ -214,6 +253,7 @@ export default {
             topDropList:'',
             formMode:eNum.formMode.ADD,
             popUpMode:eNum.popUpMode.DeleteOne,
+            keyForm: null,
             //loading
             isLoadFull:false,
             isLoad:false,
@@ -232,6 +272,7 @@ export default {
             content:'',
             isShowPopupError:false,
             textError: '',
+            focus: null,
           
 
             isShowPopupDuplicate:false,
@@ -248,11 +289,16 @@ export default {
             // xóa nhiều
             isDisable:true,
             showMultiple:false,
+            
             isCheckedAll: false,
             listSelectedEmployee: [],
         };
     },
     methods: {
+
+        // hideDroplist(){
+        // this.isShowDropList=[];
+        // },
         /**
          * Hiện Form Dialog thêm mới
          * Author: HMH(16/09/22)
@@ -263,6 +309,19 @@ export default {
             this.empSelected={}
 
         )},
+         /**
+         * Hàm reload lại form khi ấn cất và thêm
+         * author:HMH(16/09/22)
+         */
+         reLoadForm(){
+            try {
+                this.formMode = eNum.formMode.ADD,
+                this.empSelected = {};
+                this.keyForm = Math.floor(Math.random()*90000);
+            } catch (error) {
+                console.log(error)
+            }
+        },
         /**
          * Ẩn Form Dialog
          * Author: HMH(14/09/22)
@@ -281,6 +340,16 @@ export default {
             let [row] = this.$refs['row_'+index];//get element được chọn
             this.topDropList = row.getBoundingClientRect().top + 35; //getBoundingClientRect dùng để lấy vị trí của element             
         },
+        /**
+         * 
+         * @param {*} index 
+         * Ẩn edit list
+         * Author: HMHieu(18/09/22)
+         */
+        // hideListData(index){
+        //     this.isShowDropList =false;
+        // },
+
         /**
          * Hiển thị nhân viên khi dbclick để sửa
          * Author: HMHieu(18/09/22)
@@ -316,7 +385,7 @@ export default {
         loadData() {          
             fetch(loadDataURL+`Employees/filter?search=${this.searchKey}&pageIndex=${this.pageIndex}&pageSize=${this.pageSize}`, { method: "GET" })
                 .then((res) => res.json())
-                .then((data) => {
+                .then((data) => {                
                     this.employee = data.data;                   
                     this.totalRecord=data.totalCount;
                     this.totalPage=data.totalPage;
@@ -358,6 +427,18 @@ export default {
             this.isShowDropList[index] = !this.isShowDropList[index];//ẩn hiện dropList
             this.popUpMode=eNum.popUpMode.DeleteOne;
         },
+        closeDropList(){
+            console.log('Clicked');
+            this.isShowDropList=[];
+        },
+        /**
+         * ẩn droplist action
+         */
+        hideDropList(){
+            debugger;
+         this.closeDropList();
+            //this.isShowDropList[index] = !this.isShowDropList[index];//ẩn hiện dropList
+        },
         /**
          * Hiện popUp  chức năng xóa nhiều nhân viên 
          * Author: HMHieu(06/10/22)
@@ -385,8 +466,7 @@ export default {
                 this.isShowPopupError = true;
                 switch(msg){
                     case resource.popupError.EmptyCode.name:
-                        this.textError = resource.popupError.EmptyCode.content;
-                       
+                        this.textError = resource.popupError.EmptyCode.content;                       
                     break;
                     case resource.popupError.EmptyName.name:
                         this.textError =resource.popupError.EmptyName.content;
@@ -405,13 +485,31 @@ export default {
          * Hàm hiện cảnh báo lỗi backend
          * author:  HMHieu(21/09/22)
          */
-         errorBackEnd(sts){
+         errorBackEnd(sts,content){
             try {
                 this.isShowPopup = false; 
                 this.isShowPopupError = true; 
-                 
-                   if(sts===eNum.errorBackEnd.User){
+                 if(this.formMode===eNum.formMode.ADD||this.formMode===eNum.formMode.Edit||this.formMode===eNum.formMode.Duplicate){
+                    if(sts===eNum.errorBackEnd.User){
                         this.textError = resource.popupErrorBackend.User.content;
+                    }
+                    else if(sts===eNum.errorBackEnd.NotFound){
+                        this.textError = resource.popupErrorBackend.NotFound.content;
+                    }
+                    else if(sts===eNum.errorBackEnd.Ser){
+                        this.textError = resource.popupErrorBackend.Server.content;
+                    }
+                     else if(sts===eNum.errorBackEnd.InsertFailCode){
+                        this.textError = content;
+                    }
+                    else if(sts===eNum.errorBackEnd.exception){
+                        this.textError = resource.popupErrorBackend.User.content;
+                    }else{
+                        this.textError = resource.popupErrorBackend.Server.content;
+                    }
+                 }else{
+                    if(sts===eNum.errorBackEnd.User){
+                        this.textError = resource.popupErrorBackend.Deleted.content;
                     }
                     else if(sts===eNum.errorBackEnd.NotFound){
                         this.textError = resource.popupErrorBackend.NotFound.content;
@@ -422,24 +520,58 @@ export default {
                      else if(sts===eNum.errorBackEnd.InsertFailCode){
                         this.textError = resource.popupErrorBackend.User.content;
                     }
-                    else{
-                        this.isShowPopupError = false; 
-                      
-                        this.closeDialog();
-                        this.isLoadFull=true                      
-                        this.loadData();
-                        this.openToast(resource.ToastMessage.success);
-                    }           
+                    else if(sts===eNum.errorBackEnd.exception){
+                        this.textError = resource.popupErrorBackend.User.content;
+                    }else{
+                        this.textError = resource.popupErrorBackend.Server.content;
+                    }
+                 }
+                  
+                    // else{
+                    //     this.isShowPopupError = false;                       
+                    //     this.closeDialog();
+                    //     this.isLoadFull=true                      
+                    //     this.loadData();
+                    //     this.openToast(resource.ToastMessage.success);
+                    // }           
             } 
             catch (error) {
                 console.log(error);
             }
            
         },
-
+        /**
+         * 
+         * @param {*} employeeCode 
+         * PopUp trùng mã nhân viên
+         * Author: HMHieu(09/10/22)
+         */
         errorDuplicate(employeeCode){
+            if(employeeCode === '' || employeeCode == undefined || employeeCode == null){
+                this.isShowPopupDuplicate=true;
+                this.contentDuplicate=`Mã nhân viên không hợp lệ đã tồn tại trong hệ thống, vui lòng kiểm tra lại.`;
+            
+            }else{
+                this.isShowPopupDuplicate=true;
+                this.contentDuplicate=`Mã nhân viên <${employeeCode}>đã tồn tại trong hệ thống, vui lòng kiểm tra lại.`;
+            }
+           
+        },
+         /**        
+         * PopUp cảnh báo email không đúng định dạng
+         * Author: HMHieu(09/10/22)
+         */
+         waringEmail(){         
             this.isShowPopupDuplicate=true;
-            this.contentDuplicate=`Mã nhân viên <${employeeCode}>đã tồn tại trong hệ thống, vui lòng kiểm tra lại.`;
+            this.contentDuplicate='Email chưa đúng định dạng';
+        },
+          /**        
+         * PopUp cảnh báo ngày nhập quá ngày hiện tại
+         * Author: HMHieu(09/10/22)
+         */
+         waringMaxDate(){         
+            this.isShowPopupDuplicate=true;
+            this.contentDuplicate='Ngày nhập vào không quá ngày hiện tại';
         },
           /**
          * Đóng Popup error duplicate
@@ -447,7 +579,7 @@ export default {
          */
          closeErrorDuplicate(){
             this.isShowPopupDuplicate=false;
-           
+            this.focus =! this.focus;
         },
       
 
@@ -457,7 +589,7 @@ export default {
          */
         closeError(){
             this.isShowPopupError = false;
-           
+            this.focus =! this.focus;
         },
           /**
          * Hàm đóng toastmessage
@@ -492,6 +624,7 @@ export default {
          */
         keySearch(event){
             let me=this;
+            this.pageIndex=1;
             try{
               //  let key=event.keyCode;
 
@@ -506,6 +639,7 @@ export default {
                     setTimeout(() => (this.isLoadFull = false), 500);                    
                 })
                 .catch((res) => {
+                    this.errorBackEnd( eNum.errorBackEnd.Ser);                    
                     console.log(res);            
                 });
                 }
@@ -530,21 +664,27 @@ export default {
                          
             })
                 .then((res) => res.json())
-                .then((res) => {                    
-                    var status = res.status;              
-                    if (status === eNum.errorBackEnd.Ser||eNum.errorBackEnd.User||eNum.errorBackEnd.NotFound)
-                    {
-                        this.errorBackEnd(status);                                                     
-                    }                   
-                    else {                              
+                .then((res) => {                                                     
+                    let errorCode = res.errorCode;  
+                    let ok=res.success;
+                    if(ok){
                         this.isShowPopup = false;  
                         this.isLoadFull=true;
                         setTimeout(() => (this.isLoadFull=true), 500);     
-                                      
-                        this.loadData();                                                                                                                                                                             
+                        this.openToast(resource.ToastMessage.success);
+                        this.loadData();  
+                    }else{
+                        if (
+                            errorCode === eNum.errorBackEnd.InsertFailCode||
+                            errorCode === eNum.errorBackEnd.exception)
+                        {
+                            this.errorBackEnd(errorCode);                                                     
+                        }   
                     }
+                                                     
                 })
                 .catch((res) => {
+                    this.errorBackEnd( eNum.errorBackEnd.Ser);                    
                     console.log(res);                 
                     this.openToast(resource.ToastMessage.error);                               
                 });
@@ -564,7 +704,7 @@ export default {
             else{
                 changeURL= loadDataURL+`Employees/change-status?statusEmployee=${eNum.statusEmployee.UnWoking} &EmployeeID=${idEmployee}`;  
             }                                     
-            // Xóa dữ liệu:            
+            // thay đổi trạng thái dữ liệu:            
             fetch(changeURL, {                
                 method: method, 
                 headers: {
@@ -573,14 +713,27 @@ export default {
                     body: JSON.stringify(employeeStatus)                  
             })
                 .then((res) => res.json())
-                .then((res) => {     
-                     console.log(res);
-                    this.isShowDropList[index] = !this.isShowDropList[index];//ẩn hiện dropList   
-                    this.loadData();  
-                    this.openToast(resource.ToastMessage.success);                   
+                .then((res) => {
+                    let ok=res.success;
+                    let errorCode=res.errorCode;
+                    if(ok){
+                        console.log(res);
+                        this.isShowDropList[index] = !this.isShowDropList[index];//ẩn hiện dropList   
+                        this.loadData();  
+                        this.openToast(resource.ToastMessage.success);  
+                    }
+                    if( errorCode === eNum.errorBackEnd.InsertFailCode||
+                        errorCode === eNum.errorBackEnd.exception)
+                    {
+                        this.errorBackEnd(errorCode)                                                     
+                    }
+
+                      
+                                     
                 })
                 .catch((res) => {
-                    console.log(res);                 
+                    console.log(res);   
+                    this.errorBackEnd( eNum.errorBackEnd.Ser);                                  
                     this.openToast(resource.ToastMessage.error);                               
                 });
         },   
@@ -611,6 +764,7 @@ export default {
                 a.click();           
                 this.loadData();              
             }).catch((res) => {
+                    this.errorBackEnd( eNum.errorBackEnd.Ser); 
                     console.log(res);                 
                     this.openToast(resource.ToastMessage.error);                               
                 });            
@@ -618,6 +772,7 @@ export default {
         
       /**
        * ẩn hiện button xóa
+       * Author: HMHieu(04-10-22)
        */
         activeMultiple(){
             if (this.listSelectedEmployee.length  > 1) {
@@ -632,7 +787,8 @@ export default {
         // Author: HMHieu(04-10-22)
         selectEmployee(data) {
             if (!this.listSelectedEmployee.includes(data.employeeID)) {
-                this.listSelectedEmployee.push(data.employeeID);
+                this.listSelectedEmployee.push(data.employeeID);            
+                
             } else {
                 this.listSelectedEmployee.splice(
                     this.listSelectedEmployee.indexOf(this.employeeID) + 1,
@@ -678,25 +834,34 @@ export default {
                 body: JSON.stringify(listEmplyeeDelete),
                  })
                 .then((res) => res.json())
-                .then((res) => {                 
-                    let status=res.status;                   
-                    if(status===eNum.errorBackEnd.Ser||status===eNum.errorBackEnd.User||status===eNum.errorBackEnd.NotFound){
-                            me.errorBackEnd(status);    
-                         //   me.$emit('errorBackEnd',status);                           
-                    }
-                    else{ 
-                            //this.$emit('openToast', resource.ToastMessage.success);
-                            this.isShowPopup = false;  
-                            this.isLoadFull=true;
-                            setTimeout(() => (this.isLoadFull=true), 500);                             
-                            me.openToast(res+resource.ToastMessage.successDeleteMultiple);  
-                            // me.$emit("closeDialog");
-                            me.loadData();   
-                            me.showMultiple=false;                                                                   
-                    }
+                .then((res) => {    
+                    let ok=res.success;
+                    let errorCode=res.errorCode;
+                    let totalDeleted=res.data;
+                    if(ok){
+                        //this.$emit('openToast', resource.ToastMessage.success);
+                        this.isShowPopup = false;  
+                        this.isLoadFull=true;
+                        setTimeout(() => (this.isLoadFull=true), 500);                             
+                        me.openToast(totalDeleted+resource.ToastMessage.successDeleteMultiple);  
+                        // me.$emit("closeDialog");
+                        me.loadData();   
+                        me.showMultiple=false; 
+                    }  
+                    if( errorCode === eNum.errorBackEnd.InsertFailCode||
+                        errorCode === eNum.errorBackEnd.exception)
+                    {
+                        this.errorBackEnd(errorCode)                                                     
+                    }                                              
+                    // if(errorCode===eNum.errorBackEnd.Ser||status===eNum.errorBackEnd.User||status===eNum.errorBackEnd.NotFound){
+                    //         me.errorBackEnd(status);    
+                    //      //   me.$emit('errorBackEnd',status);                           
+                    // }
+                   
                     this.listSelectedEmployee=[];                 
                 })
                 .catch((res) => {
+                    this.errorBackEnd( eNum.errorBackEnd.Ser);                    
                     console.log(res);
                     this.openToast(resource.ToastMessage.error);  
                    

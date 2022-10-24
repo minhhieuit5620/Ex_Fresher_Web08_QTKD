@@ -68,14 +68,15 @@ input[type="radio"]:checked {
     justify-content: start;
     position: relative;
     align-items: center;
+    padding-right: 8px;
 }
 .search{
     position: absolute;
-    top: 1px;
-    right: 6px;
+    top: 8px;
+    right: 12px;
 }
 .content__search--data .input{   
-    width: 220px;
+    width: 230px;
 
 }
 

@@ -2,13 +2,14 @@
     width: 1499px;
     border-spacing: 0;
 }
+
 .table thead{
     position: sticky;
     top: 0;
     z-index: 9;
 }
 .table th,td{
-    height: 48px;
+    height: 45px;
     border-bottom: var(--boder--solid--input);
     border-right: var( --border--dotted);
 }

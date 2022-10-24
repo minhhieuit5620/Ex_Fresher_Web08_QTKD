@@ -142,6 +142,7 @@ body{
 }
 .inner__top--right{
     display: flex;
+    margin-right: 10px;
 }
 .inner__top--left{
     display: flex;
@@ -348,7 +349,7 @@ body{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    line-height: 32px;
+    line-height: 30px;
     height: 56px;  
 }
 /* popup waring  */
@@ -458,3 +459,6 @@ body{
     display: none;
 }
 
+::-webkit-scrollbar-track {   
+    margin-top: 48px;
+}

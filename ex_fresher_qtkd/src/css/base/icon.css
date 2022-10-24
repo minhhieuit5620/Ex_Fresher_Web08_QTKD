@@ -115,7 +115,7 @@ margin:12px 10px 12px 16px ;
 
 /* icon content  */
 .icon__search{
-    background-position:-310px -133px;
+    background-position:-310px -140px;
     background-repeat: no-repeat;  
 }
 .icon__reload{
@@ -123,15 +123,15 @@ margin:12px 10px 12px 16px ;
     background-repeat: no-repeat;
 }
 .content__reload{
-    margin: 8px 16px;
+    margin: 8px;
 }
 .icon__excel{
-    background-position: -614px -834px;
+    background-position:  -700px -195px;
     background-repeat: no-repeat;
-    width: 26px;
+    /* width: 26px; */
 }
 .content__excel{
-    margin: 8px 16px 0px 0px;
+    margin: 8px;
 }
 .icon__edit--drop{
     background-position: -888px -351px;

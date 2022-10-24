@@ -25,6 +25,7 @@
 .btn__aprove{
     background-color:var(--color--btn--primary); 
     color:var(--color--white);
+    border: 1px solid var(--color--btn--primary);
 }
 .btn__cancel--delete{
     background-color: var(--color--white);
@@ -43,6 +44,7 @@
     border-radius: 30px;
     color: #111;
     border: 2px solid #3b3c3f;
+    line-height: 28px;
 }
 .btn__delete--multiple{
     position: absolute;

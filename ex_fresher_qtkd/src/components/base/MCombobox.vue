@@ -1,12 +1,12 @@
 <template>
   <div class="combobox-container" @keydown="directItemDownUp($event)" @keyup="openDataCombobox($event)">
-    <div class="input-container">
-      <input type="text" class=" input" @input="search" v-model="dataSelected" tabIndex="3" :ref="'input'">
-      <div id="icon-combobox" class="icon-combobox" @click="showDataList=!showDataList">
+    <div class="input-container"  >
+      <input type="text" class=" input" @input="search" v-model="dataSelected"  @focus="comboboxFocus"  :class="{'border-red': emptyCombobox}"  :ref="'input'">
+      <div id="icon-combobox" class="icon-combobox" @click="showDataList=!showDataList"  >
         <div class="icon-drop-combobox" @click="loadDepartment"></div>
       </div>
     </div>
-    <div class="combobox-value" v-if="showDataList" :ref="'dataList'">
+    <div class="combobox-value" v-if="showDataList" v-clickoutside="hideListData" :ref="'dataList'">
       <div class="combobox-header">
         <div class="code__combobox">Mã đơn vị</div>
         <div class="value__combobox">Tên đợn vị</div>
@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import common from '@/js/common/common';
 /**
 * Hàm xử lý dữ liệu tiếng việt
 * author: HMHieu(11/9/2022)
@@ -48,6 +49,37 @@ function processData(Text) {
 
   return Text;
 }
+/* eslint-disable */
+/**
+ * Gán sự kiện nhấn click chuột ra ngoài combobox data (ẩn data list đi)
+ * HMHieu (09/10/2022)
+ */
+ const clickoutside = {
+  mounted(el, binding, vnode, prevVnode) {
+    el.clickOutsideEvent = (event) => {
+      // Nếu element hiện tại không phải là element đang click vào
+      // Hoặc element đang click vào không phải là button trong combobox hiện tại thì ẩn đi.
+      if (
+        !(
+          (
+            el === event.target || // click phạm vi của combobox__data
+            el.contains(event.target) || //click vào element con của combobox__data
+            el.previousElementSibling.contains(event.target)
+          ) //click vào element button trước combobox data (nhấn vào button thì hiển thị)
+        )
+      ) {
+        // Thực hiện sự kiện tùy chỉnh:
+        binding.value(event, el);
+        // vnode.context[binding.expression](event); // vue 2
+      }
+    };
+    document.body.addEventListener("click", el.clickOutsideEvent);
+  },
+  beforeUnmount: (el) => {
+    document.body.removeEventListener("click", el.clickOutsideEvent);
+  },
+};
+
 const keyCode = {
   LEFT: 37,
   UP: 38,
@@ -57,7 +89,12 @@ const keyCode = {
   noIndex: -1
 }
 export default {
+
+  
   name: "MCombobox",
+  directives:{
+    clickoutside,
+  },
   created() {
 
     this.loadDepartment();
@@ -82,6 +119,22 @@ export default {
 
   },
   methods: {
+
+    /**
+     * Ẩn danh sách item
+     * NVMANH (31/07/2022)
+     */
+     hideListData() {
+      this.showDataList = false;
+    },
+
+    /**
+     * focus vào input comboboxs
+     * author: HMHieu(10/9/2022)
+     */
+    comboboxFocus(){
+        this.$emit('validateDepartment');
+      },
     /**
      * Hàm chọn dữ liệu
      * author: HMHieu(10/9/2022)
@@ -95,11 +148,32 @@ export default {
 
     },
     loadDepartment() {
-      fetch(this.url)
-        .then(res => res.json())
-        .then(res => {
-          this.items = res;
-        })
+
+      try {
+            if(!common.checkEmptyData(sessionStorage.getItem('departments'))){
+            this.items=JSON.parse(sessionStorage.getItem('departments'));
+            }
+            else{//chưa có dữ liệu trong localstorage
+                fetch(this.url)
+                .then(res => res.json())
+                .then(res => {
+                    this.items = res;              
+                    sessionStorage.setItem('departments', JSON.stringify(this.items));
+                    // this.showDataList =! this.showDataList;
+                })  
+            }
+        } catch (error) {
+          console.log(error);
+        }
+
+
+
+
+      // fetch(this.url)
+      //   .then(res => res.json())
+      //   .then(res => {
+      //     this.items = res;
+      //   })
     },
     /**
      * Hàm điều hướng lên xuống
@@ -180,7 +254,7 @@ export default {
           // console.log(item);
           if (temp.search(textInput) != keyCode.noIndex) { // nếu có chứa chuỗi
             this.isSearch[index] = true;
-            this.directItemDownUp;
+            this.directItemDownUp;           
           }
           if (code.search(textInput) != keyCode.noIndex) {
             this.isSearch[index] = true;
@@ -199,6 +273,8 @@ export default {
         })
         this.selected = null;
         //gửi về 1 object rỗng
+        
+        
         this.$emit("objectItemCombobox", {});
       }
 
@@ -209,7 +285,8 @@ export default {
     url: String,
     code: String,
     text: String,
-    valueRender: String//ID render lên combobox
+    valueRender: String,//ID render lên combobox
+    emptyCombobox: Boolean
   },
   data() {
     return {

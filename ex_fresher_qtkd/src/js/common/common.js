@@ -93,7 +93,7 @@ export default {
          * Kiểm tra định dạng email
          */
     checkEmail(email){
-        if(email != '' || email != undefined){           
+        if(!this.checkEmptyData(email)){           
             let regex = new RegExp('[a-z0-9]+@[a-z]+[a-z]{2,3}');
             if(!regex.test(email)){
                 return true;
@@ -119,7 +119,25 @@ export default {
             
         }
        
+    },
+
+        /**
+     * Hàm so sánh ngày tháng
+     * @param {string} date1, date2
+     * @returns 
+     */
+    checkDate(dateChose, dateNow) {
+        dateChose = new Date(dateChose);
+        dateNow = new Date(dateNow);
+       
+        if(!this.checkEmptyData(dateChose) && !this.checkEmptyData(dateNow)){
+            if(dateChose.getTime() > dateNow.getTime())
+            return false;
+        }
+        return true;
     }
+    
+
 
 
 }

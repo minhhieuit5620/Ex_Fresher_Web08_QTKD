@@ -31,7 +31,11 @@
     position: relative;
 }
 .dropList-text{
+    cursor: pointer;
     /* margin-top: 8px; */
+}
+.dropList-page{
+    cursor: pointer;
 }
 .dropList-data{
     position: absolute;
@@ -40,7 +44,7 @@
     border-radius: 3px;
     border: 1px solid #ccc2c2;
     left: 0;
-    top: -164px;
+    top: -155px;
 
 }
 

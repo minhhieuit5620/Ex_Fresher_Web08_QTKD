@@ -47,7 +47,7 @@
                 fourth: null,
                 choose: 1, //trang được chọn
                 contentPage: Resource.textNumPages, //Nội dung lựa chọn số bản ghi 1 trang
-                chooseOne:false,
+                chooseOne:true,
                 chooseLast:true,
         
             }
@@ -118,13 +118,14 @@
          * author: HMHieu(26/09/2022)
          */
         next(){
-            if(this.choose < this.totalPage){
-                this.chooseNumber(this.choose + 1);
-                this.chooseLast=false;
-            }
-             if(this.choose == this.totalPage){
+            if(this.choose < this.totalPage){    
+                this.chooseNumber(this.choose + 1);     
                 this.chooseLast=true;
-            }           
+            }
+             if(this.choose === this.totalPage){
+                this.chooseLast=false;
+            } 
+           
         },
         /**
          * Gửi số bản ghi trong 1 trang khi chọn
@@ -132,8 +133,7 @@
          * @param {int} num ; Số bản ghi trong 1 trang
          */
         numberRecordOfPage(num){
-            this.$emit('recordOfPage', num);
-            console.log(num)
+            this.$emit('recordOfPage', num);       
         }
          },
          watch: {
@@ -182,7 +182,7 @@
                     this.lastPage = false;
                     this.viewMiddle = true;
                     this.third = 1;
-                    this.chooseOne=true;
+                    this.chooseOne=false;
                     this.chooseLast=false;
                 }
                 if(newPage == 2){ // chỉ có 2 trang

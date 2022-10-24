@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="dialog__waring--bottom">
-                <div class="btn btn__close" @click="agreeDuplicate">Đồng ý</div>
+                <button class="btn btn__close" :ref="'accept'" @click="agreeDuplicate">Đồng ý</button>
             </div>
         </div>
     </div>
@@ -18,15 +18,18 @@
 <script>
 export default {
     props: {
-      idEmployee:String,
+     
       contentDuplicate: String,
-      listSelectedEmployee: Object,
-      popUpMode:Number,
+    //   listSelectedEmployee: Object,
+     // popUpMode:Number,
     },
     data() {
         return{
            
         }
+    },
+    mounted(){
+        this.$refs["accept"].focus(); //focus vào item đầu tiên 
     },
     methods:{
         agreeDuplicate(){

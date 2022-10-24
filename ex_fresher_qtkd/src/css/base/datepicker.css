@@ -11,6 +11,7 @@
     font-family: Misa fonts;
     outline: 0;
     width: 174px;
+    padding-left: 16px;
 }
 .datepickerCTM input:focus{
     outline: none;
@@ -25,4 +26,10 @@
 }
 .dp__input_wrap:focus {   
     border:  none !important;
+}
+.datepickerCTM .dp__input_icon{
+    left: 80%;
+}
+.datepickerCTM .dp__clear_icon {
+    display: none;
 }

@@ -10,11 +10,11 @@
             </div>
             <div class="dialog__ask--bottom">
                 <div class="dialog__left">
-                    <div class="btn btn__cancel--delete" @click="hidePopUp">Hủy</div>
+                    <button class="btn btn__cancel--delete" @click="hidePopUp">Hủy</button>
                 </div>
                 <div class="dialog__right">                    
-                    <div class="btn btn__cancel--delete" @click="hideDialog">Không</div>
-                    <div class="btn btn__aprove--ask" @click="aprove">Có</div>
+                    <button class="btn btn__cancel--delete" :ref="'cancel'" @click="hideDialog">Không</button>
+                    <button class="btn btn__aprove--ask" @click="aprove">Có</button>
                 </div>
               
             </div>
@@ -28,6 +28,9 @@ export default{
     },
     data(){
         return{}
+    },
+    mounted(){
+        this.$refs["cancel"].focus(); //focus vào item đầu tiên 
     },
     methods:{
         /**

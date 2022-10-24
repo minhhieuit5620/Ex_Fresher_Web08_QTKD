@@ -58,7 +58,7 @@ export default {
             me.isShowToast = true;          
             setTimeout(function(){
                 me.isShowToast = false;
-            }, 2000);
+            }, 1500);
         },
         closeToastMessage(){
             this.isShowToast = false;

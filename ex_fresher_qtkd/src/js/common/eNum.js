@@ -45,7 +45,9 @@ export default{
         NotFound:404,//lỗi k đúng đường dẫn
         Success:200,//thành công
         DuplicateCode:2,// trùng mã nhân viên
-        InsertFailCode:4// trùng mã nhân viên
+        InsertFailCode:4,// Dữ liệu đầu vào bị lỗi
+        exception:1,// exception
+        
     },
     /**
      * KeyCode

@@ -33,7 +33,7 @@
                         <span class="tooltiptext tooltipIcon">Giúp</span>
                     </div>
                     <div class="tooltip">
-                        <div class="dialog__close icon icon__close"  @click="askESC(this.emp)" tabIndex="23" ></div>
+                        <div class="dialog__close icon icon__close"  @click="askESC()" tabIndex="23" ></div>
                         <span class="tooltiptext tooltipIcon tooltip__right">Đóng(ESC)</span>
                     </div>
                     
@@ -49,9 +49,10 @@
                                     <span class="color-red">*</span>
                                 </div>
                                 <div class="content__input tooltip" >
-                                    <input type="text" class="input"  tabIndex="1" maxlength="20"
+                                    <input type="text" class="input"  maxlength="20"
                                     @keyup = 'validateEmptyCode'
                                     @focus = 'validateEmptyCode'
+                                    @blur = 'validateEmptyCode'
                                     :class="{'border-red' : emptyCode}"
                                     v-model="emp.employeeCode"
                                     :ref="'employeeCode'" >
@@ -66,9 +67,10 @@
                                     <span class="color-red">*</span>
                                 </div>
                                 <div class="content__input tooltip">
-                                    <input type="text" class="input"  tabIndex="2" maxlength="100"
+                                    <input type="text" class="input"   maxlength="100"
                                     @keyup = 'validateEmptyName'
                                     @focus = 'validateEmptyName'
+                                    @blur ='validateEmptyName'
                                     :ref="'employeeNameFocus'"
                                   
                                     :class="{'border-red': emptyName}"
@@ -93,16 +95,14 @@
                                 :text="'departmentName'" 
                                 @objectItemCombobox='objectItemCombobox'
                                 :valueRender='dataCombobox'
-                                 @forcus="validateDepartment"    
+                                @blur ='validateDepartment'
+                                @comboboxFocus="validateDepartment"    
                                 :key = 'keyCombobox' 
-                                :class="{'border-red': emptyDepartment}"
+                                :emptyCombobox="emptyDepartment"                       
                                 :ref="'employeeDepartmentFocus'"
                                  />
 
-                                 <div class="empty__input tooltiptext tooltipError" v-show="emptyDepartment">Đơn vị không được để trống</div>
-                           
-                                
-                                
+                                 <div class="empty__input tooltiptext tooltipError" v-show="emptyDepartment">Đơn vị không được để trống</div>                                                                                           
                             </div>
                            
                         </div>
@@ -112,7 +112,7 @@
                                 
                             </div>
                             <div class="content__input">
-                                <input class="input" type="text"   tabIndex="4" maxlength="255" v-model="emp.positionName">
+                                <input class="input" type="text"   maxlength="255" v-model="emp.positionName">
                             </div>
                            
                         </div>
@@ -125,31 +125,23 @@
                                    Ngày sinh
                                     
                                 </div>
-                                <div class="content__input">
-                                    <datePicker 
-                                    :tabIndex=5 class="datepickerCTM" 
+                                <div class="content__input">                                  
+                                     <Datepicker 
+                                    class="datepickerCTM" 
                                     placeholder="DD/MM/YYYY"
                                     :enterSubmit=true
-                                    :tabSubmit=true
-                                  
-                                    :maxDate="new Date()"
+                                    :enableTimePicker="false"
+                                    :tabSubmit=true                                  
+                                   
                                      format="dd/MM/yyyy" 
                                     textInput 
                                     :dayNames="['T2', 'T3', 'T4', 'T5', 'T6', 'T7','CN']"
-                                   
-                                    
-                                    autoApply 
-                                   
+                                                                   
+                                    autoApply                                    
                                     utc 
-                                    locale="vn"
-                                       v-model="emp.dateOfBirth">
-                                    
-                                     
-                                     
-                                         
-                                        
-                                    </datePicker>
-                                       
+                                    locale="vi"
+                                    :ref="'dateOfBirth'"
+                                       v-model="emp.dateOfBirth"/>                 
                                     <!-- <input class="input input__date"   type="date" v-model="emp.dateOfBirth" :max="maxDate" > -->
                                 </div>
                                
@@ -162,19 +154,19 @@
                                 <div class="content__radio">
                                     
                                     <div class="radio__item">
-                                        <input type="radio" class="input__radio " checked  tabIndex="6" id="radio__boy"  value="0" name="gender"                                           
+                                        <input type="radio" class="input__radio " checked   id="radio__boy"  value="0" name="gender"                                           
                                          v-model="chooseGender"                                       
                                          >
                                         <label for="radio__boy">Nam</label>
                                     </div>
                                     <div class="radio__item">
-                                        <input type="radio" class="input__radio "  tabIndex="7" id="radio__girl" value="1" name="gender"                                         
+                                        <input type="radio" class="input__radio "  id="radio__girl" value="1" name="gender"                                         
                                         v-model="chooseGender"                                      
                                         >
                                         <label for="radio__girl">Nữ</label>
                                     </div>
                                     <div class="radio__item">
-                                        <input type="radio" class="input__radio "  tabIndex="8"  id="radio__other" value="2" name="gender"                                             
+                                        <input type="radio" class="input__radio "   id="radio__other" value="2" name="gender"                                             
                                         v-model="chooseGender"                                      
                                         >
                                         <label for="radio__other">Khác</label>
@@ -192,14 +184,14 @@
                                                                   
                                 </div>
                                 <div class="content__input tooltip">
-                                    <input class="input"  tabIndex="9"
+                                    <input class="input"  
                                      maxlength="25" type="text" 
                                      v-model="emp.identityNumber"
                                      @input="validateIdentity"
-                                     :class="{'border-red': isIdentity}"
+                                    
                                      
                                       >
-                                      <div class="empty__input tooltiptext tooltipError"  v-show="isIdentity">Số CMND không đúng</div>   
+                                      <!-- <div class="empty__input tooltiptext tooltipError"  v-show="isIdentity">Số CMND không đúng</div>    -->
                                 </div>  
                                                          
                             </div>
@@ -209,20 +201,19 @@
                                 </div>
                                 <div class="content__input">
                                     <!-- <datePicker v-model="emp.identityIssuedDate" :format="format" /> -->
-                                    <datePicker tabIndex="10" class="datepickerCTM" 
-                                    placeholder="DD/MM/YYYY"
-                                    :maxDate="new Date()"                                    
+                                    <Datepicker  class="datepickerCTM" 
+                                    placeholder="DD/MM/YYYY"                                                                 
                                      format="dd/MM/yyyy" 
                                     textInput 
                                     :dayNames="['T2', 'T3', 'T4', 'T5', 'T6', 'T7','CN']"
                                     autoApply 
                                     utc 
-
-
+                                    locale="vi"
+                                    :enableTimePicker="false"
                                     :enterSubmit=true
                                     :tabSubmit=true
                                    
-
+                                    :ref="'identityIssuedDate'"
                                     v-model="emp.identityIssuedDate"/>
                                     <!-- <input class="input input__date"  tabIndex="10" type="date" v-model="emp.identityIssuedDate" :max="maxDate" > -->
                                 </div>                             
@@ -233,7 +224,7 @@
                                 Nơi cấp                                
                             </div>
                             <div class="content__input">
-                                <input class="input" type="text"  tabIndex="11"  maxlength="255" v-model="emp.identityIssuedPlace" >
+                                <input class="input" type="text"    maxlength="255" v-model="emp.identityIssuedPlace" >
                             </div>                           
                         </div>                       
                     </div>
@@ -245,7 +236,7 @@
                                Địa chỉ                                
                             </div>
                             <div class="content__input">
-                                <input type="text" class="input"  tabIndex="12" maxlength="255" v-model="emp.address">
+                                <input type="text" class="input"  maxlength="255" v-model="emp.address">
                             </div>
                            
                         </div>
@@ -258,11 +249,10 @@
                              </div>
                              <div class="content__input tooltip">
                                  <input type="text" class="input"  maxlength="50" 
-                                 @input="validatePhoneNumber" tabIndex="13"
-                                 v-model="emp.mobile"
-                                 :class="{'border-red': isPhone}"
+                                 @input="validatePhoneNumber" 
+                                 v-model="emp.mobile"                               
                                  >
-                                 <div class="empty__input tooltiptext tooltipError"  v-show="isPhone">Số điện thoại không đúng</div>  
+                                 
                              </div>
                                  
                         </div>
@@ -272,12 +262,10 @@
                                 <span class="tooltiptext tooltipAronym">Điện thoại cố định</span>                             
                              </div>
                              <div class="content__input tooltip">
-                                 <input type="text" class="input"  tabIndex="14"  maxlength="50" 
+                                 <input type="text" class="input"    maxlength="50" 
                                  @input="validatePhoneland"
-                                 v-model="emp.landlinePhone"
-                                 :class="{'border-red': isPhoneLand}"
-                                 >
-                                 <div class="empty__input tooltiptext tooltipError"  v-show="isPhoneLand">Số điện thoại không đúng</div>  
+                                 v-model="emp.landlinePhone"                               
+                                 >                                
                              </div>
                              
                         </div>
@@ -287,11 +275,13 @@
                              </div>
                              <div class="content__input tooltip">
                                  <input type="text" class="input"  
-                                 tabIndex="15"
+                               
                                  :class="{'border-red': errorEmail}"  
                                  maxlength="100" 
                                  @input="validateEmail"
-                                 v-model="emp.email">
+                                 v-model="emp.email"
+                                 :ref="'email'"
+                                 >
                                  <div class="empty__input tooltiptext tooltipError"  v-show="errorEmail">Email chưa đúng định dạng</div>
                             </div>
                         </div>
@@ -302,7 +292,7 @@
                                 Tài khoản ngân hàng                         
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input" tabIndex="16" maxlength="25" v-model="emp.bankAccount">
+                                 <input type="text" class="input"  maxlength="25" v-model="emp.bankAccount">
                              </div>
                         </div>
                         <div class="info__item item__other">
@@ -310,7 +300,7 @@
                                 Tên ngân hàng                                
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input" tabIndex="17"  maxlength="255" v-model="emp.bankName">
+                                 <input type="text" class="input"  maxlength="255" v-model="emp.bankName">
                              </div>
                         </div>
                         <div class="info__item item__other">
@@ -318,7 +308,7 @@
                                 Chi nhánh                                
                              </div>
                              <div class="content__input">
-                                 <input type="text" class="input" tabIndex="18" maxlength="255" v-model="emp.bankBranch">
+                                 <input type="text" class="input"  maxlength="255" v-model="emp.bankBranch">
                              </div>
                         </div>
                     </div>
@@ -331,21 +321,20 @@
                         <span class="tooltiptext tooltipIcon">Giúp</span>
                     </div> -->
                 <div class="dialog__left tooltip">
-                    <div class="btn btn__cancel tooltip" @click="closeEmpDetail" tabIndex="21" @keydown="keyCancel($event)">
+                    <button class="btn btn__cancel tooltip" @click="closeEmpDetail"    @keydown="keyCancel($event)">
                         Hủy
                         <span class="tooltiptext tooltipIcon">Huỷ</span>
-                    </div>
-                   
+                    </button>                   
                 </div>
                 <div class="dialog__right">
-                    <div class="btn btn__save tooltip" tabIndex="19" @click="btnSaveOnClick(this.Save)"  @keydown="keySave($event,this.Save)">
+                    <button class="btn btn__save tooltip"  @click="btnSaveOnClick(this.Save)"   @keydown="keySave($event,this.Save)">
                         Cất
                         <span class="tooltiptext tooltipIcon">Cất (Ctrl + S)</span>
-                    </div>
-                    <div class="btn btn__saveAdd tooltip" tabIndex="20" @click="btnSaveOnClick(this.SaveAndAdd)" @keydown="keySave($event,this.SaveAndAdd)" >
+                    </button>
+                    <button class="btn btn__saveAdd tooltip"  @click="btnSaveOnClick(this.SaveAndAdd)"  @keydown="keySave($event,this.SaveAndAdd)" >
                         Cất và thêm
                         <span class="tooltiptext tooltipIcon tooltip__large tooltip__right">Cất và thêm (Ctrl + Shift + S)</span>
-                    </div>
+                    </button>
                 </div>
             </div>
         
@@ -362,16 +351,17 @@
     import eNum from '@/js/common/eNum';
     import common from '@/js/common/common';
     import Resource from '@/js/common/resource';
-    import { vn } from 'date-fns/locale';
+    // import { vn } from 'date-fns/locale';
     import MPopupAsk from '../../components/base/MPopupAsk.vue';
-  
+    import Datepicker from '@vuepic/vue-datepicker';
+    import '@vuepic/vue-datepicker/dist/main.css';
     // import MPopupAsk from '@/components/base/MPopupAsk.vue';
 
 
     /**
      * URL api 
      */
-    var loadDataURL =process.env.VUE_APP_URL;
+    const loadDataURL =process.env.VUE_APP_URL;
     // var loadDataURL="http://localhost:5287/api/v1/";
 
      /**
@@ -382,41 +372,67 @@
 
      * 
      */
-     function validate(form, objectEmpty){
+     function validate(mouse, objectEmpty){
+        
         for(let key in objectEmpty){
             if(objectEmpty[key]){                             
-                form.$emit('errorEmpty', key); 
+                mouse.form.$emit('errorEmpty', key); 
                 console.log(objectEmpty[key]);        
-                return false;
-                
+                return false;                
             }
-        }       
+        }  
+        let validateEmail = common.checkEmail(mouse.email);
+        if(validateEmail){
+            mouse.form.$emit('waringEmail');
+            mouse.form.errorEmail = true;
+            return false;
+          //  let me = {form: this, email: this.emp.email, dateOfBirth: this.emp.dateOfBirth, identityIssuedDate: this.emp.identityIssuedDate}
+
+        }
+        // else{
+        //     mouse.form.errorEmail = false;
+        // }
+
+        let dOB= common.checkDate(mouse.dateOfBirth, new Date());
+        let identityIssuedDate = common.checkDate(mouse.identityIssuedDate, new Date());
+        if(!dOB || !identityIssuedDate){
+            mouse.form.$emit('waringMaxDate');
+            // if(!dOB){
+            //     mouse.form.isDateOfBirth = true;
+            // }
+            // else if(dOB){
+            //     mouse.form.isDateOfBirth = false;
+            // }
+            // else if(!identityIssuedDate){
+            //     if(!dOB){
+            //     mouse.form.isDateOfBirth = true;
+            //     }else{
+            //         mouse.form.isIdentityIssuedDate = true;
+            //     }               
+            // }           
+            // else{
+            //     mouse.form.isIdentityIssuedDate = false;
+            // }
+             return false;
+        }     
         return true;  
    }
+   /* eslint-disable */ 
 //    import { ref } from 'vue';
 export default {
-    components: { MPopupAsk },
+    components: { MPopupAsk,Datepicker},
     name: "employeeDetail",
     props: {
         closeDialog: Function,
         loadData: Function,
         employeeSelected: Function,
         formMode: Number,
-        /**
-         * `date-fns`-type formatting for a month view heading
-         */
-        monthHeadingFormat: {
-            type: String,
-            required: false,
-            default: "LLLL yyyy",
-        },
+        focus: Boolean,       
     },
     data() {
-        return {
-            vn: vn,
+        return {           
             showForm: true,
-            emp: {},
-            test: {},
+            emp: {},          
             maxDate: common.maxDate(),
             chooseGender: null,
             dataCombobox: "",
@@ -428,17 +444,23 @@ export default {
             isPhone: false,
             isPhoneLand: false,
             isIdentity: false,
+            isDateOfBirth: false,
+            isIdentityIssuedDate: false,
             SaveAndAdd: eNum.saveFormMode.SaveAndAdd,
             Save: eNum.saveFormMode.Save,
             datetime: "",
             pickedUp: false,
+            checkChange:false,
             showPopUpAsk: false,
+            empOld:{},          
+          
         };
     },
-    created() {
-        console.log(this.emp);    
+    created() {   
+           
             //gán data truyền từ cha sang con
             this.emp = this.employeeSelected;
+          
         //xử lý dữ liệu radio
         if (!common.checkEmptyData(this.emp.gender)) {
             this.chooseGender = this.emp.gender;
@@ -447,7 +469,7 @@ export default {
         if (!common.checkEmptyData(this.emp.departmentName)) {
             this.dataCombobox = this.emp.departmentName;
             this.emptyDepartment = false;
-        }
+        }           
     },
     updated() {
         //update gender
@@ -458,7 +480,60 @@ export default {
             this.newEmployeeCode();
         }
         this.$refs["employeeCode"].focus(); //focus vào item đầu tiên 
-        this.formatDate(); //thay đổi dữ liệu ngày tháng theo format trước khi hiển thị             
+        this.formatDate(); //thay đổi dữ liệu ngày tháng theo format trước khi hiển thị       
+        this.empOld={...this.employeeSelected};      
+    },
+    watch:{
+        focus(){           
+          debugger;
+
+            if(this.emptyCode){
+                this.$refs['employeeCode'].focus();
+            }
+            if(this.errorEmail){
+                if(this.emptyCode){
+                this.$refs['employeeCode'].focus();
+                 }
+                else if(this.emptyName){
+                this.$refs['employeeNameFocus'].focus();
+                }
+                else{
+                    this.$refs['email'].focus();
+                } 
+            }
+            if(this.emptyName){
+                if(this.emptyCode){
+                this.$refs['employeeCode'].focus();
+                }
+                else{this.$refs['employeeNameFocus'].focus();}
+            }
+            // if(this.isDateOfBirth||this.isIdentityIssuedDate){
+            //     if(this.emptyCode){
+            //     this.$refs['employeeCode'].focus();
+            //      }
+            //     else if(this.emptyName){
+            //     this.$refs['employeeNameFocus'].focus();
+            //     }
+            //     else if(this.isDateOfBirth){
+            //         this.$refs['dateOfBirth'].focus();
+            //     }
+            //     else if(this.isIdentityIssuedDate){
+            //         this.$refs['identityIssuedDate'].focus();
+            //     }
+            //     this.$refs['dateOfBirth'].focus();
+            // }
+            // if(this.isIdentityIssuedDate && this.isDateOfBirth ){
+            //     if(this.emptyCode){
+            //     this.$refs['employeeCode'].focus();
+            //      }
+            //     else if(this.emptyName){
+            //     this.$refs['employeeNameFocus'].focus();
+            //     }
+            //     this.$refs['dateOfBirth'].focus();
+            // }
+           
+            
+        },
     },
     methods: {
         /**
@@ -467,28 +542,21 @@ export default {
          * Kiểm tra sự thay đổi của form khi ESC hoặc nút X
          * CreatedBy:HMHieu(07-10-22)
          */        
-        askESC(employeeChange) {
-            this.showPopUpAsk = true;
-            if (this.formMode === eNum.formMode.ADD) {
-                if (employeeChange != {}) {
-                    this.showPopUpAsk = true;
-                }
-                else {
-                    this.closeDialog();
-                    this.showPopUpAsk = false;
+        askESC() {                 
+            this.checkChange = false;
+            this.showPopUpAsk = false;
+            for(let key in this.emp){
+                if(this.emp[key] !== this.empOld[key]){                   
+                    this.checkChange = true;
+                    break;
                 }
             }
-            if (this.formMode === eNum.formMode.Edit) {
-                if (employeeChange != this.emp) {
-                    this.showPopUpAsk = true;
-                }
-                else {
-                    this.closeDialog();
-                    this.showPopUpAsk = false;
-                }
+            if(this.checkChange){
+                this.showPopUpAsk = true;
+            }else{
+                this.closeDialog();             
             }
-            console.log(employeeChange);
-            console.log("defaul ", this.empSelected);
+           
         },
         /**
          * Đóng PopUP hỏi
@@ -544,6 +612,7 @@ export default {
         validateEmail() {
             if (common.checkEmail(this.emp.email)) {
                 this.errorEmail = true;
+                this.$emit('warningEmail');
             }
             else {
                 this.errorEmail = false;
@@ -610,6 +679,15 @@ export default {
             this.emp.departmentName = item.departmentName;
             this.emp.DepartmentCode = item.departmentCode;
             this.empDepartmentName = this.emp.departmentName;
+
+          
+            if (common.checkEmptyData(this.emp.departmentName)) {                          
+                this.emptyDepartment = true;
+            }
+            else {
+                this.emptyDepartment = false;
+            }
+        
         },
         /**
          * validate giá trị phòng ban
@@ -617,161 +695,131 @@ export default {
         */
         validateDepartment() {
             if (common.checkEmptyData(this.emp.departmentName)) {
+                
                 this.emptyDepartment = true;
             }
             else {
                 this.emptyDepartment = false;
             }
-        },
+        },      
         /**
         * Thêm mới hoặc sửa dữ liệu theo formMode
         * Author: HMH(19/09/22)
         */
         btnSaveOnClick(modeForm) {
-            var me = this;
+            // var me = this;
+             var me = {form: this, email: this.emp.email, dateOfBirth: this.emp.dateOfBirth, identityIssuedDate: this.emp.identityIssuedDate}
             // validate dữ liệu:
+            this.validateEmptyName();
+            this.validateEmptyCode();
+            this.validateDepartment();          
             let checkEmpty = {
                 EmptyCode: this.emptyCode,
                 EmptyName: this.emptyName,
                 EmptyDepartment: this.emptyDepartment
             };
-            this.validateEmptyName();
-            this.validateEmptyCode();
-            this.validateDepartment();
+         
+          
             let valid = validate(me, checkEmpty);
+           // let valid =true;
+            
             if (valid) {
                 //cất
-                if (me.formMode === eNum.formMode.ADD) {
+                if (me.form.formMode === eNum.formMode.ADD) {
                     var method = "POST";
                     fetch(loadDataURL + "Employees", {
                         method: method,
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify(me.emp),
-                    })
+                        body: JSON.stringify(me.form.emp),
+                    })                                             
                         .then((res) => res.json())
                         .then((res) => {
-                        let status = res.status;
-                        let errorCode = res.errorCode;
-                        console.log(status);
-                        if (errorCode === eNum.errorBackEnd.DuplicateCode) {
-                            me.$emit("errorDuplicate", me.emp.employeeCode);
-                        }
-                        if (status === eNum.errorBackEnd.Ser || status === eNum.errorBackEnd.User || status === eNum.errorBackEnd.NotFound || errorCode === eNum.errorBackEnd.InsertFailCode) {
-                            me.$emit("errorBackEnd", status || errorCode);
-                        }
-                        else {
-                            this.$emit("openToast", Resource.ToastMessage.success);
-                            me.$emit("loadData");
-                            if (modeForm === eNum.saveFormMode.Save) {
-                                me.$emit("closeDialog");
-                            }
-                            if (modeForm === eNum.saveFormMode.SaveAndAdd) {
-                                me.emp = {};
-                            }
-                        }
+                            this.handleResponse(res,me.form,modeForm);
+                      
                     })
                         .catch((res) => {
-                        console.log(res);
-                        this.$emit("openToast", Resource.ToastMessage.error);
+                            me.form.$emit("errorBackEnd", eNum.errorBackEnd.Ser);                              
+                            console.log(res);
+                            me.form.$emit("openToast", Resource.ToastMessage.error);
                     });
                 }
                 // Cất sửa dữ liệu:
-                if (me.formMode === eNum.formMode.Edit) {
+                if (me.form.formMode === eNum.formMode.Edit) {
                     method = "PUT";
-                    let URL = loadDataURL + `Employees/${me.emp.employeeID}`;
+                    let URL = loadDataURL + `Employees/${me.form.emp.employeeID}`;
                     console.log(URL);
                     fetch(URL, {
                         method: method,
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify(me.emp),
+                        body: JSON.stringify(me.form.emp),
                     })
                         .then((res) => res.json())
                         .then((res) => {
-                        let status = res.status;
-                        console.log(status);
-                        let errorCode = res.errorCode;
-                        if (errorCode === eNum.errorBackEnd.DuplicateCode) {
-                            me.$emit("errorDuplicate", me.emp.employeeCode);
-                        }
-                        if (status === eNum.errorBackEnd.Ser || status === eNum.errorBackEnd.User || status === eNum.errorBackEnd.NotFound || errorCode === eNum.errorBackEnd.InsertFailCode) {
-                            me.$emit("errorBackEnd", status || errorCode);
-                        }
-                        else {
-                            this.$emit("openToast", Resource.ToastMessage.success);
-                            me.$emit("loadData");
-                            if (modeForm === eNum.saveFormMode.Save) {
-                                me.$emit("closeDialog");
-                            }
-                            if (modeForm === eNum.saveFormMode.SaveAndAdd) {
-                                me.emp = {};
-                            }
-                        }
-                        //     else if(status===eNum.errorBackEnd.Success){
-                        //         this.$emit('openToast', Resource.ToastMessage.success);
-                        //         me.$emit("loadData");   
-                        //         if(modeForm===eNum.saveFormMode.Save){
-                        //             me.$emit("closeDialog");  
-                        //         } 
-                        //         if(modeForm===eNum.saveFormMode.SaveAndAdd){
-                        //             me.emp={}; 
-                        //         }         
-                        //     }              
-                        // //    else if(status===eNum.errorBackEnd.Ser||eNum.errorBackEnd.User||eNum.errorBackEnd.NotFound){
-                        // //         me.$emit('errorBackEnd',status); 
-                        // //         //this.$emit('openToast', Resource.ToastMessage.error);                          
-                        // //     }
-                        //     else{ 
-                        //         me.$emit('errorBackEnd',status);       
-                        //     }
+                            this.handleResponse(res,me.form,modeForm);
+                                            
                     })
-                        .catch((res) => {
-                        console.log(res);
-                        this.$emit("openToast", Resource.ToastMessage.error);
+                        .catch((res) => {                      
+                            me.form.$emit("errorBackEnd", eNum.errorBackEnd.Ser);      
+                            console.log(res);
+                            me.form.$emit("openToast", Resource.ToastMessage.error);
                     });
                 }
-                if (me.formMode === eNum.formMode.Duplicate) {
+                if (me.form.formMode === eNum.formMode.Duplicate) {
                     method = "POST";
                     fetch(loadDataURL + "Employees", {
                         method: method,
                         headers: {
                             "Content-Type": "application/json",
                         },
-                        body: JSON.stringify(me.emp),
+                        body: JSON.stringify(me.form.emp),
                     })
                         .then((res) => res.json())
-                        .then((res) => {
-                        let status = res.status;
-                        let errorCode = res.errorCode;
-                        console.log(status);
-                        if (errorCode === eNum.errorBackEnd.DuplicateCode) {
-                            me.$emit("errorDuplicate", me.emp.employeeCode);
-                        }
-                        else if (status === eNum.errorBackEnd.Ser || eNum.errorBackEnd.User || eNum.errorBackEnd.NotFound) {
-                            me.$emit("errorBackEnd", status);
-                            //this.$emit('openToast', Resource.ToastMessage.error);                          
-                        }
-                        else {
-                            this.$emit("openToast", Resource.ToastMessage.success);
-                            me.$emit("loadData");
-                            if (modeForm === eNum.saveFormMode.Save) {
-                                me.$emit("closeDialog");
-                            }
-                            if (modeForm === eNum.saveFormMode.SaveAndAdd) {
-                                me.emp = {};
-                                //  me.emp.employeeCode= this.newEmployeeCode();
-                            }
-                        }
+                        .then((res) => {                       
+                             this.handleResponse(res,me.form,modeForm);                            
                     })
-                        .catch((res) => {
-                        console.log(res);
-                        this.$emit("openToast", Resource.ToastMessage.error);
+                        .catch((res) => {                                                    
+                            me.form.$emit("errorBackEnd", eNum.errorBackEnd.Ser);    
+                            console.log(res);
+                            me.form.$emit("openToast", Resource.ToastMessage.error);                      
                     });
                 }
             }
+        },
+        /**
+         * 
+         * @param {*} res // thông tin trả về từ BE
+         * @param {*} me //con trỏ
+         * @param {*} mode // formMode
+         * handle trạng thái trả về từ BE
+         * CreatedBy HMHieu (20-10-2022)
+         */
+        handleResponse(res,me,mode){          
+            let errorCode = res.data.errorCode;  
+            let content=res.data.userMsg;                   
+            let ok = res.success;
+            if(ok){
+                this.$emit("openToast", Resource.ToastMessage.success);
+                me.$emit("loadData");
+                if (mode === eNum.saveFormMode.Save) {
+                    me.$emit("closeDialog");
+                }
+                if (mode === eNum.saveFormMode.SaveAndAdd) {
+                    me.$emit("loadData");
+                    me.$emit('reLoadForm');
+                    me.newEmployeeCode();     
+                    this.$refs['employeeCode'].focus();    
+                }
+            }else{                      
+                if (
+                    errorCode === eNum.errorBackEnd.InsertFailCode||
+                    errorCode === eNum.errorBackEnd.exception) {
+                    me.$emit("errorBackEnd",  errorCode,content);
+                }
+            }    
         },
         /**
       *
@@ -785,7 +833,8 @@ export default {
                 let key = event.keyCode;
                 switch (key) {
                     case eNum.KeyCode.ESC:
-                        me.$emit("closeDialog");
+                        me.askESC();
+                       // me.$emit("closeDialog");
                 }
             }
             catch (error) {
@@ -820,11 +869,11 @@ export default {
         saveBtn(event) {
             // let me=this;
             try {
-                if (event.keyCode == eNum.KeyCode.S && event.ctrlKey) {
+                if (event.keyCode === eNum.KeyCode.S && event.ctrlKey) {
                     event.preventDefault();
                     this.btnSaveOnClick(eNum.saveFormMode.Save);
                 }
-                if (event.keyCode == eNum.KeyCode.S && event.ctrlKey && event.shiftKey) {
+                if (event.keyCode === eNum.KeyCode.S && event.ctrlKey && event.shiftKey) {
                     event.preventDefault();
                     this.btnSaveOnClick(eNum.saveFormMode.SaveAndAdd);
                 }
@@ -862,14 +911,30 @@ export default {
        * author: HMHieu(07/10/2022)
        */
         newEmployeeCode() {
+            let me=this;
             try {
                 fetch(loadDataURL + "Employees/new-code-employee", { method: "GET" })
-                    .then(res => res.text())
-                    .then(data => {
-                    this.emp.employeeCode = data;
-                    this.emptyCode = false;
+                    .then(res => res.json())
+                    .then(res => {
+
+                        let errorCode = res.errorCode;                     
+                        let ok = res.success;
+                        console.log(ok);
+                        if(ok){
+                            me.emp.employeeCode = res.data;
+                           
+                            me.emptyCode = false;                           
+                        }else{                           
+                            if (
+                                errorCode === eNum.errorBackEnd.InsertFailCode||
+                                errorCode === eNum.errorBackEnd.exception) {
+                                me.$emit("errorBackEnd",  errorCode);
+                            }
+                        }                  
+                   
                 })
                     .catch(error => {
+                    me.$emit("errorBackEnd", eNum.errorBackEnd.Ser); 
                     console.log(error);
                     return null;
                 });

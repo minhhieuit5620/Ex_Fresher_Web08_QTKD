@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="dialog__waring--bottom">
-                <div class="btn btn__close" @click="close()">Đóng</div>
+                <button class="btn btn__close" :ref="'accept'" @click="close()">Đóng</button>
             </div>
         </div>
     </div>
@@ -23,6 +23,9 @@ export default {
         return{
 
         }
+    },
+    mounted(){
+        this.$refs["accept"].focus(); //focus vào item đầu tiên 
     },
     methods:{
             close(){

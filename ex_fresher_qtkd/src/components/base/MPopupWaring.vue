@@ -9,8 +9,8 @@
                 </div>
             </div>
             <div class="dialog__two--bottom">
-                <div class="btn btn__cancel--delete" @click="cancelDelete()">Không</div>
-                <div class="btn btn__aprove" @click="aproveDelete()" >Có</div>
+                <button class="btn btn__cancel--delete" :ref="'delete'" @click="cancelDelete()">Không</button>
+                <button class="btn btn__aprove"  @click="aproveDelete()" >Có</button>
             </div>
         </div>
     </div>
@@ -29,6 +29,9 @@ export default {
         return{
            
         }
+    },
+    mounted(){
+        this.$refs["delete"].focus(); //focus vào item đầu tiên 
     },
     methods:{
         cancelDelete(){

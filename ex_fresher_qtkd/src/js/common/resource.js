@@ -60,5 +60,9 @@ Resource.popupErrorBackend = {
     name: 'NotFound',
     content: "Không tìm thấy"
   },
+  Deleted: {
+    name: 'Deleted',
+    content: "Dữ liệu của bạn đã có sự thay đổi hoặc không tồn tại, vui lòng lấy lại dữ liệu"
+  },
 }
 export default Resource;

@@ -83,19 +83,19 @@
 
 @keyframes slide-in {
     from{
-        right: 0px;
+        top: 0px;
         
     }
     to{
-        right: 80px;
+        top: 80px;
     }
 }
 
 @keyframes slide-out {
     from{
-        right: 80px;
+        top: 80px;
     }
     to{
-        right: 0px;
+        top: 0px;
     }
 }
