@@ -35,7 +35,7 @@
    
     --color--head:#B9E2B1;
     --color--checkbox:#089740;
-    --color--background:#f1f1f1;
+    --color--background:#eceef1;
     --color--hover:#eceef1;
     --color--hover--table:#DCF1D8;
     --color--dialog--wrap: rgba(0,0,0,0.59);    
@@ -50,7 +50,7 @@
 body{
     margin:0;
     padding: 0;
-    font-size: 14px;
+    font-size: 13px;
     font-family: Misa fonts;
     box-sizing: border-box;
 }
@@ -73,7 +73,7 @@ body{
 /* định dạng fontsize  */
 .fontsize__tile{
     font-size: 24px;
-    font-weight: 700px;
+    font-weight: 700;
     color: var(--color--black);
 }
 .fontsize__input::placeholder{
@@ -85,7 +85,7 @@ body{
 }
 .border-red{
     outline: none;
-    border:1px solid #ff0000;
+    border:1px solid #ff0000 !important;
     
 }
 
@@ -185,6 +185,9 @@ body{
 /* Detail employee */
 .dialog__wrap{
     position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top: 0;
     right: 0;
     left: 0;
@@ -201,9 +204,11 @@ body{
     position: absolute;
     flex-direction: column;
     justify-content: space-between;
-    top: 50%;
+    /* top: 0;
+    left: 0; */
+    /* top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
     box-sizing: border-box;  
     background-color: var(--color--white);  
     border:var(--boder--solid--input);
@@ -224,7 +229,7 @@ body{
  }
  .dialog__info--name{
      font-size:24px;
-    font-weight: 700px;
+    font-weight: 700;
  }
  .checkbox__item{
      display: flex;
@@ -359,7 +364,7 @@ body{
     right: 0;
     left: 0;
     bottom: 0;
-    z-index: 99;
+    z-index: 100;
     background-color: var(--color--dialog--wrap);
 }
 .dialog__waring{
@@ -402,7 +407,7 @@ body{
     right: 0;
     left: 0;
     bottom: 0;
-    z-index: 99;
+    z-index: 100;
     background-color:var(--color--dialog--wrap)
 }
 
@@ -440,7 +445,7 @@ body{
     right: 0;
     left: 0;
     bottom: 0;
-    z-index: 99;
+    z-index: 200;
     background-color:var(--color--dialog--wrap)
 }
 .dialog__ask{

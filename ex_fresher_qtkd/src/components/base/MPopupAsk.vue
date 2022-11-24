@@ -13,7 +13,7 @@
                     <button class="btn btn__cancel--delete" @click="hidePopUp">Hủy</button>
                 </div>
                 <div class="dialog__right">                    
-                    <button class="btn btn__cancel--delete" :ref="'cancel'" @click="hideDialog">Không</button>
+                    <button class="btn btn__cancel--delete" ref="cancel" @click="hideDialog">Không</button>
                     <button class="btn btn__aprove--ask" @click="aprove">Có</button>
                 </div>
               
@@ -30,7 +30,7 @@ export default{
         return{}
     },
     mounted(){
-        this.$refs["cancel"].focus(); //focus vào item đầu tiên 
+        this.$refs.cancel.focus(); //focus vào item đầu tiên 
     },
     methods:{
         /**

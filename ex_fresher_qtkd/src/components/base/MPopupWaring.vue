@@ -45,7 +45,10 @@ export default {
             if(this.popUpMode===eNum.popUpMode.DeleteOne) {
                 this.$emit('employeeDelete', this.idEmployee)
             }
-          
+            if(this.popUpMode===eNum.popUpMode.CloseImport){
+                this.$emit('closePopup');
+                this.$emit('closeImportEx');
+            }
            
         }
     }

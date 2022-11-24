@@ -135,6 +135,33 @@ export default {
             return false;
         }
         return true;
+    },
+
+    /**
+     * tách chuỗi tên file để kierm tra 
+     * @param {*} filename //tên file
+     * @returns 
+     */
+    getExtension(filename) {
+        var parts = filename.split('.');
+        return parts[parts.length - 1];
+      },
+      
+      /**
+       * kiểm tra đúng file yêu cầu hay chưa
+       * @param {*} filename tên file
+       * @returns 
+       */
+    checkIsExcel(filename) {
+    var ext = this.getExtension(filename);
+    switch (ext.toLowerCase()) {
+        case 'xlsx':
+        case 'xls':
+        case 'xlsm':      
+        //etc
+        return true;
+    }
+    return false;
     }
     
 

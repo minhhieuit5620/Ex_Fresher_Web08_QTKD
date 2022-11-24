@@ -8,6 +8,8 @@
     outline: none;
     border: none;
     line-height: 32px;
+    font-weight: 600;
+    
 }
 
 .btn__save{
@@ -45,6 +47,7 @@
     color: #111;
     border: 2px solid #3b3c3f;
     line-height: 28px;
+    font-weight: 600;
 }
 .btn__delete--multiple{
     position: absolute;

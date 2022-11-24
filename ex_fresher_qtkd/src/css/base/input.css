@@ -15,7 +15,7 @@
     width: 16px;
     height: 16px;
     margin-right: 10px;
-    margin-left: 16px;
+    margin-left: 10px;
     accent-color: var(--color--checkbox);
     color: #fff;
 }
@@ -27,31 +27,94 @@
     margin-left: 16px;
     margin-right: 8px;
 }
- .input__radio{   
+ /* .input__radio{   
     width: 16px;
     height: 16px;
     border-radius: 50%;
     outline: none;
     margin-right: 8px;
+    accent-color: #089740;
     border: 1px solid gray;
 }
-/*
+.input__radio:focus{
+    border: 1px solid gray;
+    border-width: 0.2rem; 
+     outline: 1px solid gray;
+    
+    box-shadow: 4px 0px 4px rgb(23 27 42 / 24%);
+
+} */
+input[type="radio"] {
+    height: 18px;
+    width: 18px;
+    margin-right: 0.5rem;
+}
+.input__radio {
+  
+    /* hiding browser el */
+    appearance: none;
+    /* Safari support */
+    -webkit-appearance: none;
+    border: 4px solid #fff;
+    /* background-color:  #ccc; */
+    border-radius: 50%;
+    outline: 1px solid  #ccc;
+
+}
+
+/* keyboard navigation focus appearance */
+.input__radio:focus-visible {
+    outline-offset: 0;
+   
+ outline: 1px solid  #50B83C !important;
+}
+.input__radio:focus{
+    outline: 1px solid #50B83C;
+}
+
+.input__radio:checked{
+    background-color:  #50B83C;
+    /* outline: 1px solid  #50B83C; */
+
+
+}
+
+
+
+
+/* .input__radio:checked{
+    border: 1px solid #50B83C;
+} */
+/* 
 input[type='radio']:before {
     content: '';
     display: block;
     width: 60%;
     height: 60%;
     margin: 20% auto;
+    border: none;
     border-radius: 50%;
 }
 
 input[type="radio"]:checked:before {
     background: #50B83C;
     
+
 }
 
 input[type="radio"]:checked {
   border-color:#50B83C;
+  
+    
+} */
+/* .bo{
+    position: absolute;
+    border: 1px solid #ccc;
+    top: 40px;
+    width: 20px;
+    height: 18px;
+    
+    border-radius: 50%;
 } */
 .item__radio{
     margin-left: 16px;
@@ -59,6 +122,7 @@ input[type="radio"]:checked {
 
 .lable-input{
     margin-bottom: 4px;
+    font-weight: 700;
 }
 .label-gender{
     padding-left: 14px;                                 
@@ -73,15 +137,20 @@ input[type="radio"]:checked {
 .search{
     position: absolute;
     top: 8px;
-    right: 12px;
+    right: 8px;
 }
 .content__search--data .input{   
     width: 230px;
 
 }
-
-
-
-/* input[type=text]::placeholder{
-    font-size: 12px;
+/* .input ::placeholder{
+    font-style: italic;
 } */
+
+
+
+input[type=text]::placeholder{
+    font-size: 12px;
+    font-style: italic;
+
+}

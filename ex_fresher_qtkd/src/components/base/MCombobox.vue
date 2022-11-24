@@ -1,9 +1,9 @@
 <template>
-  <div class="combobox-container" @keydown="directItemDownUp($event)" @keyup="openDataCombobox($event)">
+  <div class="combobox-container" @keydown="directItemDownUp($event)" @keyup="openDataCombobox($event)" >
     <div class="input-container"  >
-      <input type="text" class=" input" @input="search" v-model="dataSelected"  @focus="comboboxFocus"  :class="{'border-red': emptyCombobox}"  :ref="'input'">
-      <div id="icon-combobox" class="icon-combobox" @click="showDataList=!showDataList"  >
-        <div class="icon-drop-combobox" @click="loadDepartment"></div>
+      <input type="text" class=" input" @input="search();comboboxFocus();" @click="showDataList=true;comboboxFocus();" v-model="dataSelected" @blur="comboboxFocus();"  @focus="showDataList=true"   :class="{'border-red': emptyCombobox}"  :ref="'input'">
+      <div id="icon-combobox" class="icon-combobox icon icon__drop--comboboxV2" @click="showDataList=!showDataList"  >
+        <div  @click="loadDepartment"  ></div>
       </div>
     </div>
     <div class="combobox-value" v-if="showDataList" v-clickoutside="hideListData" :ref="'dataList'">
@@ -12,7 +12,7 @@
         <div class="value__combobox">Tên đợn vị</div>
       </div>
 
-      <div class="combobox-item" v-for="(item, index) in items" :key="index" @click="selectedDataCombobox(item, index)"
+      <div class="combobox-item" v-for="(item, index) in items" :key="index" @click="selectedDataCombobox(item, index);comboboxFocus();"
         :class="{'combobox-item-active': selected == index}" v-show="isSearch[index]" :ref="'focus_' +index"
        >
 
@@ -27,7 +27,9 @@
 </template>
 
 <script>
+/* eslint-disable */
 import common from '@/js/common/common';
+import baseApi from '@/js/common/baseApi';
 /**
 * Hàm xử lý dữ liệu tiếng việt
 * author: HMHieu(11/9/2022)
@@ -49,7 +51,7 @@ function processData(Text) {
 
   return Text;
 }
-/* eslint-disable */
+
 /**
  * Gán sự kiện nhấn click chuột ra ngoài combobox data (ẩn data list đi)
  * HMHieu (09/10/2022)
@@ -73,12 +75,17 @@ function processData(Text) {
         // vnode.context[binding.expression](event); // vue 2
       }
     };
+ 
     document.body.addEventListener("click", el.clickOutsideEvent);
+    
   },
   beforeUnmount: (el) => {
     document.body.removeEventListener("click", el.clickOutsideEvent);
+    
   },
 };
+
+
 
 const keyCode = {
   LEFT: 37,
@@ -86,8 +93,12 @@ const keyCode = {
   RIGHT: 39,
   DOWN: 40,
   ENTER: 13,
+  TAB: 9,
+  ESC: 27,
   noIndex: -1
 }
+
+
 export default {
 
   
@@ -133,7 +144,8 @@ export default {
      * author: HMHieu(10/9/2022)
      */
     comboboxFocus(){
-        this.$emit('validateDepartment');
+      
+        this.$emit('comboboxFocus');
       },
     /**
      * Hàm chọn dữ liệu
@@ -147,21 +159,31 @@ export default {
       this.$emit('objectItemCombobox', item);
 
     },
-    loadDepartment() {
+
+
+    //lấy dữ liệu trên session hoặc get dữ liệu mới
+    async  loadDepartment() {
 
       try {
-            if(!common.checkEmptyData(sessionStorage.getItem('departments'))){
-            this.items=JSON.parse(sessionStorage.getItem('departments'));
-            }
-            else{//chưa có dữ liệu trong localstorage
-                fetch(this.url)
-                .then(res => res.json())
-                .then(res => {
-                    this.items = res;              
-                    sessionStorage.setItem('departments', JSON.stringify(this.items));
-                    // this.showDataList =! this.showDataList;
-                })  
-            }
+            // if(!common.checkEmptyData(sessionStorage.getItem('departments'))){
+            // this.items=JSON.parse(sessionStorage.getItem('departments'));
+            // }
+            // else{//chưa có dữ liệu trong localstorage
+            //     // fetch(this.url)
+            //     // .then(res => res.json())
+            //     // .then(res => {
+            //       let method="GET";
+            //       var res =await baseApi.fetchAPIDefault(this.url,method)   
+                 
+            //         this.items = res;              
+            //         sessionStorage.setItem('departments', JSON.stringify(this.items));
+            //         // this.showDataList =! this.showDataList;
+            //     // })  
+            // }
+
+            let method="GET";
+              var res =await baseApi.fetchAPIDefault(this.url,method)                 
+              this.items = res;   
         } catch (error) {
           console.log(error);
         }
@@ -187,7 +209,8 @@ export default {
 
       switch (key) {
         case keyCode.DOWN:
-          // this.$refs[`focus_${this.selectedCurrent + 1}`].click();
+        var elToFocus = null;
+           //this.$refs[`focus_${selectedCurrent + 1}`].click();
           if (selectedCurrent < this.items.length - 1) {
             selectedCurrent++;
             while (!this.isSearch[selectedCurrent]) { //nếu bị ẩn
@@ -213,6 +236,13 @@ export default {
           }
           this.selected = selectedCurrent;
           break;
+          //tắt form
+        case keyCode.ESC:
+          
+          this.showDataList = false;
+          //reset lại
+          this.selected = keyCode.noIndex;
+          break;
         case keyCode.ENTER:
           this.dataSelected = this.items[this.selected][this.text];
           this.$emit('objectItemCombobox', this.items[this.selected]);
@@ -220,10 +250,17 @@ export default {
           //reset lại
           this.selected = keyCode.noIndex;
           break;
+        case keyCode.TAB:
+            this.showDataList=false;
         default:
           break;
       }
     },
+    /********************
+    * mở form cbx bằng phím mũi tên xuống
+    * HMHieu 22-11-2022
+    * 
+    */
     openDataCombobox(event) {
       try {
         let key = event.keyCode;
@@ -243,9 +280,10 @@ export default {
      * author: HMHieu(10/9/2022)
      */
     search() {
-      this.showDataList = true;
+      this.showDataList = true;     
       if (this.dataSelected != '' || this.dataSelected == undefined) {
         let textInput = processData(this.dataSelected);
+        var ok=false;
         this.items.forEach((item, index) => {
           this.isSearch[index] = false;
           let temp = processData(item[this.text]);
@@ -254,13 +292,21 @@ export default {
           // console.log(item);
           if (temp.search(textInput) != keyCode.noIndex) { // nếu có chứa chuỗi
             this.isSearch[index] = true;
-            this.directItemDownUp;           
+            this.directItemDownUp;  
+            ok=true         
           }
           if (code.search(textInput) != keyCode.noIndex) {
             this.isSearch[index] = true;
             this.directItemDownUp;
-          }
+            ok=true
+          }    
+          // debugger     
         })
+        if(ok==false&&this.dataSelected != '' || this.dataSelected !== undefined){
+          this.dataSelected =  this.dataSelected;
+          this.$emit("objectItemCombobox", this.dataSelected);
+          // textInput = processData(this.dataSelected);
+        }
       } else { //nếu rỗng thì hiển thị tất cả
         this.items.forEach((item, index) => {
           this.isSearch[index] = true;

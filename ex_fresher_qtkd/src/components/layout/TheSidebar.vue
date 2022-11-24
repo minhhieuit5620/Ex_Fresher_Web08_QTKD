@@ -4,9 +4,9 @@
                 <div class="sidebar__item--icon icon__sidebar icon icon__dashboard" ></div>
                 <div class="sidebar__item--text"> Tổng quan</div>
             </router-link>
-            <router-link to="/moneyPage" class="sidebar__item">
+            <router-link to="/managerUser" class="sidebar__item" v-show="showManager">
                 <div class="sidebar__item--icon icon__sidebar icon icon__cash" ></div>
-                <div class="sidebar__item--text"> Tiền mặt</div>
+                <div class="sidebar__item--text"> Người dùng</div>
             </router-link>
             <router-link to="/moneyBank" class="sidebar__item">
                 <div class="sidebar__item--icon icon__sidebar icon icon__bank" ></div>
@@ -65,10 +65,47 @@
 <script>
 
 
-
+// import baseApi from '@/js/common/baseApi';
+import common from '@/js/common/common';
+import resource from '@/js/common/resource';
 export default {
     data() {
-        return{}
+        return{
+            showManager:false
+        }
     },
+    created(){
+        this.managerUser();
+    },
+    methods:{
+        managerUser(){
+            // let token=localStorage.getItem(resource.Manager.token.accessToken);
+            // var role=baseApi.parseJwt(token);
+            // if(role===resource.Manager.role.admin){                  
+            //     this.showManager=true;
+            // }
+            // else{
+            //     this.showManager=false;
+            // }
+
+            let rol = localStorage.getItem(resource.Manager.token.rol);           
+            if(!common.checkEmptyData(rol)){
+                for (let index = 0; index < rol.length; index++) {
+                    if (rol[index] === resource.Manager.role.admin) {                       
+                        this.showManager=true;
+                    }
+                    else if (rol === resource.Manager.role.admin) {                       
+                        this.showManager=true;
+                    }
+                    else {
+                        this.showManager=false;
+                    }
+                
+                }
+            }else{
+                this.showManager=false;
+            }
+        }
+    }
 }
 </script>

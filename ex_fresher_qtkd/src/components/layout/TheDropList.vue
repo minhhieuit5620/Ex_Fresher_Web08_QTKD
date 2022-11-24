@@ -1,18 +1,20 @@
 <template>
-    <div class="dropList-page"    >
-        <div class="dropList-text" @click="isShow =! isShow"  >{{text}}</div>
-        <div class="dropList-data" v-show="isShow" v-clickoutside="hideDropList" >
+    <div class="dropList-page"   >
+        <div class="dropList-text" @click="openDropList"  >{{text}}</div>
+        <div class="dropList-data" v-show="isShow"  v-clickoutside="hideDropList" >
             <div class="data-item" v-for="(textNumPage, index)  in contentPage"  :key="index" 
             @click="selectNumOfPage(textNumPage, index)"
             :class="{'dropList-choose': choose==index}">{{textNumPage.textData}}</div>
         </div>
-        <div class="dropList-icon" @click="isShow =! isShow"  >
-            <div class="dropList-icon-drop"></div>
+        <div class="dropList-icon"  @click="openDropList"  >
+            <div class="dropList-icon-drop" ></div>
         </div>
     </div>
 </template>
     
 <script>
+ /* eslint-disable */
+import Resource from '@/js/common/resource';
 
 
 
@@ -45,9 +47,9 @@ const clickoutside = {
       clickoutside,
     },
     created(){
-      var recorInSession=sessionStorage.getItem("recordPage");
-      var textpage=sessionStorage.getItem("textPage");
-      var index=sessionStorage.getItem("index");
+      var recorInSession=sessionStorage.getItem(Resource.Session.recordPage);
+      var textpage=sessionStorage.getItem(Resource.Session.textPage);
+      var index=sessionStorage.getItem(Resource.Session.index);
         if(recorInSession!=null || recorInSession!=undefined){
           this.$emit("numberRecordOfPage", recorInSession);
           this.text =textpage;
@@ -57,7 +59,8 @@ const clickoutside = {
     methods: { 
       selectNumOfPage(textNumPage, index){
         this.isShow = true; 
-        var recorInSession=sessionStorage.getItem("recordPage");
+        var recorInSession=sessionStorage.getItem(Resource.Session.recordPage);
+        // var recorInSession=sessionStorage.getItem("recordPage");
           if(recorInSession!=null || recorInSession!=undefined){
             this.choose = index;
             this.text = textNumPage.textData;
@@ -80,25 +83,29 @@ const clickoutside = {
       addPage(record,textPage,index){
         if(record==""||record==undefined){
           this.recordInpage=20;          
-          sessionStorage.setItem("recordPage",this.recordInpage);
-          sessionStorage.setItem("textPage",textPage);
-          sessionStorage.setItem("index",index);
+          sessionStorage.setItem(Resource.Session.recordPage,this.recordInpage);
+          sessionStorage.setItem(Resource.Session.textPage,textPage);
+          sessionStorage.setItem(Resource.Session.index,index);
         }else{
-          sessionStorage.setItem("recordPage",record);
-          sessionStorage.setItem("textPage",textPage);
-          sessionStorage.setItem("index",index);
+          sessionStorage.setItem(Resource.Session.recordPage,record);
+          sessionStorage.setItem(Resource.Session.textPage,textPage);
+          sessionStorage.setItem(Resource.Session.index,index);
+          
         }
         console.log(this.textPage);
       },
       hideDropList(){
         this.isShow = false
-        }
+        },
+      openDropList(){       
+        this.isShow= !this.isShow
+      }
     },
 
     updated(){
-      var recorInSession=sessionStorage.getItem("recordPage");
-      var textpage=sessionStorage.getItem("textPage");
-      var index=sessionStorage.getItem("index");
+      var recorInSession=sessionStorage.getItem(Resource.Session.recordPage);
+      var textpage=sessionStorage.getItem(Resource.Session.textPage);
+      var index=sessionStorage.getItem(Resource.Session.index);   
         if(recorInSession!=null || recorInSession!=undefined){
           this.$emit("numberRecordOfPage", recorInSession);
           this.text =textpage;
@@ -112,7 +119,7 @@ const clickoutside = {
         isShow: false,
         textNumPages: null,
 
-        choose: null,
+        choose: 1,
         text: '20 bản ghi trên một trang',
 
         recordInpage:null,

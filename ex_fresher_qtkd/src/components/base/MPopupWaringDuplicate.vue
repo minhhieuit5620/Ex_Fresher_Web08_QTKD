@@ -16,12 +16,13 @@
 
 </template>
 <script>
+import eNum from '@/js/common/eNum';
 export default {
     props: {
      
-      contentDuplicate: String,
+        contentDuplicate: String,
     //   listSelectedEmployee: Object,
-     // popUpMode:Number,
+        popUpModeOneBtn:Number,
     },
     data() {
         return{
@@ -33,7 +34,15 @@ export default {
     },
     methods:{
         agreeDuplicate(){
-            this.$emit('closeErrorDuplicate');
+            if(this.popUpModeOneBtn===eNum.popUpModeOneBtn.warning){
+                this.$emit('closeErrorDuplicate');
+            }
+            if(this.popUpModeOneBtn===eNum.popUpModeOneBtn.logout){
+                this.$emit('closeErrorDuplicate');
+                this.$emit('logOutAccount');
+
+                
+            }
         }
       
     }

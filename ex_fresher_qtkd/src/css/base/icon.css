@@ -117,9 +117,10 @@ margin:12px 10px 12px 16px ;
 .icon__search{
     background-position:-310px -140px;
     background-repeat: no-repeat;  
+    opacity: 0.6;
 }
 .icon__reload{
-    background-position: -1092px -85px;
+    background-position:-420px -196px;
     background-repeat: no-repeat;
 }
 .content__reload{
@@ -129,6 +130,14 @@ margin:12px 10px 12px 16px ;
     background-position:  -700px -195px;
     background-repeat: no-repeat;
     /* width: 26px; */
+}
+.icon__import{
+    background-position: -476px -195px;
+    background-repeat: no-repeat;
+}
+.icon__import--default{
+    background-position: -252px -140px;
+    background-repeat: no-repeat;
 }
 .content__excel{
     margin: 8px;
@@ -162,7 +171,7 @@ margin:12px 10px 12px 16px ;
 .icon__waring{
     background-position: -590px -458px;
     background-repeat: no-repeat;
-    width: 50px;
+    min-width: 50px;
     height: 37px;
 }
 .icon__error{
@@ -184,4 +193,64 @@ margin:12px 10px 12px 16px ;
 .icon__date{
     background-position: -128px -312px;
     background-repeat: no-repeat;
+}
+
+/* icon Import  */
+.icon__ask--import{
+    background-position:-695px -305px;
+    background-repeat: no-repeat;
+}
+.icon__back{
+
+    background-position:-360px -305px;
+    background-repeat: no-repeat;
+    color: #005995;
+}
+.icon__continue--import{
+
+    background-position:-312px -305px;
+    background-repeat: no-repeat;
+    /* filter:drop-shadow(8px 8px 10px 005995); */
+    /* color: #005995; */
+
+}
+.icon__action--import{
+    background-position:-313px -305px;
+    background-repeat: no-repeat;
+}
+.icon__cancel--import{
+    background-position:-1025px -400px;
+    background-repeat: no-repeat;
+}
+.icon__close--import{
+    background-position:-1928px -199px;
+    background-repeat: no-repeat;
+}
+.icon__close--importESC{
+    background-position:-1311px -353px;
+    background-repeat: no-repeat;
+}
+
+.icon__eye--show{
+    background-position:-932px -93px;
+    background-repeat: no-repeat;
+}
+.icon__eye--hide{
+    background-position:-987px -92px;
+    background-repeat: no-repeat;
+}
+.icon__drop--comboboxV2{
+    background-position: -1740px -303px;
+    background-repeat: no-repeat;
+    position: absolute;
+    border-left: 1px solid #eed9d9;
+    padding: 8px 12px;
+   
+    height: 16px;
+    width: 16px;
+ 
+    cursor: pointer;
+}
+.icon__drop--comboboxV2:hover{
+    opacity: unset !important;
 }

@@ -5,5 +5,7 @@
 }
 .btn:focus{
     outline: none;
-    border: 2px solid #babec5;
+    /* height: 32px; */
+    box-shadow: 4px 0px 4px rgb(23 27 42 / 24%);
+    /* border: 1px solid #babec5; */
 }

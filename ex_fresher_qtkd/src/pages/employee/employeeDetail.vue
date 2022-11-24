@@ -1,13 +1,13 @@
 <template>
      <!-- Detail Employee  -->
-     <div class="dialog__wrap"   > 
+     <div class="dialog__wrap" id="range"  > 
        
           <!-- <div class="dialog__infoEmp" @keyup="escClose($event)" @keydown="saveBtn($event)"
           @mousemove="draging($event)"  
           @mouseup="drop"  
           @mousedown="drag"  
           :ref="'headerDialog'" > -->
-          <div class="dialog__infoEmp" @keyup="escClose($event)" @keydown="saveBtn($event)">
+          <div class="dialog__infoEmp" @keyup="escClose($event)" @keydown="saveBtn($event)" draggable>
           
             <div class="dialog__infoEmp--top" >
                 <div class="dialog__info">
@@ -51,12 +51,13 @@
                                 <div class="content__input tooltip" >
                                     <input type="text" class="input"  maxlength="20"
                                     @keyup = 'validateEmptyCode'
-                                    @focus = 'validateEmptyCode'
                                     @blur = 'validateEmptyCode'
+                                    @input = 'validateEmptyCode'
                                     :class="{'border-red' : emptyCode}"
                                     v-model="emp.employeeCode"
                                     :ref="'employeeCode'" >
                                     <div class="empty__input tooltiptext tooltipError"  v-show="emptyCode" >Mã không được để trống</div>
+                                    <div class="empty__input tooltiptext tooltipError"  v-show="errorMaxCode" >Mã không được lớn hơn 20 ký tự.</div>
                                 </div>
                               
                                
@@ -68,8 +69,9 @@
                                 </div>
                                 <div class="content__input tooltip">
                                     <input type="text" class="input"   maxlength="100"
-                                    @keyup = 'validateEmptyName'
-                                    @focus = 'validateEmptyName'
+                                   
+                                   
+                                    @input ='validateEmptyName'
                                     @blur ='validateEmptyName'
                                     :ref="'employeeNameFocus'"
                                   
@@ -90,12 +92,13 @@
                             
                             <div class="content__input tooltip" >
                             
-                                 <MCombobox :url="'http://localhost:5063/api/v1/Departments'" 
+                                 <MCombobox :url=apiGetDepartment                                
                                  :code="'departmentCode'" 
                                 :text="'departmentName'" 
                                 @objectItemCombobox='objectItemCombobox'
                                 :valueRender='dataCombobox'
-                                @blur ='validateDepartment'
+                                @input ='validateDepartment'
+                                @blur="validateDepartment"
                                 @comboboxFocus="validateDepartment"    
                                 :key = 'keyCombobox' 
                                 :emptyCombobox="emptyDepartment"                       
@@ -125,7 +128,7 @@
                                    Ngày sinh
                                     
                                 </div>
-                                <div class="content__input">                                  
+                                <div class="content__input dateOfBirth tooltip" >                                  
                                      <Datepicker 
                                     class="datepickerCTM" 
                                     placeholder="DD/MM/YYYY"
@@ -140,8 +143,10 @@
                                     autoApply                                    
                                     utc 
                                     locale="vi"
-                                    :ref="'dateOfBirth'"
-                                       v-model="emp.dateOfBirth"/>                 
+                                    ref="dateOfBirth"    
+                                    v-model="emp.dateOfBirth"/>                 
+                                 <div class="empty__input tooltiptext tooltipError"  v-show="isDateOfBirth"> Ngày sinh không hợp lệ</div>
+                                    
                                     <!-- <input class="input input__date"   type="date" v-model="emp.dateOfBirth" :max="maxDate" > -->
                                 </div>
                                
@@ -154,9 +159,10 @@
                                 <div class="content__radio">
                                     
                                     <div class="radio__item">
-                                        <input type="radio" class="input__radio " checked   id="radio__boy"  value="0" name="gender"                                           
+                                        <div class="bo"><input type="radio" class="input__radio " checked   id="radio__boy"  value="0" name="gender"                                           
                                          v-model="chooseGender"                                       
-                                         >
+                                         ></div>
+                                        
                                         <label for="radio__boy">Nam</label>
                                     </div>
                                     <div class="radio__item">
@@ -199,7 +205,7 @@
                                 <div class="lable-input">
                                   Ngày cấp                                    
                                 </div>
-                                <div class="content__input">
+                                <div class="content__input identityIssuedDate tooltip">
                                     <!-- <datePicker v-model="emp.identityIssuedDate" :format="format" /> -->
                                     <Datepicker  class="datepickerCTM" 
                                     placeholder="DD/MM/YYYY"                                                                 
@@ -215,6 +221,9 @@
                                    
                                     :ref="'identityIssuedDate'"
                                     v-model="emp.identityIssuedDate"/>
+
+                                 <div class="empty__input tooltiptext tooltipError"  v-show="isIdentityIssuedDate">Ngày cấp không hợp lệ</div>
+
                                     <!-- <input class="input input__date"  tabIndex="10" type="date" v-model="emp.identityIssuedDate" :max="maxDate" > -->
                                 </div>                             
                             </div>
@@ -249,7 +258,7 @@
                              </div>
                              <div class="content__input tooltip">
                                  <input type="text" class="input"  maxlength="50" 
-                                 @input="validatePhoneNumber" 
+                              
                                  v-model="emp.mobile"                               
                                  >
                                  
@@ -263,7 +272,7 @@
                              </div>
                              <div class="content__input tooltip">
                                  <input type="text" class="input"    maxlength="50" 
-                                 @input="validatePhoneland"
+                                
                                  v-model="emp.landlinePhone"                               
                                  >                                
                              </div>
@@ -331,10 +340,11 @@
                         Cất
                         <span class="tooltiptext tooltipIcon">Cất (Ctrl + S)</span>
                     </button>
-                    <button class="btn btn__saveAdd tooltip"  @click="btnSaveOnClick(this.SaveAndAdd)"  @keydown="keySave($event,this.SaveAndAdd)" >
+                    <button class="btn btn__saveAdd tooltip" @click="btnSaveOnClick(this.SaveAndAdd)"  @keydown="keySave($event,this.SaveAndAdd)" >
                         Cất và thêm
                         <span class="tooltiptext tooltipIcon tooltip__large tooltip__right">Cất và thêm (Ctrl + Shift + S)</span>
                     </button>
+                    <button @focus="this.$refs.employeeCode.focus(); "  ref="btn__SaveAdd" style="height:0;outline:0; width: 0;border: 0;padding: 0;"> </button>
                 </div>
             </div>
         
@@ -346,23 +356,19 @@
         <MPopupAsk v-show="showPopUpAsk" @btnSaveOnClick="btnSaveOnClick"  @closeAsk='closeAsk' @closeAskDialog='closeAskDialog'></MPopupAsk>
 </template>
 <script>
-    
+ /* eslint-disable */
+     import {drag} from'@/js/common/dragDrop.js';
     // import MCombobox from '@/components/base/MCombobox.vue';
     import eNum from '@/js/common/eNum';
     import common from '@/js/common/common';
     import Resource from '@/js/common/resource';
-    // import { vn } from 'date-fns/locale';
     import MPopupAsk from '../../components/base/MPopupAsk.vue';
     import Datepicker from '@vuepic/vue-datepicker';
     import '@vuepic/vue-datepicker/dist/main.css';
-    // import MPopupAsk from '@/components/base/MPopupAsk.vue';
 
-
-    /**
-     * URL api 
-     */
-    const loadDataURL =process.env.VUE_APP_URL;
-    // var loadDataURL="http://localhost:5287/api/v1/";
+    import baseApi from '@/js/common/baseApi';
+    import urlApi from '@/js/common/urlApi';
+    
 
      /**
      * Hàm validate
@@ -373,48 +379,56 @@
      * 
      */
      function validate(mouse, objectEmpty){
-        
+        //validate dữ liệu bắt buộc nhập không được bỏ trống
         for(let key in objectEmpty){
             if(objectEmpty[key]){                             
                 mouse.form.$emit('errorEmpty', key); 
                 console.log(objectEmpty[key]);        
                 return false;                
             }
-        }  
+        } 
+        //validate email 
         let validateEmail = common.checkEmail(mouse.email);
         if(validateEmail){
-            mouse.form.$emit('waringEmail');
+            mouse.form.$emit('warningEmail');
             mouse.form.errorEmail = true;
             return false;
           //  let me = {form: this, email: this.emp.email, dateOfBirth: this.emp.dateOfBirth, identityIssuedDate: this.emp.identityIssuedDate}
 
         }
-        // else{
-        //     mouse.form.errorEmail = false;
-        // }
-
+      
+            //validate ngày sinh và ngày cấp CMND phải nhỏ hơn ngày hiện tại
         let dOB= common.checkDate(mouse.dateOfBirth, new Date());
         let identityIssuedDate = common.checkDate(mouse.identityIssuedDate, new Date());
-        if(!dOB || !identityIssuedDate){
-            mouse.form.$emit('waringMaxDate');
-            // if(!dOB){
-            //     mouse.form.isDateOfBirth = true;
-            // }
-            // else if(dOB){
-            //     mouse.form.isDateOfBirth = false;
-            // }
-            // else if(!identityIssuedDate){
-            //     if(!dOB){
-            //     mouse.form.isDateOfBirth = true;
-            //     }else{
-            //         mouse.form.isIdentityIssuedDate = true;
-            //     }               
-            // }           
-            // else{
-            //     mouse.form.isIdentityIssuedDate = false;
-            // }
+        if(!dOB||!identityIssuedDate){
+            if(!dOB ){
+            mouse.form.$emit('warningMaxDateOfBirth'); 
+            mouse.form.isDateOfBirth=true;  
+            return false;                       
+            } else{
+                mouse.form.isDateOfBirth=false;            
+
+            } 
+            if( !identityIssuedDate){
+                mouse.form.$emit('warningMaxDateIdentity'); 
+                mouse.form.isIdentityIssuedDate=true;            
+                return false;
+            }  else{
+                mouse.form.isIdentityIssuedDate=false;            
+            } 
+            if(mouse.form.isDateOfBirth===true|| mouse.form.isIdentityIssuedDate===true){
+                return false;
+            }
+        }
+       
+           //validate ngày cấp CMND phải lớn hơn ngày sinh
+        let minIdentityIssuedDate=common.checkDate(mouse.dateOfBirth,mouse.identityIssuedDate);
+        if(!minIdentityIssuedDate){
+            mouse.form.$emit('warningMinIdenDate');   
+            mouse.form.identityDateLessDOB=true;
              return false;
-        }     
+        }
+        
         return true;  
    }
    /* eslint-disable */ 
@@ -440,27 +454,29 @@ export default {
             emptyCode: false,
             emptyName: false,
             emptyDepartment: false,
+            errorMaxCode:false,
             errorEmail: false,
             isPhone: false,
             isPhoneLand: false,
             isIdentity: false,
             isDateOfBirth: false,
             isIdentityIssuedDate: false,
+            identityDateLessDOB:false,
             SaveAndAdd: eNum.saveFormMode.SaveAndAdd,
             Save: eNum.saveFormMode.Save,
             datetime: "",
             pickedUp: false,
             checkChange:false,
             showPopUpAsk: false,
-            empOld:{},          
+            empOld:{},  
+            apiGetDepartment:urlApi.methodCRUD.getDepartment,        
           
         };
     },
-    created() {   
-           
-            //gán data truyền từ cha sang con
-            this.emp = this.employeeSelected;
-          
+      created() {  
+       //gán data truyền từ cha sang con
+        this.emp =  this.employeeSelected; 
+                                         
         //xử lý dữ liệu radio
         if (!common.checkEmptyData(this.emp.gender)) {
             this.chooseGender = this.emp.gender;
@@ -468,69 +484,149 @@ export default {
         //xử lý dữ liệu combobox
         if (!common.checkEmptyData(this.emp.departmentName)) {
             this.dataCombobox = this.emp.departmentName;
+            console.log(this.dataCombobox)
             this.emptyDepartment = false;
         }           
     },
     updated() {
+        // initDragDialog();
+       // drag();
         //update gender
+        
         this.emp.gender = Number(this.chooseGender);      
     },
     mounted() {
+        drag();     
+        
+        //nếu form được chọn là thêm mới hoặc nhân bản thì sẽ sinh mã nhân viên mới
         if (this.formMode === eNum.formMode.ADD || this.formMode === eNum.formMode.Duplicate) {
             this.newEmployeeCode();
         }
         this.$refs["employeeCode"].focus(); //focus vào item đầu tiên 
-        this.formatDate(); //thay đổi dữ liệu ngày tháng theo format trước khi hiển thị       
+        this.formatDate(); //thay đổi dữ liệu ngày tháng theo format trước khi hiển thị  
+      
         this.empOld={...this.employeeSelected};      
+        //document.addEventListener("keydown",this.escClose);
+    },
+    unmounted(){
+        
+       
     },
     watch:{
-        focus(){           
-          debugger;
+        
+        
+        //focus vào textbox nếu gặp lỗi khi validate
+        //CreatedBy: HMHieu(10/10/2022)
+        focus(){                     
+            // debugger
+            //mã nhân viên trống hoặc quá dài
+            if(this.emptyCode||this.errorMaxCode){
+                this.$refs['employeeCode'].focus();
+                this.$refs['employeeCode'].setAttribute('style','border:1px solid red');
+            }else{
+               
+                this.$refs['employeeCode'].setAttribute('style','border:1px solid #bbbbbb;');
+            }           
 
-            if(this.emptyCode){
+            if(this.emptyDepartment){
+                if(this.emptyCode||this.errorMaxCode){
                 this.$refs['employeeCode'].focus();
-            }
-            if(this.errorEmail){
-                if(this.emptyCode){
-                this.$refs['employeeCode'].focus();
+                this.$refs['employeeCode'].setAttribute('style','border:1px solid red');
+                document.querySelectorAll(".combobox-container  .input")[0].setAttribute('style','border:1px solid red');
+
                  }
+                
                 else if(this.emptyName){
                 this.$refs['employeeNameFocus'].focus();
+                this.$refs['employeeNameFocus'].setAttribute('style','border:1px solid red');
+                document.querySelectorAll(".combobox-container  .input")[0].setAttribute('style','border:1px solid red');
+
+
+                }else if(this.emptyDepartment){
+                   
+                    document.querySelectorAll(".combobox-container .input")[0].focus();
+                    document.querySelectorAll(".combobox-container  .input")[0].setAttribute('style','border:1px solid red');
+                    // this.$refs['input'].focus();
+                    // this.$refs['input'].setAttribute('style','border:1px solid red');
+                }else{
+                    document.querySelectorAll(".combobox-container  .input")[0].setAttribute('style','border:1px solid #bbbbbb');
+
                 }
+            }
+            //email không đúng định dạng
+
+            if(this.errorEmail){
+                debugger
+                if(this.emptyCode||this.errorMaxCode){
+                this.$refs['employeeCode'].focus();
+                this.$refs['employeeCode'].setAttribute('style','border:1px solid red');
+                this.$refs['employeeNameFocus'].setAttribute('style','border:1px solid red');
+                this.$refs['email'].setAttribute('style','border:1px solid red');
+
+                 }
+                
+                else if(this.emptyName){
+                this.$refs['employeeNameFocus'].focus();
+                this.$refs['employeeNameFocus'].setAttribute('style','border:1px solid red');
+                this.$refs['email'].setAttribute('style','border:1px solid red');
+
+                }              
                 else{
                     this.$refs['email'].focus();
-                } 
-            }
-            if(this.emptyName){
-                if(this.emptyCode){
-                this.$refs['employeeCode'].focus();
+                    this.$refs['email'].setAttribute('style','border:1px solid red');
                 }
-                else{this.$refs['employeeNameFocus'].focus();}
             }
-            // if(this.isDateOfBirth||this.isIdentityIssuedDate){
-            //     if(this.emptyCode){
-            //     this.$refs['employeeCode'].focus();
-            //      }
-            //     else if(this.emptyName){
-            //     this.$refs['employeeNameFocus'].focus();
-            //     }
-            //     else if(this.isDateOfBirth){
-            //         this.$refs['dateOfBirth'].focus();
-            //     }
-            //     else if(this.isIdentityIssuedDate){
-            //         this.$refs['identityIssuedDate'].focus();
-            //     }
-            //     this.$refs['dateOfBirth'].focus();
-            // }
-            // if(this.isIdentityIssuedDate && this.isDateOfBirth ){
-            //     if(this.emptyCode){
-            //     this.$refs['employeeCode'].focus();
-            //      }
-            //     else if(this.emptyName){
-            //     this.$refs['employeeNameFocus'].focus();
-            //     }
-            //     this.$refs['dateOfBirth'].focus();
-            // }
+            else {
+                    this.$refs['email'].setAttribute('style','border:1px solid #bbbbbb');
+                }
+            //tên nhân viên trống
+
+            if(this.emptyName){
+                if(this.emptyCode||this.errorMaxCode){
+                this.$refs['employeeCode'].focus();
+                this.$refs['employeeCode'].setAttribute('style','border:1px solid red');
+                }
+                
+                else if(this.emptyName){
+                    this.$refs['employeeNameFocus'].focus();
+                    this.$refs['employeeNameFocus'].setAttribute('style','border:1px solid red');
+                    
+                }
+                
+            }else {
+                    this.$refs['employeeNameFocus'].setAttribute('style','border:1px solid #bbbbbb');
+                }
+            
+           if(this.isIdentityIssuedDate){
+            
+            document.querySelectorAll(".identityIssuedDate .dp__input")[0].focus();
+            // document.querySelectorAll(".identityIssuedDate .dp__input")[0].classList.add("border-red");
+            document.querySelectorAll(".identityIssuedDate .dp__input")[0].setAttribute('style','border:1px solid red');
+
+           }else{
+            // document.querySelectorAll(".identityIssuedDate .dp__input")[0].classList.remove("border-red");
+            document.querySelectorAll(".identityIssuedDate .dp__input")[0].setAttribute('style','border:1px solid #bbbbbb');                              
+
+           }
+            if(this.isDateOfBirth){
+                document.querySelectorAll(".dateOfBirth .dp__input")[0].focus();
+                document.querySelectorAll(".dateOfBirth .dp__input")[0].setAttribute('style','border:1px solid red');                              
+
+            }else{
+                document.querySelectorAll(".dateOfBirth .dp__input")[0].setAttribute('style','border:1px solid #bbbbbb');                              
+
+                // document.querySelectorAll(".dateOfBirth .dp__input")[0].classList.remove("border-red");
+
+            }  
+            
+            if(this.identityDateLessDOB){
+                document.querySelectorAll(".identityIssuedDate .dp__input")[0].focus();            
+                document.querySelectorAll(".identityIssuedDate .dp__input")[0].setAttribute('style','border:1px solid red');
+
+            }else{
+                
+                document.querySelectorAll(".identityIssuedDate .dp__input")[0].setAttribute('style','border:1px solid #bbbbbb'); 
+            }
            
             
         },
@@ -545,12 +641,18 @@ export default {
         askESC() {                 
             this.checkChange = false;
             this.showPopUpAsk = false;
-            for(let key in this.emp){
-                if(this.emp[key] !== this.empOld[key]){                   
-                    this.checkChange = true;
-                    break;
-                }
+            // if(this.formMode=== eNum.formMode.ADD){
+            //     this.checkChange = true;
+            // }else {
+                for(let key in this.emp){
+                    if(this.emp[key] !== this.empOld[key]){                   
+                        this.checkChange = true;
+                        break;
+                    }
+            //}
             }
+           
+
             if(this.checkChange){
                 this.showPopUpAsk = true;
             }else{
@@ -599,25 +701,25 @@ export default {
         validateEmptyCode() {
             if (common.checkEmptyData(this.emp.employeeCode)) {
                 this.emptyCode = true;
+               
             }
             else {
                 this.emptyCode = false;
             }
         },
         /**
-         * Check giá trị email có đúng định dạng chưa khi nhập dữ liệu vào input
-         * author: HMHieu(21/09/2022)
-         *
+         *  kiểm tra xem nếu mã nhân viên vượt quá số ký tự quy định thì hiện thông báo
+         * 
          */
-        validateEmail() {
-            if (common.checkEmail(this.emp.email)) {
-                this.errorEmail = true;
-                this.$emit('warningEmail');
+        validateMaxCode(){
+            if (!common.checkEmptyData(this.emp.employeeCode)) {
+                if(this.emp.employeeCode.length>20){
+                    this.errorMaxCode=true;
+                }else{
+                    this.errorMaxCode=false;
+                }
             }
-            else {
-                this.errorEmail = false;
-            }
-        },
+        },      
         /**
          * Check giá trị input có đúng định dạng number chưa
          * author: HMHieu(21/09/2022)
@@ -679,22 +781,24 @@ export default {
             this.emp.departmentName = item.departmentName;
             this.emp.DepartmentCode = item.departmentCode;
             this.empDepartmentName = this.emp.departmentName;
-
-          
-            if (common.checkEmptyData(this.emp.departmentName)) {                          
-                this.emptyDepartment = true;
-            }
-            else {
-                this.emptyDepartment = false;
-            }
+            if(this.emp.departmentName===null||this.emp.departmentName===undefined||this.emp.departmentName==='' ){
+                this.emp.departmentName=item;
+            }            
+         
+            // if (common.checkEmptyData(this.emp.departmentName) ||Object.keys(item).length === 0) {                          
+            //     this.emptyDepartment = true;
+            // }
+            // else {
+            //     this.emptyDepartment = false;
+            // }
         
         },
         /**
          * validate giá trị phòng ban
          *  author: HMHieu(06/10/2022)
         */
-        validateDepartment() {
-            if (common.checkEmptyData(this.emp.departmentName)) {
+        validateDepartment() {        
+            if (common.checkEmptyData(this.emp.departmentName)||Object.keys(this.emp.departmentName).length === 0) {
                 
                 this.emptyDepartment = true;
             }
@@ -706,119 +810,110 @@ export default {
         * Thêm mới hoặc sửa dữ liệu theo formMode
         * Author: HMH(19/09/22)
         */
-        btnSaveOnClick(modeForm) {
-            // var me = this;
-             var me = {form: this, email: this.emp.email, dateOfBirth: this.emp.dateOfBirth, identityIssuedDate: this.emp.identityIssuedDate}
-            // validate dữ liệu:
-            this.validateEmptyName();
-            this.validateEmptyCode();
-            this.validateDepartment();          
-            let checkEmpty = {
-                EmptyCode: this.emptyCode,
-                EmptyName: this.emptyName,
-                EmptyDepartment: this.emptyDepartment
-            };
-         
-          
-            let valid = validate(me, checkEmpty);
-           // let valid =true;
-            
-            if (valid) {
-                //cất
-                if (me.form.formMode === eNum.formMode.ADD) {
-                    var method = "POST";
-                    fetch(loadDataURL + "Employees", {
-                        method: method,
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(me.form.emp),
-                    })                                             
-                        .then((res) => res.json())
-                        .then((res) => {
-                            this.handleResponse(res,me.form,modeForm);
+       async btnSaveOnClick(modeForm) {
+            try {
+                
+                // var me = this;
+                var me = {form: this, email: this.emp.email, dateOfBirth: this.emp.dateOfBirth, identityIssuedDate: this.emp.identityIssuedDate}
+                // validate dữ liệu:
+                this.validateEmptyCode();                             
+                this.validateMaxCode();       
+                this.validateEmptyName();
+
+                this.validateDepartment();  
+                debugger 
+                let checkEmpty = {
+                    EmptyCode: this.emptyCode,
+                    ErrorMaxCode:this.errorMaxCode,
+                    EmptyName: this.emptyName,
+                    EmptyDepartment: this.emptyDepartment,
+                };
+                                     
+                 let valid=validate(me, checkEmpty);   
+               
+                //let valid=true;  
+                if (valid) {
+                    var method = "";
+                    //cất
+                    if (me.form.formMode === eNum.formMode.ADD) {//thêm mới dữ liệu
+                        method = Resource.method.POST;
+                       
+                        try {
+                            var res= await baseApi.fetchAPIBody(me.form.emp,urlApi.methodCRUD.insert,method)                                       
+                            this.handleResponse(res,me.form,modeForm);// gọi hàm xử lí dữ liệu trả về       
+                        } catch (error) {
+                            this.$emit(Resource.emit.errorBackEnd,   eNum.errorBackEnd.Ser);                                                
+                        }
                       
-                    })
-                        .catch((res) => {
-                            me.form.$emit("errorBackEnd", eNum.errorBackEnd.Ser);                              
-                            console.log(res);
-                            me.form.$emit("openToast", Resource.ToastMessage.error);
-                    });
+                                                 
+                    }
+                    // Cất sửa dữ liệu:
+                    if (me.form.formMode === eNum.formMode.Edit) {//sửa dữ liệu
+                        method =Resource.method.PUT;
+                        try {
+                            var res= await baseApi.fetchAPIBody(me.form.emp,urlApi.apiDeleteOrPut(me.form.emp.employeeID),method)                                                      
+                            this.handleResponse(res,me.form,modeForm);// gọi hàm xử lí dữ liệu trả về                                                
+                        } catch (error) {
+                            this.$emit(Resource.emit.errorBackEnd,   eNum.errorBackEnd.Ser);                                                
+                        }    
+                    }
+                    // Nhân bản dữ liệu
+                    if (me.form.formMode === eNum.formMode.Duplicate) {
+                        method = Resource.method.POST;
+                        try {
+                            var res= await baseApi.fetchAPIBody(me.form.emp,urlApi.methodCRUD.insert,method)                 
+                            this.handleResponse(res,me.form,modeForm);// gọi hàm xử lí dữ liệu trả về                                          
+                        } catch (error) {
+                            this.$emit(Resource.emit.errorBackEnd,   eNum.errorBackEnd.Ser);                                                
+                        }    
+                                     
+                    }
                 }
-                // Cất sửa dữ liệu:
-                if (me.form.formMode === eNum.formMode.Edit) {
-                    method = "PUT";
-                    let URL = loadDataURL + `Employees/${me.form.emp.employeeID}`;
-                    console.log(URL);
-                    fetch(URL, {
-                        method: method,
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(me.form.emp),
-                    })
-                        .then((res) => res.json())
-                        .then((res) => {
-                            this.handleResponse(res,me.form,modeForm);
-                                            
-                    })
-                        .catch((res) => {                      
-                            me.form.$emit("errorBackEnd", eNum.errorBackEnd.Ser);      
-                            console.log(res);
-                            me.form.$emit("openToast", Resource.ToastMessage.error);
-                    });
-                }
-                if (me.form.formMode === eNum.formMode.Duplicate) {
-                    method = "POST";
-                    fetch(loadDataURL + "Employees", {
-                        method: method,
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(me.form.emp),
-                    })
-                        .then((res) => res.json())
-                        .then((res) => {                       
-                             this.handleResponse(res,me.form,modeForm);                            
-                    })
-                        .catch((res) => {                                                    
-                            me.form.$emit("errorBackEnd", eNum.errorBackEnd.Ser);    
-                            console.log(res);
-                            me.form.$emit("openToast", Resource.ToastMessage.error);                      
-                    });
-                }
+            } catch (error) {
+                //thông báo lỗi cho người dùng khi gặp ex
+                this.$emit(Resource.emit.errorBackEnd, eNum.errorFE.UserActionError);           
+                console.log(error);
             }
         },
+
         /**
          * 
+         * handle trạng thái trả về từ BE
          * @param {*} res // thông tin trả về từ BE
          * @param {*} me //con trỏ
          * @param {*} mode // formMode
-         * handle trạng thái trả về từ BE
          * CreatedBy HMHieu (20-10-2022)
          */
-        handleResponse(res,me,mode){          
-            let errorCode = res.data.errorCode;  
-            let content=res.data.userMsg;                   
+        handleResponse(res,me,mode){                                         
             let ok = res.success;
-            if(ok){
-                this.$emit("openToast", Resource.ToastMessage.success);
-                me.$emit("loadData");
-                if (mode === eNum.saveFormMode.Save) {
-                    me.$emit("closeDialog");
+       // debugger
+            if(ok){//Thành công
+                me.$emit(Resource.emit.openToast, Resource.ToastMessage.success);
+                me.$emit(Resource.emit.loadData);
+                if (mode === eNum.saveFormMode.Save) {//nếu là cất
+                    me.$emit(Resource.emit.closeDialogAdd);
                 }
-                if (mode === eNum.saveFormMode.SaveAndAdd) {
-                    me.$emit("loadData");
-                    me.$emit('reLoadForm');
-                    me.newEmployeeCode();     
-                    this.$refs['employeeCode'].focus();    
+                if (mode === eNum.saveFormMode.SaveAndAdd) {//nếu là cất và thêm mới
+                    me.$emit(Resource.emit.loadData);
+                    me.$emit(Resource.emit.reloadForm);
+                    me.newEmployeeCode();  //sinh code mới   
+                    me.$refs['employeeCode'].focus();    //focus vào employeeCode
                 }
-            }else{                      
+            }else{ // thất bại
+                debugger;
+                let errorCode = res.data.errorCode;  //Mã lỗi trả về được quy định ở BE
+                let content=res.data.userMsg; // Message lỗi trả về tương ứng với mã lỗi từ BE
                 if (
                     errorCode === eNum.errorBackEnd.InsertFailCode||
                     errorCode === eNum.errorBackEnd.exception) {
-                    me.$emit("errorBackEnd",  errorCode,content);
+                    me.$emit(Resource.emit.errorBackEnd,  errorCode,content);//gọi hàm handle errorCode
                 }
+                else{
+                    //thông báo lỗi cho người dùng 
+                    me.$emit(Resource.emit.errorBackEnd,   eNum.errorBackEnd.Ser);                    
+                }
+                //hiển thị toast message 
+                   // me.$emit("openToast", Resource.ToastMessage.error);
             }    
         },
         /**
@@ -833,14 +928,27 @@ export default {
                 let key = event.keyCode;
                 switch (key) {
                     case eNum.KeyCode.ESC:
-                        me.askESC();
-                       // me.$emit("closeDialog");
+                        me.askESC();                       
                 }
             }
             catch (error) {
                 console.log(error);
             }
         },
+        
+        /********************
+        * đóng form bằng keycode ESC
+        * HMHieu 17-11-2022
+        * 
+        // */       
+        // escClose(event) {       
+        //     debugger                                 
+        //     let key = event.keyCode;
+        //     if(key===eNum.KeyCode.ESC){
+        //         this.askESC();
+        //     }
+                    
+        // },
         /**
         *
         * @param {*} event
@@ -853,7 +961,7 @@ export default {
                 let key = event.keyCode;
                 switch (key) {
                     case eNum.KeyCode.Enter:
-                        me.$emit("closeDialog");
+                        me.$emit(Resource.emit.closeDialogAdd);
                 }
             }
             catch (error) {
@@ -890,58 +998,55 @@ export default {
         */
         keySave(event, mode) {
             // let me=this;
-            try {
-                let key = event.keyCode;
-                switch (key) {
-                    case eNum.KeyCode.Enter:
-                        if (mode === eNum.saveFormMode.Save) {
-                            this.btnSaveOnClick(eNum.saveFormMode.Save);
-                        }
-                        if (mode === eNum.saveFormMode.SaveAndAdd) {
-                            this.btnSaveOnClick(eNum.saveFormMode.SaveAndAdd);
-                        }
-                }
+           
+            let key = event.keyCode;
+            switch (key) {
+                case eNum.KeyCode.Enter:
+                    if (mode === eNum.saveFormMode.Save) {
+                        this.btnSaveOnClick(eNum.saveFormMode.Save);
+                    }
+                    if (mode === eNum.saveFormMode.SaveAndAdd) {
+                        this.btnSaveOnClick(eNum.saveFormMode.SaveAndAdd);
+                    }
             }
-            catch (error) {
-                console.log(error);
-            }
+          
         },
         /**
        * Hàm lấy mã nhân viên mới nhất
        * author: HMHieu(07/10/2022)
        */
-        newEmployeeCode() {
+       async newEmployeeCode() {
             let me=this;
+            let method=Resource.method.GET;
             try {
-                fetch(loadDataURL + "Employees/new-code-employee", { method: "GET" })
-                    .then(res => res.json())
-                    .then(res => {
-
-                        let errorCode = res.errorCode;                     
-                        let ok = res.success;
-                        console.log(ok);
-                        if(ok){
-                            me.emp.employeeCode = res.data;
-                           
-                            me.emptyCode = false;                           
-                        }else{                           
-                            if (
-                                errorCode === eNum.errorBackEnd.InsertFailCode||
-                                errorCode === eNum.errorBackEnd.exception) {
-                                me.$emit("errorBackEnd",  errorCode);
-                            }
-                        }                  
-                   
-                })
-                    .catch(error => {
-                    me.$emit("errorBackEnd", eNum.errorBackEnd.Ser); 
-                    console.log(error);
-                    return null;
-                });
+                var res= await baseApi.fetchAPIDefault(urlApi.methodCRUD.getNewCode,method);                  
+                this.handleResponseGetNewCode(res,me);               
             }
             catch (error) {
                 console.log(error);
+                me.$emit(Resource.emit.errorBackEnd,   eNum.errorBackEnd.Ser); 
             }
+        },
+
+        /**
+         * xử lý dữ liệu trả về khi getData
+         * @param {*} res response data trả về từ BE
+         * @param {*} me con trỏ
+         * 
+         */
+         handleResponseGetNewCode(res,me){                                        
+            let errorCode = res.errorCode;                     
+            let ok = res.success;          
+            if(ok){//thành công
+                me.emp.employeeCode = res.data;                
+                me.emptyCode = false;                           
+            }else{//bắt lỗi trả về từ BE
+                if (
+                    errorCode === eNum.errorBackEnd.InsertFailCode||
+                    errorCode === eNum.errorBackEnd.exception) {
+                    me.$emit(Resource.emit.errorBackEnd,  errorCode);
+                }
+            }                 
         },
     },
    

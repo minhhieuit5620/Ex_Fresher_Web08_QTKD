@@ -44,10 +44,46 @@ export default{
         User:400,//lỗi người dùng
         NotFound:404,//lỗi k đúng đường dẫn
         Success:200,//thành công
+
         DuplicateCode:2,// trùng mã nhân viên
-        InsertFailCode:4,// Dữ liệu đầu vào bị lỗi
+        InsertFailCode:4||3,// Dữ liệu đầu vào bị lỗi
         exception:1,// exception
+        notFileImport:6,
+
+        //error status login
+        Login:401,//lỗi đăng nhập authen
+        Forbidden:403,// lỗi phân quyền author
+        DuplicateUsername:2,
+        errorMinlength:3,
+        loginFailed:4,
+        regiterFailed:5,
+        confirmPassNotMatch:6,
+        EmptyModel:7,
         
+    },
+    errorFE:{
+        UserActionError:10,
+    },
+
+    //Paging default
+    page:{
+        pageIndexDefault:1,//trng chọn default 
+        pageSizeDefault:20, // size page default
+    },
+
+    marginTop:{
+        marginTopEdit:35//margin top cột edit
+    },
+
+    //thời gian chờ
+    timeOut:{
+        loadData:500,//thời gian chờ load lại dữ liệu
+
+        loadSearch:2000,// thời gian chờ sau khi thao tác xong sẽ search
+
+        waitToast:1200,
+
+        waitRadom:90000
     },
     /**
      * KeyCode
@@ -67,6 +103,13 @@ export default{
      */
     popUpMode:{
         DeleteOne:1,//xóa một bản ghi
-        DeleteMultiple:2//xóa nhiều
+        DeleteMultiple:2,//xóa nhiều
+        CloseImport:3,//Đóng form import
+        ErrorAccount:4// Đóng form và đăng xuất khỏi hệ thống
+    },
+
+    popUpModeOneBtn:{
+        warning:1,
+        logout:2
     }
 }

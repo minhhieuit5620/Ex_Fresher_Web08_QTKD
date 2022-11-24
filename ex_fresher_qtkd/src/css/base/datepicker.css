@@ -33,3 +33,13 @@
 .datepickerCTM .dp__clear_icon {
     display: none;
 }
+.dp__month_year_select{
+    font-weight: 700;
+    font-size: 13px;
+}
+.dp__calendar {
+    font-size: 13px;
+}
+.dp__menu_index {
+    z-index: 99 !important;
+}

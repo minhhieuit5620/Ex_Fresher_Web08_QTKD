@@ -26,20 +26,29 @@
                  <div class="header__account--ring icon icon__ring" @click="openToast"></div>
                  <span class="tooltiptext tooltipIcon">Thông báo</span>
                 </div>
-                <div class="header__account--info" @click="openToast" >
-                    <div class="info__img icon icon__user"></div>
+                <div class="header__account--info"  >
+                    <div class="info__img icon icon__user" @click="openToast"></div>
                    
-                    <div class="info__text">Hứa Minh Hiếu</div>
+                    <div class="info__text"  @click="openLogOut">Hứa Minh Hiếu</div>
                 </div>
-                <div class="header__account--toggle icon icon__drop" @click="openToast" ></div>
+                <div class="header__account--toggle icon icon__drop" @click="openLogOut" ></div>
+              
             </div>
         </div> 
-        <transition name="toast-message">
+        <button class="btn logout" v-show="showLogout" @click="Logout"> Đăng xuất</button>
+        <!-- <transition name="toast-message">
             <MToastMessage v-show='isShowToast' :content = 'contentOfToastMessage' 
             @closeToastMessage='closeToastMessage' :class='{"toast-waring": isShowToast}' />
+        </transition> -->
+        <transition name="toast-message">
+            <MToastMessage v-show='isShowToast' :content='contentOfToastMessage' @closeToastMessage='closeToastMessage'
+                :class='{ "toast-waring": isShowToast}'  />
         </transition>
 </template>
 <script>
+ /* eslint-disable */
+    import auth from '@/js/common/auth';
+    import common from '@/js/common/common';
     import resource from '@/js/common/resource';
     import MToastMessage from '../../components/base/MToastMsg.vue';
 export default {
@@ -48,10 +57,16 @@ export default {
         return{
             isShowToast: false,
             contentOfToastMessage: '', //nội dung toast message
+            showLogout:false,
         }
     },
     methods:{
        
+        /********************
+        * open toast đang thi công
+        * HMHieu 24-11-2022
+        * 
+        */
         openToast(){ 
             let me=this;
             me.contentOfToastMessage = resource.ToastMessage.notComplete ;
@@ -60,9 +75,51 @@ export default {
                 me.isShowToast = false;
             }, 1500);
         },
+        //đóng toast đang thi công
         closeToastMessage(){
             this.isShowToast = false;
         },
+
+        /********************
+        * mở form đăng xuất
+        * HMHieu 24-11-2022
+        * 
+        */
+        openLogOut(){
+            this.showLogout= !this.showLogout;
+        },
+
+        /********************
+        * đăng xuất khỏi chương trình
+        * HMHieu 24-11-2022
+        * 
+        */
+       async Logout(){         
+            var accessToken=localStorage.getItem("token");
+
+            //revoke refresh token
+            if(!common.checkEmptyData(accessToken)){              
+                await auth.revoke();             
+            }
+            localStorage.clear();
+            this.$router.push("/login");
+           
+        }
     }
 }
 </script>
+<style scoped>
+/* .header__account{
+    position: absolute;
+} */
+.logout{
+    position: absolute;
+    top: 50px;
+    right: 40px;
+    z-index: 10;
+    background-color: #fff;
+    color: #000;
+   
+    border: 1px solid #ccc;
+}
+</style>

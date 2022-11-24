@@ -58,11 +58,14 @@
     cursor: pointer;
 }
 .page__item{
-    height: 16px;
-    padding-left: 10px;
-    padding-right: 10px;
+    height: 6px;
+    padding-left: 6px;
+    line-height: 6px;
+    padding-top: 6px;
+    padding-right: 6px;
     /* padding-top: 1px; */
-    padding-bottom: 12px;
+    padding-bottom: 6px;
+    margin-top: 6px;
 }
 
 

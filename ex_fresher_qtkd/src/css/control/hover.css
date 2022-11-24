@@ -26,13 +26,20 @@
 }
 .table tr:hover td
 {
-    background-color: var(--color--hover--table);
+    /* background-color: var(--color--hover--table); */
+    background-color: #e5f3ff
 }
 
 /* input  */
 
 .radio__item:hover{
     cursor: pointer;
+}
+.icon__reload:hover,
+ .icon__excel:hover,
+.icon__import:hover{
+    opacity: 1 !important;
+    filter: brightness(0) saturate(100%) invert(41%) sepia(7%) saturate(321%) hue-rotate(194deg) brightness(98%) contrast(81%);
 }
 
 /* button  */

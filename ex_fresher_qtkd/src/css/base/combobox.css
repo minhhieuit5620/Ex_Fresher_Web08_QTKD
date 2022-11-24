@@ -40,8 +40,8 @@
 }    
 .combobox-header{
     display: flex;
-    padding: 0 25px;
-    background-color: var(--color--head);
+    padding: 0 20px;
+    background-color:#eceef1;
     height: 32px;
     align-items: center;
     font-weight: bold;
@@ -51,10 +51,10 @@
     padding-right: 75px
 }
 .code__combobox--value{
-    padding: 0 20px;
+    padding: 0 12px;
 }
 .value__combobox--value{
-    padding-left: 80px;
+    padding-left: 90px;
 }
 .combobox-value{
     width: 100%;
@@ -65,7 +65,12 @@
     z-index: 100;
     border-top: none;
     box-shadow: 1px 0px 4px rgba(23,27,42,0.24);
+    max-height: 200px;
+    overflow-x: auto;
 
+}
+.combobox-value::-webkit-scrollbar-track{
+margin-top: 32px;
 }
 .icon-drop-combobox{
     background: url('../../assets/img/Sprites.64af8f61.svg') no-repeat -464px -406px; 
@@ -84,10 +89,15 @@
     padding-left: 8px;
     position: relative;
 }
+.combobox-item:active{
+    background-color: #73C663;
+    color: var(--color--white);
+}
 
 .combobox-item-active{
     background-color: #73C663;
     color: var(--color--white);
+   
 }
 
 .combobox-item .icon-tick{
@@ -103,6 +113,6 @@
     display: none;
 }
 .combobox-item:hover{
-   background-color: #73C663;
-   color: var(--color--white);
+    background-color: #ebedf0;
+    color: #2ca01c;
 }
