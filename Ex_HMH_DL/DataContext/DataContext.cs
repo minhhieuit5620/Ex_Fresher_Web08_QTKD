@@ -8,6 +8,9 @@ namespace Misa.AMIS.DL
 {
     public class DataContext
     {
+        /// <summary>
+        /// chuỗi kết nối 
+        /// </summary>
         public static string MySqlConnectionString;
     }
 }

@@ -46,3 +46,12 @@ C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD
 C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\obj\Debug\net6.0\Misa.AMIS.API.pdb
 C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\obj\Debug\net6.0\Misa.AMIS.API.genruntimeconfig.cache
 C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\obj\Debug\net6.0\ref\Misa.AMIS.API.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\bin\Debug\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\bin\Debug\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\bin\Debug\net6.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\bin\Debug\net6.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\bin\Debug\net6.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Ex_HMH_QTKD_08_API\obj\Debug\net6.0\Misa.AMIS.API.MvcApplicationPartsAssemblyInfo.cs

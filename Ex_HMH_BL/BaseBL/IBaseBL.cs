@@ -27,7 +27,7 @@ namespace Misa.AMIS.BL.BaseBL
         /// <param name="pageSize">số bản ghi trên 1 trang</param>
         /// <returns>Danh sách bản ghi thỏa mãn điều kiện filter</returns>
         /// Created by: HMHieu(28/09/2022)
-        public PagingData<T> Filter(string? search, string? sort, int pageIndex, int pageSize);
+        public PagingData<T> GetRecordsByFilter(string? search, string? sort, int pageIndex, int pageSize);
 
         /// <summary>
         /// Thêm một bản ghi mới
@@ -43,7 +43,7 @@ namespace Misa.AMIS.BL.BaseBL
         /// <param name="ID"></param>
         /// <returns>dữ liệu bản ghi tương ứng với mã đã nhập</returns>
         /// Created by: HMHieu(29/09/2022)
-        public T RecordByID(Guid ID);
+        public T GetRecordByID(Guid ID);
 
         /// <summary>
         /// sửa một bản ghi 

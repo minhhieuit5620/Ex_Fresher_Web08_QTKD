@@ -1,0 +1,14 @@
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\bin\Debug\net6.0\Misa.AMIS.Auth.Common.deps.json
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\bin\Debug\net6.0\Misa.AMIS.Auth.Common.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\bin\Debug\net6.0\Misa.AMIS.Auth.Common.pdb
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\obj\Debug\net6.0\Misa.AMIS.Auth.Common.csproj.AssemblyReference.cache
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\obj\Debug\net6.0\Misa.AMIS.Auth.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\obj\Debug\net6.0\Misa.AMIS.Auth.Common.AssemblyInfoInputs.cache
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\obj\Debug\net6.0\Misa.AMIS.Auth.Common.AssemblyInfo.cs
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\obj\Debug\net6.0\Misa.AMIS.Auth.Common.csproj.CoreCompileInputs.cache
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\obj\Debug\net6.0\Misa.AMIS.Auth.Common.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\obj\Debug\net6.0\refint\Misa.AMIS.Auth.Common.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\obj\Debug\net6.0\Misa.AMIS.Auth.Common.pdb
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\obj\Debug\net6.0\ref\Misa.AMIS.Auth.Common.dll
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\obj\Debug\net6.0\Misa.AMIS.Auth.Common.Resource.Resource.resources
+C:\Users\MinhHieuDev\Desktop\Ex_Fresher_Web08_QTKD\Ex_HMH_QTKD_08_BE\Misa.AMIS.Auth.Common\obj\Debug\net6.0\Misa.AMIS.Auth.Common.csproj.GenerateResource.cache

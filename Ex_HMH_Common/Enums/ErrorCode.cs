@@ -28,9 +28,21 @@
         InvalidInput = 4,
 
         /// <summary>
+        /// Xóa không thành công 
+        /// </summary>
+        DeleteFailed = 4,
+
+        /// <summary>
         /// Mã nhân viên không đúng địng dạng
         /// </summary>
-        InvalidEmployeeCode = 5
+        InvalidEmployeeCode = 5,
+
+        /// <summary>
+        /// Không tồn tại file
+        /// </summary>
+        NotExitsFile= 6,
+
+       
 
 
     }

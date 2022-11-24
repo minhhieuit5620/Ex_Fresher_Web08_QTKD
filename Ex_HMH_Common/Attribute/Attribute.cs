@@ -54,6 +54,33 @@
     }
 
     /// <summary>
+    /// Attribute dùng để xác định 1 có format hợp lệ hay không
+    /// </summary>
+    /// Hứa Minh Hiếu 06-10-2022
+    [AttributeUsage(AttributeTargets.Property)]
+    public class FormatAttribute : Attribute
+    {
+
+        #region Field
+
+        public string Format { get; set; }
+        public string ErrorMessage { get; set; }
+
+        #endregion
+
+        #region Constructor
+
+        public FormatAttribute(string format, string errorMessage)
+        {
+            Format = format;
+            ErrorMessage = errorMessage;
+        }
+
+        #endregion
+
+    }
+
+    /// <summary>
     /// trùng mã
     /// </summary>
     public class DuplicateAttribute : Attribute

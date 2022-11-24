@@ -1,6 +1,8 @@
 ﻿
+using Microsoft.AspNetCore.Http;
 using Misa.AMIS.BL.BaseBL;
 using Misa.AMIS.Common.Entities;
+using Misa.AMIS.Common.Entities.DTO;
 using Misa.AMIS.Common.Enums;
 using System;
 using System.Collections.Generic;
@@ -46,6 +48,43 @@ namespace Misa.AMIS.BL
         /// CreatedBy: Hứa Minh Hiếu(05-10-2022)
         public ServiceResponse DeleteMultiple(List<Guid> listEmployeeID);
 
-     
+        /// <summary>
+        /// Xuất khẩu dữ liệu excel từ bảng chính
+        /// </summary>
+        /// <param name="list">Danh sách bản ghi xuất khẩu</param>
+        /// <returns></returns>
+        public ServiceResponse ExportExcel(List<Employee> list);
+
+        /// <summary>
+        /// Nhập khẩu dữ liệu 1 bước
+        /// </summary>
+        /// <param name="listEmployee">File dữ liệu người dùng gửi</param>
+        /// <returns></returns>
+        /// CreatedBy;Hứa Minh Hiếu(11/11/2022)
+        public  ServiceResponse ImportData(IFormFile formFile);
+
+
+        /// <summary>
+        /// Nhập khẩu dữ liệu theo 3 bước
+        /// </summary>
+        /// <param name="listEmployee">File dữ liệu người dùng gửi</param>
+        /// <returns></returns>
+        /// CreatedBy;Hứa Minh Hiếu(14/11/2022)
+        public Task<ServiceResponse> CheckDataThreeStep(IFormFile formFile);
+
+        /// <summary>
+        /// Xuất khẩu file excel từ kết quả nhập khẩu thành công
+        /// </summary>
+        /// <returns></returns>
+        public  ServiceResponse ExportFileImportSuccess();
+
+        /// <summary>
+        /// thực hiện thêm dữ liệu người dùng gửi vào DB
+        /// </summary>
+        /// <param name="employees"></param>
+        /// <returns></returns>
+        public ServiceResponse ImportThreeSteps(List<string> list);
+
+        
     }
 }

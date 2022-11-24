@@ -1,5 +1,4 @@
 ﻿using Misa.AMIS.Common.Entities;
-using Misa.AMIS.Common.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +25,7 @@ namespace Misa.AMIS.DL
         /// <param name="pageSize">số bản ghi trên 1 trang</param>
         /// <returns>Danh sách bản ghi thỏa mãn điều kiện filter</returns>
         /// Created by: HMHieu(28/09/2022)
-        public PagingData<T> Filter(string? search, string? sort, int pageIndex, int pageSize);
+        public PagingData<T> GetRecordsByFilter(string? search, string? sort, int pageIndex, int pageSize);
 
         /// <summary>
         ///lấy một bản ghi theo mã
@@ -34,7 +33,7 @@ namespace Misa.AMIS.DL
         /// <param name="ID"></param>
         /// <returns>dữ liệu bản ghi tương ứng với mã đã nhập</returns>
         /// Created by: HMHieu(29/09/2022)
-        public T RecordByID(Guid ID);
+        public T GetRecordByID(Guid ID);
 
         /// <summary>
         ///  thêm mới một bản ghi
@@ -61,12 +60,12 @@ namespace Misa.AMIS.DL
         /// <returns>Id của bản ghi vừa xóa </returns>
         public Guid Delete(Guid ID);
 
-        /// <summary>
-        /// Kiểm tra mã trùng
-        /// CreatedBy: HMHieu(9/10/2022)
-        /// </summary>
-        /// <param name="record">bản ghi nhân viên</param>
-        /// <returns>IDs nếu bị trùng</returns>
-        public Guid checkDuplicateEmployeeCode(T record);
+        ///// <summary>
+        ///// Kiểm tra mã trùng
+        ///// CreatedBy: HMHieu(9/10/2022)
+        ///// </summary>
+        ///// <param name="record">bản ghi nhân viên</param>
+        ///// <returns>Mã code nếu bị trùng</returns>
+        //public Guid checkDuplicateEmployeeCode(T record);
     }
 }

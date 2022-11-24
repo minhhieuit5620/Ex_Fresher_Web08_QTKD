@@ -35,8 +35,6 @@ namespace Misa.AMIS.BL.BaseBL
             validateFailed = new List<string>();
         }
 
-    
-
         #endregion
 
         #region Method
@@ -51,7 +49,6 @@ namespace Misa.AMIS.BL.BaseBL
             return _baseDL.GetAllRecords();
         }
 
-
         /// <summary>
         /// Lấy danh sách bản ghi theo filter
         /// </summary>
@@ -61,9 +58,20 @@ namespace Misa.AMIS.BL.BaseBL
         /// <param name="pageSize">số bản ghi trên 1 trang</param>
         /// <returns>Danh sách bản ghi thỏa mãn điều kiện filter</returns>
         /// Created by: HMHieu(28/09/2022)
-        public PagingData<T> Filter(string? search, string? sort, int pageIndex, int pageSize)
+        public PagingData<T> GetRecordsByFilter(string? search, string? sort, int pageIndex, int pageSize)
         {
-            return _baseDL.Filter(search, sort, pageIndex, pageSize);
+            return _baseDL.GetRecordsByFilter(search, sort, pageIndex, pageSize);
+        }
+
+        /// <summary>
+        ///  lấy một bản ghi
+        /// </summary>      
+        /// <param name="ID"></param>
+        /// <returns>dữ liệu bản ghi tương ứng với mã đã nhập</returns>
+        /// Created by: HMHieu(18/09/2022)
+        public T GetRecordByID(Guid ID)
+        {
+            return _baseDL.GetRecordByID(ID);
         }
 
         /// <summary>
@@ -125,17 +133,6 @@ namespace Misa.AMIS.BL.BaseBL
         }
 
         /// <summary>
-        ///  lấy một bản ghi
-        /// </summary>      
-        /// <param name="ID"></param>
-        /// <returns>dữ liệu bản ghi tương ứng với mã đã nhập</returns>
-        /// Created by: HMHieu(18/09/2022)
-        public T RecordByID(Guid ID)
-        {
-            return _baseDL.RecordByID(ID);
-        }
-
-        /// <summary>
         /// sửa một bản ghi 
         /// </summary>
         /// Created by: HMHieu(29/09/2022)
@@ -180,8 +177,7 @@ namespace Misa.AMIS.BL.BaseBL
             {
                 return new ServiceResponse
                 {
-                    Success = false,
-                    Duplicate = false,
+                    Success = false,                 
 
                     Data = new ErrorResult(
 
@@ -198,7 +194,6 @@ namespace Misa.AMIS.BL.BaseBL
                 };
             }
         }
-
 
         /// <summary>
         /// xóa một bản ghi 
@@ -250,13 +245,11 @@ namespace Misa.AMIS.BL.BaseBL
             //validate dữ liệu truyền vào
             var properties = typeof(T).GetProperties();
 
-           
-
-            foreach (var property in properties)
+            foreach (var property in properties)//lặp qua các prop để lấy giá trị
             {
-                string propertyName = property.Name;
+                string propertyName = property.Name;//lấy giá trị propName
 
-                var propertyValue = property.GetValue(record);
+                var propertyValue = property.GetValue(record);//lấy value của prop
 
                 var isNotNullOrEmptyAttr = (IsNotNullOrEmptyAttribute?)Attribute.GetCustomAttribute(property, typeof(IsNotNullOrEmptyAttribute));
 
@@ -292,18 +285,20 @@ namespace Misa.AMIS.BL.BaseBL
 
                 //}
             }
-            ValidateObjectCustom(record);
+            ValidateObjectCustom(record);//validate các trường hợp riêng của từng bảng (Mã trùng, ngày tháng,email,..)
+            //nếu tồn tại giá trị validate lỗi
             if (validateFailed.Count > 0)
             {
                 return new ServiceResponse
                 {
                     Success = false,
 
-                    Data = validateFailed.FirstOrDefault().ToString()
+                    Data = validateFailed.FirstOrDefault().ToString()//lấy ra giá trị validate lỗi đầu tiên để gủi sang client
+                    
                     
                 };
             }
-            else
+            else//thành công
             {
                 return new ServiceResponse
                 {
@@ -312,6 +307,7 @@ namespace Misa.AMIS.BL.BaseBL
             }
             
         }
+
         /// <summary>
         /// </summary>
         /// <param name="entity">Đối tượng cần validate</param>
@@ -322,6 +318,7 @@ namespace Misa.AMIS.BL.BaseBL
         {
             return null;
         }
+
         #endregion
     }
 }

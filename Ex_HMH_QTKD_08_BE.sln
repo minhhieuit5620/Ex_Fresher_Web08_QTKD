@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misa.AMIS.DL", "Ex_HMH_DL\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Misa.AMIS.Common", "Ex_HMH_Common\Misa.AMIS.Common.csproj", "{201397D9-A2BA-452F-B64C-01B904410F85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misa.AMIS.Auth", "Misa.AMIS.Auth\Misa.AMIS.Auth.csproj", "{00F6848B-318F-492C-84F2-9EB9EA966864}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misa.AMIS.Auth.Common", "Misa.AMIS.Auth.Common\Misa.AMIS.Auth.Common.csproj", "{D4EB6B37-BC6B-4243-A159-4485F0FFBB91}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{201397D9-A2BA-452F-B64C-01B904410F85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{201397D9-A2BA-452F-B64C-01B904410F85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{201397D9-A2BA-452F-B64C-01B904410F85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00F6848B-318F-492C-84F2-9EB9EA966864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00F6848B-318F-492C-84F2-9EB9EA966864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00F6848B-318F-492C-84F2-9EB9EA966864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00F6848B-318F-492C-84F2-9EB9EA966864}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4EB6B37-BC6B-4243-A159-4485F0FFBB91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4EB6B37-BC6B-4243-A159-4485F0FFBB91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4EB6B37-BC6B-4243-A159-4485F0FFBB91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4EB6B37-BC6B-4243-A159-4485F0FFBB91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

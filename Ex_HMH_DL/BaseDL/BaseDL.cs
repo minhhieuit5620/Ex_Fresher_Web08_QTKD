@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using Misa.AMIS.Common.Attributes;
 using Misa.AMIS.Common.Entities;
-using Misa.AMIS.Common.Entities;
 using MySqlConnector;
 using System;
 using System.Collections;
@@ -15,6 +14,8 @@ namespace Misa.AMIS.DL.BaseDL
 {
     public class BaseDL<T> : IBaseDL<T>
     {
+
+
         /// <summary>
         /// lấy toàn bộ các bản ghi
         /// </summary>
@@ -74,7 +75,7 @@ namespace Misa.AMIS.DL.BaseDL
         /// <param name="pageSize">số bản ghi trên 1 trang</param>
         /// <returns>Danh sách bản ghi thỏa mãn điều kiện filter</returns>
         /// Created by: HMHieu(28/09/2022)
-        public PagingData<T> Filter(string? search, string? sort, int pageIndex, int pageSize)
+        public PagingData<T> GetRecordsByFilter(string? search, string? sort, int pageIndex, int pageSize)
         {
             var procName = $"Proc_{typeof(T).Name.ToLower()}_GetDataFilterPaging";
 
@@ -133,19 +134,13 @@ namespace Misa.AMIS.DL.BaseDL
         /// </summary>
         /// <param name="record">dữ liệu của bản ghi mới</param>
         /// <returns>ID của bản ghi</returns>
-        public string Insert(T record)
+        public virtual string Insert(T record)
         {
             var newID = Guid.NewGuid();
 
             var properties = typeof(T).GetProperties();
 
-            var parameters = new DynamicParameters();
-            
-            //Guid id = checkDuplicateEmployeeCode(record);
-
-            ////Nếu chưa tồn tại thì thực hiện
-            //if (id == Guid.Empty)
-            //{
+            var parameters = new DynamicParameters();           
 
                 foreach (var prop in properties)
                 {
@@ -208,7 +203,7 @@ namespace Misa.AMIS.DL.BaseDL
         /// <param name="ID"></param>
         /// <returns>dữ liệu bản ghi tương ứng với mã đã nhập</returns>
         /// Created by: HMHieu(29/09/2022)
-        public T RecordByID(Guid ID)
+        public T GetRecordByID(Guid ID)
         {
             var procname = $"Proc_{typeof(T).Name.ToLower()}_GetByID";
 
@@ -238,13 +233,7 @@ namespace Misa.AMIS.DL.BaseDL
         {
             var properties = typeof(T).GetProperties();
 
-            var parameters = new DynamicParameters();          
-
-           // Guid id = checkDuplicateEmployeeCode(record);        
-
-            ////Nếu chưa tồn tại thì thực hiện
-            //if (id == Guid.Empty)
-            //{
+            var parameters = new DynamicParameters();                     
 
                 foreach (var prop in properties)
                 {
@@ -290,13 +279,7 @@ namespace Misa.AMIS.DL.BaseDL
                             return Guid.Empty.ToString();
                         }
                     }
-                }
-
-        //    }
-        //    else
-        //    {
-        //        return null;
-        //    }
+                }     
         }
 
         /// <summary>
@@ -305,49 +288,47 @@ namespace Misa.AMIS.DL.BaseDL
         /// </summary>
         /// <param name="record">bản ghi nhân viên</param>
         /// <returns>Mã nhân viên nếu bị trùng</returns>
-        public Guid checkDuplicateEmployeeCode(T record)
-        {
+        //public Guid checkDuplicateEmployeeCode(T record)
+        //{
 
-            //khai báo store proceduce
-            string storedProceduceName = $"Proc_{typeof(T).Name.ToLower()}_CheckDuplicate";        
+        //    //khai báo store proceduce
+        //    string storedProceduceName = $"Proc_{typeof(T).Name.ToLower()}_CheckDuplicate";        
 
-            var parameters = new DynamicParameters();
+        //    var parameters = new DynamicParameters();
 
-            var props = typeof(T).GetProperties();
-            foreach (var prop in props)
-            {
-                string propName = prop.Name;
+        //    var props = typeof(T).GetProperties();
+        //    foreach (var prop in props)
+        //    {
+        //        string propName = prop.Name;
 
-                string nameCheckCode = "EmployeeCode";
+        //        string nameCheckCode = "EmployeeCode";
               
-                if (propName == nameCheckCode)
-                {
-                    var propValue = prop.GetValue(record, null);
-                    parameters.Add("v_EmployeeCode", propValue);
-                    break;
-                }
-                var isPrimarykey = (Primarykey?)Attribute.GetCustomAttribute(prop, typeof(Primarykey));
-                if (isPrimarykey != null)
-                {
-                    var propValue = prop.GetValue(record, null);
+        //        if (propName == nameCheckCode)
+        //        {
+        //            var propValue = prop.GetValue(record, null);
+        //            parameters.Add("v_EmployeeCode", propValue);
+        //            break;
+        //        }
+        //        var isPrimarykey = (Primarykey?)Attribute.GetCustomAttribute(prop, typeof(Primarykey));
+        //        if (isPrimarykey != null)
+        //        {
+        //            var propValue = prop.GetValue(record, null);
 
-                    parameters.Add("v_EmployeeID", propValue);
-                }
-                else parameters.Add("v_EmployeeID", Guid.Empty);
+        //            parameters.Add("v_EmployeeID", propValue);
+        //        }
+        //        else parameters.Add("v_EmployeeID", Guid.Empty);
 
-            }
+        //    }
 
+        //    //kết nối đến db
+        //    using (MySqlConnection connect = new MySqlConnection(DataContext.MySqlConnectionString))
+        //    {
+        //        //thực hiện câu lệnh 
+        //        var idEmp = connect.QueryFirstOrDefault<Guid>(storedProceduceName, parameters, commandType: System.Data.CommandType.StoredProcedure);
 
-            //kết nối đến db
-            using (MySqlConnection connect = new MySqlConnection(DataContext.MySqlConnectionString))
-            {
-                //thực hiện câu lệnh 
-                var idEmp = connect.QueryFirstOrDefault<Guid>(storedProceduceName, parameters, commandType: System.Data.CommandType.StoredProcedure);
-
-                // Trả về dữ liệu cho client
-                return idEmp;
-
-            }
-        }
+        //        // Trả về dữ liệu cho client
+        //        return idEmp;
+        //    }
+        //}
     }
 }

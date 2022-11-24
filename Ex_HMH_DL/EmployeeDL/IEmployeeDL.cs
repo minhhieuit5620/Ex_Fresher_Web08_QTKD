@@ -31,6 +31,14 @@ namespace Misa.AMIS.DL
         /// <returns>Mã nhân viên mới</returns>
         /// CreatedBy: Hứa Minh Hiếu
         public string NewEmployeeCode();
+        
+        /// <summary>
+        /// Kiểm tra mã trùng
+        /// CreatedBy: HMHieu(9/10/2022)
+        /// </summary>
+        /// <param name="record">bản ghi nhân viên</param>
+        /// <returns>Mã code nếu bị trùng</returns>
+        public Guid checkDuplicateEmployeeCode(Employee employee);
 
         /// <summary>
         /// Thay đổi trạng thái người dùng
@@ -45,7 +53,27 @@ namespace Misa.AMIS.DL
         /// <param name="listEmployeeID"></param>
         /// <returns>Số bản ghi đã xóa</returns>
         public int DeleteMultiple(List<Guid> listEmployeeID);
-      
+
+        /// <summary>
+        /// kiểm tra dữ liệu đầu vào trong danh sách import đã có trong DB hay chưa
+        /// </summary>
+        /// <param name="employeeCode">mã nhân viên</param>
+        /// <returns>true nếu đã tồn tại/ false nếu chưa tồn tại</returns>
+        public bool checkCodeImport(string employeeCode);
+
+        /// <summary>
+        /// nhập khẩu dữ liệu
+        /// </summary>
+        /// <param name="employees"></param>
+        /// <returns></returns>
+        public int ImportData(List<Employee> employees);
+
+        /// <summary>
+        /// Nhập khẩu dữ liệu sử dụng Proc(test)
+        /// </summary>
+        /// <param name="employees"></param>
+        /// <returns></returns>
+        public Task<int> ImportUsingProc(List<Employee> employees);
     }
 
 }

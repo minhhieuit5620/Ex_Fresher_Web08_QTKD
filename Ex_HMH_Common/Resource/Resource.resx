@@ -117,6 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CodeExitsInFileImport" xml:space="preserve">
+    <value>Mã nhân viên {0} đã tồn tại trên tệp nhập khẩu</value>
+    <comment>message thông báo cho người dùng là mã nhân viên đã tồn tại trên tệp nhập khẩu</comment>
+  </data>
+  <data name="ContenTypeExport" xml:space="preserve">
+    <value>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</value>
+    <comment>ContentypeExport</comment>
+  </data>
   <data name="DefaultStatus" xml:space="preserve">
     <value>1</value>
     <comment>Trạng thái người dùng mặc định</comment>
@@ -154,12 +162,39 @@
     <comment>Thông báo nếu email nhập vào không hợp lệ</comment>
   </data>
   <data name="ErrorMaxDate" xml:space="preserve">
-    <value>Thông tin {0} không được lớn hơn ngày hiện tại</value>
+    <value>Thông tin {0} không được lớn hơn ngày {1}</value>
     <comment>Thông báo nếu ngày nhập vào lơn hơn ngày hiện tại</comment>
+  </data>
+  <data name="ErrorValidNotFormat" xml:space="preserve">
+    <value>Thông tin {0} không đúng định dạng</value>
+  </data>
+  <data name="ErrorValidNotFormatOrNull" xml:space="preserve">
+    <value>Thông tin {0} bị trống hoặc không hợp lệ</value>
   </data>
   <data name="ErrorValidNotNull" xml:space="preserve">
     <value>Thông tin {0} không được để trống</value>
     <comment>Thông báo nếu thông tin NotNull bị trống</comment>
+  </data>
+  <data name="File Import" xml:space="preserve">
+    <value>File nhập khẩu</value>
+  </data>
+  <data name="FIleImportNotExcel" xml:space="preserve">
+    <value>File nhập khẩu không đúng định dạng</value>
+  </data>
+  <data name="FileImportNull" xml:space="preserve">
+    <value>File nhập khẩu không tồn tại</value>
+  </data>
+  <data name="FileNameExport" xml:space="preserve">
+    <value>Danh_sach_nhan_vien</value>
+    <comment>Tên file xuất khẩu</comment>
+  </data>
+  <data name="KeyCacheExport" xml:space="preserve">
+    <value>export</value>
+    <comment>Tên của key cache memmory import</comment>
+  </data>
+  <data name="KeyCacheImport" xml:space="preserve">
+    <value>checked</value>
+    <comment>Tên của key cache memmory import</comment>
   </data>
   <data name="Moreinfo_InsertFailed" xml:space="preserve">
     <value>https://openapi.misa.com.vn/errorcode/4</value>
@@ -168,6 +203,14 @@
   <data name="Proc_InsertOne" xml:space="preserve">
     <value>Proc_{0}_InsertOne</value>
     <comment>Template proc insert one</comment>
+  </data>
+  <data name="RegexEmployeeCode" xml:space="preserve">
+    <value>^NV[0-9]+$</value>
+    <comment>Format mã nhân viên</comment>
+  </data>
+  <data name="RegexNumber" xml:space="preserve">
+    <value>^[0-9]*$</value>
+    <comment>Format chỉ được là số</comment>
   </data>
   <data name="UserMsg_DeleteFailed" xml:space="preserve">
     <value>Xóa đối tượng thất bại</value>

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "VWXYLEMNXI/hmDMimHHSFhi9MNOtKlwGYAibm4UKkjFKPn8hAsQvQ1G3k9YUB3wL7IhExIalTDGHjYH9SEaHMA==",
+  "dgSpecHash": "c/O94bt4Z0RwoHIyJXi/e1eyM83xU+PC1RTlea+JJvZ9YYiYLrzxayKnAMv3DfOPYNTzhhtaIQYkqKrgjZQ8dQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\MinhHieuDev\\Desktop\\Ex_Fresher_Web08_QTKD\\Ex_HMH_QTKD_08_BE\\Ex_HMH_Common\\Misa.AMIS.Common.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\MinhHieuDev\\.nuget\\packages\\nlog\\5.0.4\\nlog.5.0.4.nupkg.sha512"
+  ],
   "logs": []
 }

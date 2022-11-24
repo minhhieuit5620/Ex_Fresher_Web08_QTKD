@@ -61,6 +61,24 @@ namespace Misa.AMIS.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mã nhân viên {0} đã tồn tại trên tệp nhập khẩu.
+        /// </summary>
+        public static string CodeExitsInFileImport {
+            get {
+                return ResourceManager.GetString("CodeExitsInFileImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.
+        /// </summary>
+        public static string ContenTypeExport {
+            get {
+                return ResourceManager.GetString("ContenTypeExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 1.
         /// </summary>
         public static string DefaultStatus {
@@ -142,11 +160,29 @@ namespace Misa.AMIS.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Thông tin {0} không được lớn hơn ngày hiện tại.
+        ///   Looks up a localized string similar to Thông tin {0} không được lớn hơn ngày {1}.
         /// </summary>
         public static string ErrorMaxDate {
             get {
                 return ResourceManager.GetString("ErrorMaxDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông tin {0} không đúng định dạng.
+        /// </summary>
+        public static string ErrorValidNotFormat {
+            get {
+                return ResourceManager.GetString("ErrorValidNotFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Thông tin {0} bị trống hoặc không hợp lệ.
+        /// </summary>
+        public static string ErrorValidNotFormatOrNull {
+            get {
+                return ResourceManager.GetString("ErrorValidNotFormatOrNull", resourceCulture);
             }
         }
         
@@ -156,6 +192,60 @@ namespace Misa.AMIS.Common {
         public static string ErrorValidNotNull {
             get {
                 return ResourceManager.GetString("ErrorValidNotNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File nhập khẩu.
+        /// </summary>
+        public static string File_Import {
+            get {
+                return ResourceManager.GetString("File Import", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File nhập khẩu không đúng định dạng.
+        /// </summary>
+        public static string FIleImportNotExcel {
+            get {
+                return ResourceManager.GetString("FIleImportNotExcel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File nhập khẩu không tồn tại.
+        /// </summary>
+        public static string FileImportNull {
+            get {
+                return ResourceManager.GetString("FileImportNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Danh_sach_nhan_vien.
+        /// </summary>
+        public static string FileNameExport {
+            get {
+                return ResourceManager.GetString("FileNameExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to export.
+        /// </summary>
+        public static string KeyCacheExport {
+            get {
+                return ResourceManager.GetString("KeyCacheExport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to checked.
+        /// </summary>
+        public static string KeyCacheImport {
+            get {
+                return ResourceManager.GetString("KeyCacheImport", resourceCulture);
             }
         }
         
@@ -174,6 +264,24 @@ namespace Misa.AMIS.Common {
         public static string Proc_InsertOne {
             get {
                 return ResourceManager.GetString("Proc_InsertOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ^NV[0-9]+$.
+        /// </summary>
+        public static string RegexEmployeeCode {
+            get {
+                return ResourceManager.GetString("RegexEmployeeCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ^[0-9]*$.
+        /// </summary>
+        public static string RegexNumber {
+            get {
+                return ResourceManager.GetString("RegexNumber", resourceCulture);
             }
         }
         
